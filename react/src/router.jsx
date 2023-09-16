@@ -1,11 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
+import Dashboard from "./views/Dashboard";
+import Tickets from "./views/Tickets";
+import Login from "./views/Login";
+import Signup from "./views/Signup";
 
 const router = createBrowserRouter([
     {
-        path: '/app',
-        element: <App />
-    }
+        path: '/',
+        element: <Dashboard />
+    },
+    {
+        path: '/tickets',
+        element: <Tickets />
+    },
+    {
+        path: '/login',
+        element: <Login />
+    },
+    {
+        path: '/signup',
+        element: <Signup />
+    },
 ])
 
 export default router;
