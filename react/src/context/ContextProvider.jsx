@@ -1,10 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { useContext } from "react";
+import { useState } from "react";
+import { createContext } from "react";
 
-const StateContext = createContext({});
+const StateContext = createContext({
+    currentUser: {},
+    userToken: null,
+    setCurrentUser: () => {},
+    setUserToken: () => {}
+});
 
 export const ContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState({});
-    const [userToken, setUserToken] = useState(null);
+    const [currentUser, setCurrentUser] = useState({
+        name: 'Andrey Efimenko',
+        email: 'aa.efimenko@yandex.ru'
+    });
+    const [userToken, setUserToken] = useState('111');
 
     return (
         <StateContext.Provider value={{
@@ -18,4 +28,4 @@ export const ContextProvider = ({children}) => {
     )
 };
 
-export const userStateContext = () => useContext(StateContext);
+export const useStateContext = () => useContext(StateContext);

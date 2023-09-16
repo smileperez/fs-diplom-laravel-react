@@ -1,16 +1,26 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import Dashboard from "./views/Dashboard";
-import Tickets from "./views/Tickets";
-import Login from "./views/Login";
-import Signup from "./views/Signup";
+// Layouts
 import GuestLayout from "./components/GuestLayout";
-import DefaultLayout from "./components/DefaultLayout";
+import AuthLayout from "./components/AuthLayout";
+import AdminLayout from "./components/AdminLayout";
+// Admins
+import Dashboard from "./views/admins/Dashboard";
+import Halls from "./views/admins/Halls";
+import ConfigHalls from "./views/admins/ConfigHalls";
+import Prices from "./views/admins/Prices";
+import Sessions from "./views/admins/Sessions";
+import Users from "./views/admins/Users";
+// Guests
+import Tickets from "./views/guests/Tickets";
+// Auth
+import Login from "./views/auth/Login";
+import Signup from "./views/auth/Signup";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <DefaultLayout />,
+        element: <AdminLayout />,
         children: [
             {
                 path: '/dashboard',
@@ -21,15 +31,31 @@ const router = createBrowserRouter([
                 element: <Dashboard />
             },
             {
-                path: '/tickets',
-                element: <Tickets />
+                path: '/halls',
+                element: <Halls />
+            },
+            {
+                path: '/confighalls',
+                element: <ConfigHalls />
+            },
+            {
+                path: '/prices',
+                element: <Prices />
+            },
+            {
+                path: '/sessions',
+                element: <Sessions />
+            },
+            {
+                path: '/users',
+                element: <Users />
             },
         ]
     },
 
     {
         path: '/',
-        element: <GuestLayout />,
+        element: <AuthLayout />,
         children: [
             {
                 path: '/login',
@@ -41,6 +67,19 @@ const router = createBrowserRouter([
             },
         ]
     },
+
+    {
+        path: '/',
+        element: <GuestLayout />,
+        children: [
+            {
+                path: '/tickets',
+                element: <Tickets />
+            },
+        ]
+    },
+
+
 ])
 
 export default router;
