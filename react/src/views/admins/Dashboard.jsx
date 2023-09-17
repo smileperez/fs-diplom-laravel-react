@@ -3,7 +3,9 @@ import PageComponent from "../../components/PageComponent";
 export default function Dashboard() {
   return (
     <PageComponent title="Главная">
-        Главная
+        <div className="">
+            Dashboard content
+        </div>
     </PageComponent>
   )
 }

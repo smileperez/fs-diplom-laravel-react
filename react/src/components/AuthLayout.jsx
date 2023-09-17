@@ -10,12 +10,17 @@ export default function AuthLayout() {
     }
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h1 class="page-header__title">Идём<span>в</span>кино</h1>
-          </div>
+        <div className="flex min-h-full flex-col justify-center mx-24 my-12 lg:px-8 bg-[#63536C]">
+            <div className="p-2 flex flex-col items-center">
+                <h1 className="logo-head-01">
+                    ИДЁМ
+                    <span className="logo-head-02">В</span>
+                    КИНО
+                </h1>
+                <h2 className="logo-head-03">Администраторская</h2>
+            </div>
 
-          <Outlet />
+            <Outlet />
         </div>
     )
 }
