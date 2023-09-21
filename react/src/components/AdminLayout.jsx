@@ -20,12 +20,10 @@ export default function DefaultLayout() {
 
     return (
         <div className='flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden'>
-            {/* <div className='bg-gray-800'>Sidebar</div> */}
             <SidebarComponent currentUser={currentUser} />
-            <div className='p-4'>
-                <div><Outlet /></div>
+            <div className='p-10 flex-1'>
+                <Outlet />
             </div>
-
         </div>
     )
 }

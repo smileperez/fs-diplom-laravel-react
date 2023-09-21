@@ -9,16 +9,17 @@ import {
     StarIcon, CurrencyDollarIcon,
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
+import { useState } from 'react'
 
 export default function SidebarComponent({ currentUser }) {
 
     const navigation = [
-        { name: 'Главная', icon: <StarIcon className='block w-6 h-6' />, to: '/' },
-        { name: 'Залы', icon: <SquaresPlusIcon className='block w-6 h-6' />, to: '/halls' },
-        { name: 'Конфигурации', icon: <AdjustmentsHorizontalIcon className='block w-6 h-6' />, to: '/confighalls' },
-        { name: 'Цены', icon: <CurrencyDollarIcon className='block w-6 h-6' />, to: '/prices' },
-        { name: 'Сеансы', icon: <CalendarDaysIcon className='block w-6 h-6' />, to: '/sessions' },
-        { name: 'Пользователи', icon: <UsersIcon className='block w-6 h-6' />, to: '/users' },
+        { name: 'Главная', icon: <StarIcon className='block w-6 h-7' />, to: '/' },
+        { name: 'Залы', icon: <SquaresPlusIcon className='block w-6 h-7' />, to: '/halls' },
+        { name: 'Конфигурации', icon: <AdjustmentsHorizontalIcon className='block w-6 h-7' />, to: '/confighalls' },
+        { name: 'Цены', icon: <CurrencyDollarIcon className='block w-6 h-7' />, to: '/prices' },
+        { name: 'Сеансы', icon: <CalendarDaysIcon className='block w-6 h-7' />, to: '/sessions' },
+        { name: 'Пользователи', icon: <UsersIcon className='block w-6 h-7' />, to: '/users' },
     ]
 
     function classNames(...classes) {
@@ -30,18 +31,25 @@ export default function SidebarComponent({ currentUser }) {
         console.log("Logout");
     }
 
+    const [open, setOpen] = useState(true);
+
     return (
-        <div className="flex flex-col justify-between bg-[#63536C] min-w-[18rem] text-white">
-            <div className='flex justify-evenly items-center'>
-                <div className="p-2 flex flex-col items-center">
-                    <h1 className="logo-head-01">
+        <div
+            className={`${open ? 'w-[18rem]' : 'w-20'} duration-300 flex flex-col justify-between bg-[#63536C] text-white`}
+        >
+            <div className='flex justify-evenly items-center relative'>
+                <div className={`${!open && 'invisible'} h-68 p-2 flex flex-col items-center`}>
+                    <h1 className='logo-head-01'>
                         ИДЁМ
                         <span className="logo-head-02">В</span>
                         КИНО
                     </h1>
-                    <h2 className="logo-head-03">Администраторская</h2>
+                    <h2 className='logo-head-03'>Администраторская</h2>
                 </div>
-                <ChevronLeftIcon className='block w-12 h-12 bg-black/25 p-2 rounded-full' />
+                <ChevronLeftIcon
+                    className={`block w-10 h-10 bg-[#89639e] p-2 rounded-full absolute top-4 -right-5 border-2 border-gray-700 cursor-pointer ${!open && 'rotate-180'}`}
+                    onClick={() => setOpen(!open)}
+                />
             </div>
 
 
@@ -59,18 +67,18 @@ export default function SidebarComponent({ currentUser }) {
                     >
                         <div className='flex items-center text-lg space-x-3'>
                             <div>{item.icon}</div>
-                            <div>{item.name}</div>
+                            <div className={`${!open && 'hidden'}`}>{item.name}</div>
                         </div>
                     </NavLink>
                 ))}
             </div>
 
             <div className="px-4 flex justify-evenly">
-                <div className="flex flex-col justify-evenly">
+                <div className={`${!open && 'hidden'} flex flex-col justify-evenly`}>
                     <div className="text-base font-medium leading-none text-white">{currentUser.name}</div>
                     <div className="text-sm font-medium leading-none text-gray-400">{currentUser.email}</div>
                 </div>
-                <UserIcon className='block w-10 h-10 bg-black/25 p-2 rounded-full text-white' />
+                <UserIcon className='block w-10 h-10 p-2 rounded-full text-white cursor-pointer' />
             </div>
 
             <div className='p-4 flex'>
@@ -78,8 +86,8 @@ export default function SidebarComponent({ currentUser }) {
                     className="flex-1 text-red-300 hover:text-red-400 hover:bg-gray-700 text-lg px-3 py-2 space-x-3 font-medium inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center cursor-pointer"
                     onClick={(event) => logout(event)}
                 >
-                    <ArrowLeftOnRectangleIcon className='block w-6 h-6' />
-                    <div>Выход</div>
+                    <ArrowLeftOnRectangleIcon className='block w-6 h-7' />
+                    <div className={`${!open && 'hidden'}`}>Выход</div>
                 </div>
             </div>
 
