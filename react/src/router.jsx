@@ -19,51 +19,36 @@ import Signup from "./views/auth/Signup";
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/admin',
         element: <AdminLayout />,
         children: [
+            // {
+            //     path: '/dashboard',
+            //     element: <Navigate to="/dashboard" />
+            // },
             {
-                path: '/dashboard',
-                element: <Navigate to="/dashboard" />
-            },
-            {
-                path: '/',
+                path: '/admin/dashboard',
                 element: <Dashboard />
             },
             {
-                path: '/halls',
+                path: '/admin/halls',
                 element: <Halls />
             },
             {
-                path: '/confighalls',
+                path: '/admin/confighalls',
                 element: <ConfigHalls />
             },
             {
-                path: '/prices',
+                path: '/admin/prices',
                 element: <Prices />
             },
             {
-                path: '/sessions',
+                path: '/admin/sessions',
                 element: <Sessions />
             },
             {
-                path: '/users',
+                path: '/admin/users',
                 element: <Users />
-            },
-        ]
-    },
-
-    {
-        path: '/',
-        element: <AuthLayout />,
-        children: [
-            {
-                path: '/login',
-                element: <Login />
-            },
-            {
-                path: '/signup',
-                element: <Signup />
             },
         ]
     },
@@ -73,8 +58,23 @@ const router = createBrowserRouter([
         element: <GuestLayout />,
         children: [
             {
-                path: '/tickets',
+                path: '/',
                 element: <Tickets />
+            },
+        ]
+    },
+
+    {
+        path: '/auth',
+        element: <AuthLayout />,
+        children: [
+            {
+                path: '/auth/login',
+                element: <Login />
+            },
+            {
+                path: '/auth/signup',
+                element: <Signup />
             },
         ]
     },

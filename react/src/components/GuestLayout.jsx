@@ -3,11 +3,11 @@ import { useStateContext } from '../context/ContextProvider'
 
 export default function GuestLayout() {
 
-    const { currentUser, userToken } = useStateContext();
+    // const { currentUser, userToken } = useStateContext();
 
-    if (userToken) {
-        return <Navigate to='/' />
-    }
+    // if (userToken) {
+    //     return <Navigate to='/admin/dashboard' />
+    // }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

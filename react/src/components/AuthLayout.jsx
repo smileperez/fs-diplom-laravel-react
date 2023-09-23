@@ -6,11 +6,11 @@ export default function AuthLayout() {
     const { currentUser, userToken } = useStateContext();
 
     if (userToken) {
-        return <Navigate to='/' />
+        return <Navigate to='/admin/dashboard' />
     }
 
     return (
-        <div className="flex min-h-full flex-col justify-center mx-24 my-12 lg:px-8 bg-[#63536C]">
+        <div className="flex min-h-full flex-col justify-center lg:px-8 bg-[#63536C]">
             <div className="p-2 flex flex-col items-center">
                 <h1 className="logo-head-01">
                     ИДЁМ

@@ -14,12 +14,12 @@ import { useState } from 'react'
 export default function SidebarComponent({ currentUser }) {
 
     const navigation = [
-        { name: 'Главная', icon: <StarIcon className='block w-6 h-7' />, to: '/' },
-        { name: 'Залы', icon: <SquaresPlusIcon className='block w-6 h-7' />, to: '/halls' },
-        { name: 'Конфигурации', icon: <AdjustmentsHorizontalIcon className='block w-6 h-7' />, to: '/confighalls' },
-        { name: 'Цены', icon: <CurrencyDollarIcon className='block w-6 h-7' />, to: '/prices' },
-        { name: 'Сеансы', icon: <CalendarDaysIcon className='block w-6 h-7' />, to: '/sessions' },
-        { name: 'Пользователи', icon: <UsersIcon className='block w-6 h-7' />, to: '/users' },
+        { name: 'Главная', icon: <StarIcon className='block w-6 h-7' />, to: '/admin/dashboard' },
+        { name: 'Залы', icon: <SquaresPlusIcon className='block w-6 h-7' />, to: '/admin/halls' },
+        { name: 'Конфигурации', icon: <AdjustmentsHorizontalIcon className='block w-6 h-7' />, to: '/admin/confighalls' },
+        { name: 'Цены', icon: <CurrencyDollarIcon className='block w-6 h-7' />, to: '/admin/prices' },
+        { name: 'Сеансы', icon: <CalendarDaysIcon className='block w-6 h-7' />, to: '/admin/sessions' },
+        { name: 'Пользователи', icon: <UsersIcon className='block w-6 h-7' />, to: '/admin/users' },
     ]
 
     function classNames(...classes) {
