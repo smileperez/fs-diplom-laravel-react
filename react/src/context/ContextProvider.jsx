@@ -35,10 +35,7 @@ const tmpMovies = [
 ]
 
 export const ContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState({
-        name: 'Andrey Efimenko',
-        email: 'aa.efimenko@yandex.ru'
-    });
+    const [currentUser, setCurrentUser] = useState({});
     const [userToken, setUserToken] = useState('');
 
     const [movies, setMovies] = useState(tmpMovies);

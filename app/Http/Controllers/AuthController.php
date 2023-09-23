@@ -14,9 +14,8 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        /** @var \App\Models\User $user */
         $user = User::create([
-            'login' => $data['login'],
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
@@ -51,9 +50,8 @@ class AuthController extends Controller
 
     public function signout(Request $request)
     {
-        /** $var user $user */
         $user = Auth::user();
-        $user->currentAccessToken()-delete();
+        $user->currentAccessToken()->delete();
 
         return response([
             'success' => true

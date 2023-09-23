@@ -8,13 +8,14 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
   const token = '123'; //TODO
   config.headers.Authorization = `Bearer ${token}`
+  return config
 });
 
 axiosClient.interceptors.response.use(response => {
  return response;
 }, error => {
   if (error.response && error.response.status === 401) {
-    router.navigate('/auth/signin')
+    // router.navigate('/auth/signin')
     return error;
   }
   throw error;
