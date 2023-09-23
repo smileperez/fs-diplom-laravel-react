@@ -4,7 +4,7 @@ import LogoAdminComponent from '../components/LogoAdminComponent';
 
 export default function AuthLayout() {
 
-    const { currentUser, userToken } = useStateContext();
+    const { userToken } = useStateContext();
 
     if (userToken) {
         return <Navigate to='/admin/dashboard' />
