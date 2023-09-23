@@ -39,7 +39,7 @@ export const ContextProvider = ({children}) => {
         name: 'Andrey Efimenko',
         email: 'aa.efimenko@yandex.ru'
     });
-    const [userToken, setUserToken] = useState('111');
+    const [userToken, setUserToken] = useState('');
 
     const [movies, setMovies] = useState(tmpMovies);
 
