@@ -78,12 +78,12 @@ export default function SidebarComponent({ currentUser }) {
                     <div className="text-base font-medium leading-none text-white">{currentUser.name}</div>
                     <div className="text-sm font-medium leading-none text-gray-400">{currentUser.email}</div>
                 </div>
-                <UserIcon className='block w-10 h-10 p-2 rounded-full text-white cursor-pointer' />
+                <UserIcon className='block w-10 h-10 p-2 rounded-full text-white cursor-pointer hover:bg-gray-700 active:bg-[#89639e]' />
             </div>
 
             <div className='p-4 flex'>
                 <div
-                    className="flex-1 text-red-300 hover:text-red-400 hover:bg-gray-700 text-lg px-3 py-2 space-x-3 font-medium inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center cursor-pointer"
+                    className="flex-1 text-red-300 hover:text-red-400 hover:bg-gray-700  text-lg px-3 py-2 space-x-3 font-medium inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center cursor-pointer active:bg-[#89639e] active:text-white"
                     onClick={(event) => logout(event)}
                 >
                     <ArrowLeftOnRectangleIcon className='block w-6 h-7' />
