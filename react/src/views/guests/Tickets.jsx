@@ -1,12 +1,12 @@
 export default function Tickets() {
     return (
         <>
-            <nav>
-
+            <nav className="h-100 bg-white">
+            Nav
             </nav>
 
-            <main>
-                <section>
+            <main className="mt-8">
+                <section className="h-100 bg-white">
                 Tickets content -1
                 </section>
             </main>
