@@ -1,8 +1,8 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 // Layouts
-import GuestLayout from "./components/GuestLayout";
-import AuthLayout from "./components/AuthLayout";
-import AdminLayout from "./components/AdminLayout";
+import GuestLayout from "./layouts/GuestLayout";
+import AuthLayout from "./layouts/AuthLayout";
+import AdminLayout from "./layouts/AdminLayout";
 // Admins
 import Dashboard from "./views/admins/Dashboard";
 import Halls from "./views/admins/Halls";
@@ -22,10 +22,6 @@ const router = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-            // {
-            //     path: '/dashboard',
-            //     element: <Navigate to="/dashboard" />
-            // },
             {
                 path: '/admin/dashboard',
                 element: <Dashboard />

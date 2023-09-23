@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink, Navigate, Outlet } from 'react-router-dom'
 import { useStateContext } from '../context/ContextProvider'
-import SidebarComponent from './SidebarComponent'
+import SidebarComponent from '../components/SidebarComponent'
 
 export default function DefaultLayout() {
 

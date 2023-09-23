@@ -10,7 +10,6 @@ import {
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import Logo from './Logo'
 
 export default function SidebarComponent({ currentUser }) {
 

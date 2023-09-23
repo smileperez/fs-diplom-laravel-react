@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useStateContext } from '../context/ContextProvider'
-import Logo from './Logo';
+import LogoComponent from '../components/LogoComponent';
 
 export default function AuthLayout() {
 
@@ -13,7 +13,7 @@ export default function AuthLayout() {
     return (
         <div className="mx-auto mt-[20%] w-[400px]">
             <header className="p-2 flex flex-col items-center bg-[#63536C]">
-                <Logo />
+                <LogoComponent />
             </header>
             <Outlet />
         </div>
