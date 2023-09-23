@@ -10,7 +10,7 @@ export default function DefaultLayout() {
     const { currentUser, userToken } = useStateContext();
 
     if (!userToken) {
-        return <Navigate to='/auth/login' />
+        return <Navigate to='/auth/signin' />
     }
 
     const logout = (event) => {

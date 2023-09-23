@@ -13,7 +13,7 @@ import Users from "./views/admins/Users";
 // Guests
 import Tickets from "./views/guests/Tickets";
 // Auth
-import Login from "./views/auth/Login";
+import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";
 
 
@@ -69,8 +69,8 @@ const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
             {
-                path: '/auth/login',
-                element: <Login />
+                path: '/auth/signin',
+                element: <Signin />
             },
             {
                 path: '/auth/signup',

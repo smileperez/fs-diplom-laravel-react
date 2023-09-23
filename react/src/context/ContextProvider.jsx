@@ -14,7 +14,7 @@ export const ContextProvider = ({children}) => {
         name: 'Andrey Efimenko',
         email: 'aa.efimenko@yandex.ru'
     });
-    const [userToken, setUserToken] = useState('');
+    const [userToken, setUserToken] = useState('11');
 
     return (
         <StateContext.Provider value={{

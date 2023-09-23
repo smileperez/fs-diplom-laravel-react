@@ -10,6 +10,7 @@ import {
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import Logo from './Logo'
 
 export default function SidebarComponent({ currentUser }) {
 
@@ -39,12 +40,7 @@ export default function SidebarComponent({ currentUser }) {
         >
             <div className='flex justify-evenly items-center relative'>
                 <div className={`${!open && 'invisible'} h-68 p-2 flex flex-col items-center`}>
-                    <h1 className='logo-head-01'>
-                        ИДЁМ
-                        <span className="logo-head-02">В</span>
-                        КИНО
-                    </h1>
-                    <h2 className='logo-head-03'>Администраторская</h2>
+                    <Logo />
                 </div>
                 <ChevronLeftIcon
                     className={`block w-10 h-10 bg-[#89639e] p-2 rounded-full absolute top-4 -right-5 border-2 border-gray-700 cursor-pointer ${!open && 'rotate-180'}`}

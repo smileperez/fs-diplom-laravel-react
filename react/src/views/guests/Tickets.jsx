@@ -1,9 +1,15 @@
-import PageComponent from "../../components/PageComponent";
-
 export default function Tickets() {
-  return (
-    <PageComponent title="Tickets">
-        Tickets content
-    </PageComponent>
-  )
+    return (
+        <>
+            <nav>
+
+            </nav>
+
+            <main>
+                <section>
+                Tickets content -1
+                </section>
+            </main>
+        </>
+    )
 }
