@@ -6,11 +6,13 @@ import LogoComponent from '../components/LogoComponent'
 export default function GuestLayout() {
 
     return (
-        <div className="h-screen bg-guest bg-cover">
-            <header className="p-2 flex flex-col items-center">
-                <LogoComponent />
-            </header>
-            <Outlet />
+        <div className='h-screen bg-guest bg-cover'>
+            <div className='mx-auto w-[900px]'>
+                <header className='p-4 flex flex-col items-дуае'>
+                    <LogoComponent />
+                </header>
+                <Outlet />
+            </div>
         </div>
     )
 }

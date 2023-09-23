@@ -10,7 +10,7 @@ import {
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import LogoComponent from '../components/LogoComponent'
+import LogoAdminComponent from '../components/LogoAdminComponent'
 
 export default function SidebarComponent({ currentUser }) {
 
@@ -40,7 +40,7 @@ export default function SidebarComponent({ currentUser }) {
         >
             <div className='flex justify-evenly items-center relative'>
                 <div className={`${!open && 'invisible'} h-68 p-2 flex flex-col items-center`}>
-                    <LogoComponent />
+                    <LogoAdminComponent />
                 </div>
                 <ChevronLeftIcon
                     className={`block w-10 h-10 bg-[#89639e] p-2 rounded-full absolute top-4 -right-5 border-2 border-gray-700 cursor-pointer ${!open && 'rotate-180'}`}
