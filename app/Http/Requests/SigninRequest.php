@@ -22,7 +22,7 @@ class SigninRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|string|unique:users,email',
+            'email' => 'required|email|string',
             'password' => 'required',
             'remember' => 'boolean'
         ];

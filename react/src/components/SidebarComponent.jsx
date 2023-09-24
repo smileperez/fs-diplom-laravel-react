@@ -1,21 +1,40 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import {
     UserIcon,
     ChevronLeftIcon,
+    FilmIcon,
     SquaresPlusIcon,
     CalendarDaysIcon,
     UsersIcon,
     AdjustmentsHorizontalIcon,
     StarIcon, CurrencyDollarIcon,
     ArrowLeftOnRectangleIcon
-} from '@heroicons/react/24/outline'
-import { useState } from 'react'
-import LogoAdminComponent from '../components/LogoAdminComponent'
+} from '@heroicons/react/24/outline';
+import { useState } from 'react';
+import LogoAdminComponent from '../components/LogoAdminComponent';
+import axiosClient from '../axios';
+import { useStateContext } from "../context/ContextProvider";
 
-export default function SidebarComponent({ currentUser }) {
+export default function SidebarComponent() {
 
+    const { currentUser, userToken, setCurrentUser, setUserToken } = useStateContext();
+
+    // Request в сторону контрлллера Laravel
+    const logout = (event) => {
+        event.preventDefault();
+
+        axiosClient
+            .post('/signout')
+            .then(res => {
+                setCurrentUser({})
+                setUserToken(null)
+            })
+    }
+
+    // Навигация
     const navigation = [
         { name: 'Главная', icon: <StarIcon className='block w-6 h-7' />, to: '/admin/dashboard' },
+        { name: 'Фильмы', icon: <FilmIcon className='block w-6 h-7' />, to: '/admin/movies' },
         { name: 'Залы', icon: <SquaresPlusIcon className='block w-6 h-7' />, to: '/admin/halls' },
         { name: 'Конфигурации', icon: <AdjustmentsHorizontalIcon className='block w-6 h-7' />, to: '/admin/confighalls' },
         { name: 'Цены', icon: <CurrencyDollarIcon className='block w-6 h-7' />, to: '/admin/prices' },
@@ -27,11 +46,7 @@ export default function SidebarComponent({ currentUser }) {
         return classes.filter(Boolean).join(' ')
     }
 
-    const logout = (event) => {
-        event.preventDefault();
-        console.log("Logout");
-    }
-
+    // Для скрытия Sidebar
     const [open, setOpen] = useState(true);
 
     return (

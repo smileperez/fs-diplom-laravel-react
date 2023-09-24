@@ -15,6 +15,7 @@ export default function Signup() {
         ev.preventDefault();
         setError({ __html: '' })
 
+        // Request в сторону контрлллера Laravel
         axiosClient
             .post('/signup', {
                 name,
@@ -29,7 +30,6 @@ export default function Signup() {
             .catch((error) => {
                 if (error.response) {
                     const finalErrors = Object.values(error.response.data.errors).reduce((accum, next) => [...accum, ...next], []);
-                    console.log(finalErrors);
                     setError({ __html: finalErrors.join('<br>') });
                 }
                 console.error(error);

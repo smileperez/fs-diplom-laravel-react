@@ -11,10 +11,10 @@ export default function MovieListItem({ movie }) {
                     <h2 className="text-base font-bold">
                         {movie.title}
                     </h2>
-                    <p className="text-sm mt-2.5" dangerouslySetInnerHTML={{ __html: movie.description}}>
+                    <p className="text-sm mt-2.5" dangerouslySetInnerHTML={{ __html: movie.description }}>
                     </p>
                     <p className="text-sm mt-2.5 font-light">
-                    {movie.duration} минут {movie.origin}
+                        {movie.duration} минут {movie.origin}
                     </p>
                 </div>
             </div>

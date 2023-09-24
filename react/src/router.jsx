@@ -5,6 +5,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import AdminLayout from "./layouts/AdminLayout";
 // Admins
 import Dashboard from "./views/admins/Dashboard";
+import Movies from "./views/admins/Movies";
 import Halls from "./views/admins/Halls";
 import ConfigHalls from "./views/admins/ConfigHalls";
 import Prices from "./views/admins/Prices";
@@ -17,6 +18,7 @@ import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";
 
 
+
 const router = createBrowserRouter([
     {
         path: '/admin',
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: '/admin/dashboard',
                 element: <Dashboard />
+            },
+            {
+                path: '/admin/movies',
+                element: <Movies />
             },
             {
                 path: '/admin/halls',
@@ -56,7 +62,7 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Tickets />
-            },
+            }
         ]
     },
 

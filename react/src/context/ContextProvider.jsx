@@ -5,8 +5,8 @@ import { createContext } from "react";
 const StateContext = createContext({
     currentUser: {},
     userToken: null,
-    setCurrentUser: () => {},
-    setUserToken: () => {},
+    setCurrentUser: () => { },
+    setUserToken: () => { },
     movies: []
 });
 
@@ -34,11 +34,19 @@ const tmpMovies = [
     }
 ]
 
-export const ContextProvider = ({children}) => {
+export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
-    const [userToken, setUserToken] = useState('');
-
+    const [userToken, _setUserToken] = useState(localStorage.getItem('TOKEN') || '');
     const [movies, setMovies] = useState(tmpMovies);
+
+    const setUserToken = (token) => {
+        if (token) {
+            localStorage.setItem('TOKEN', token)
+        } else {
+            localStorage.removeItem('TOKEN')
+        }
+        _setUserToken(token);
+    }
 
     return (
         <StateContext.Provider value={{

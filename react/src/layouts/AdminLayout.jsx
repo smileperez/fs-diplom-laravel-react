@@ -13,11 +13,6 @@ export default function DefaultLayout() {
         return <Navigate to='/auth/signin' />
     }
 
-    const logout = (event) => {
-        event.preventDefault();
-        console.log("Logout");
-    }
-
     return (
         <div className='flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden'>
             <SidebarComponent currentUser={currentUser} />
