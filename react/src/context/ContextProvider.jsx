@@ -7,7 +7,8 @@ const StateContext = createContext({
     userToken: null,
     setCurrentUser: () => { },
     setUserToken: () => { },
-    movies: []
+    movies: [],
+    calendar: []
 });
 
 const tmpMovies = [
@@ -37,10 +38,49 @@ const tmpMovies = [
     }
 ]
 
+const tmpCalendar = [
+    {
+        "name_of_day": "Пн",
+        "day": "02",
+        "weekend": "false",
+    },
+    {
+        "name_of_day": "Вт",
+        "day": "03",
+        "weekend": "false",
+    },
+    {
+        "name_of_day": "Ср",
+        "day": "04",
+        "weekend": "false",
+    },
+    {
+        "name_of_day": "Чт",
+        "day": "05",
+        "weekend": "false",
+    },
+    {
+        "name_of_day": "Пт",
+        "day": "06",
+        "weekend": "false",
+    },
+    {
+        "name_of_day": "Сб",
+        "day": "07",
+        "weekend": "true",
+    },
+    {
+        "name_of_day": "Вс",
+        "day": "08",
+        "weekend": "true",
+    },
+]
+
 export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
     const [userToken, _setUserToken] = useState(localStorage.getItem('TOKEN') || '');
     const [movies, setMovies] = useState(tmpMovies);
+    const [calendar, setCalendar] = useState(tmpCalendar);
 
     const setUserToken = (token) => {
         if (token) {
@@ -57,7 +97,8 @@ export const ContextProvider = ({ children }) => {
             setCurrentUser,
             userToken,
             setUserToken,
-            movies
+            movies,
+            calendar
         }}>
             {children}
         </StateContext.Provider>

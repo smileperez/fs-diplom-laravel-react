@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function MovieListItem({ movie }) {
     return (
-        <section className="mt-8 h-100 bg-[#F1EBE6] p-3.5 relative">
-            <div className="flex relative">
-                <div className="relative after:content-[''] after:block after:absolute after:-right-[7px] after:-top-[28px] after:border-t-[14px] after:border-solid after:border-transparent after:border-b-0 after:border-r-0 after:border-l-[7px] after:border-l-[#772720]">
-                    <img className="relative -top-7 max-w-[8rem] min-w-[8rem] max-h-[12rem]" alt={movie.title} src={movie.img_url}></img>
+        <section className="mt-8 h-100 bg-[#F1EBE6]/95 p-3.5 rounded">
+            <div className="flex">
+                <div className="relative after:content-[''] after:block after:absolute after:-right-[7px] after:-top-[25px] after:border-t-[11px] after:border-solid after:border-transparent after:border-b-0 after:border-r-0 after:border-l-[7px] after:border-l-[#772720]">
+                    <img className="relative rounded -top-7 max-w-[8rem] min-w-[8rem] max-h-[12rem]" alt={movie.title} src={movie.img_url}></img>
                 </div>
                 <div className="pl-4">
                     <h2 className="text-base font-bold">
