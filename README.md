@@ -49,8 +49,8 @@ react@\fs-app\react
 └── vite@4.4.9
 
 Инструкция по запуску приложения:
-| № | Center Aligned  | Right Aligned |
+| № | Действие | Подробности |
 |:- |:----------------|:--------------|
-| 1 | Cell 2          | Cell 3        |
+| 1 | Установка XAMPP сервера | Cell 3        |
 | 2 | Cell 5          | Cell 6        |
 | 3 | Cell 8          | Cell 9        |
