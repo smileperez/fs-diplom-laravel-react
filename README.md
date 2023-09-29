@@ -55,34 +55,10 @@ react@\fs-app\react
 | 2 | Запускаем веб-сервер apache и базу данных mysql | ![Alt text](image.png) |
 | 3 | Установливаем Composer. Не забываем установить галку "Прописать PATH PHP" | https://getcomposer.org/ |
 | 4 | Клонирование репозитория в XAMPP в папку htdocs через git | git clone https://github.com/smileperez/fs-diplom fs-app |
-| 5 | Клонирование репозитория в XAMPP в папку htdocs через git | git clone https://github.com/smileperez/fs-diplom fs-app |
+| 5 | В корневой папке приложения запускаем команду | composer install |
+| 6 | В корневой папке проекта файл .env.example переименовываем в .env |  |
+| 7 | Проверяем файл в корневой папке проекта .env на корректность, например что адрес, логин, пароль БД стоит корректный |  |
+| 8 | Делаем первую миграцию БД | php artisan migrate |
+| 9 | В корневой папке приложения запускаем команду | php artisan key:generate |
+| 10 | Проверяем, что Laravel запустился корректно | php artisan serve |
 
-
-
-Клонирование репозитория в XAMPP в папку htdocs через git
-
-В корневой папке приложения запускаем команду
-
-В корневой папке проекта файл .env.example переименовываем в .env
-
-Проверяем файл в корневой папке проекта .env на корректность, например что адрес, логин, пароль БД стоит корректный
-
-Делаем миграцию БД
-
-В папке приложения запускаем команду
-
-Проверить, что Laravel запустился корректно
-
-Ø git clone https://github.com/smileperez/fs-diplom fs-app
-
-Ø composer install
-
-
-
-
-
-Ø php artisan migrate
-
-Ø php artisan key:generate
-
-Ø php artisan serve
