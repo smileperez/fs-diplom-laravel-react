@@ -47,3 +47,10 @@ react@\fs-app\react
 ├── react@18.2.0
 ├── tailwindcss@3.3.3
 └── vite@4.4.9
+
+Инструкция по запуску приложения:
+| № | Center Aligned  | Right Aligned |
+|:- |:----------------|:--------------|
+| 1 | Cell 2          | Cell 3        |
+| 2 | Cell 5          | Cell 6        |
+| 3 | Cell 8          | Cell 9        |

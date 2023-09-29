@@ -11,7 +11,7 @@ export default function AuthLayout() {
     }
 
     return (
-        <div className="mx-auto mt-[20%] w-[400px] bg-gray-300">
+        <div className="mx-auto mt-[5%] w-[400px] bg-gray-300">
             <header className="p-2 flex flex-col items-center bg-[#63536C]">
                 <LogoAdminComponent />
             </header>
