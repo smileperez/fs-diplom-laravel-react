@@ -51,14 +51,13 @@ react@\fs-app\react
 Инструкция по запуску приложения:
 | № | Действие | Подробности |
 |:- |:----------------|:--------------|
-| 1 | Установка XAMPP сервера | https://www.apachefriends.org/ru/index.html |
-| 2 | Запускаем веб-сервер apache и базу данных mysql         | Cell 6        |
-| 3 | Установка Composer, не забываем установить галку "Прописать PATH PHP"         | Cell 9        |
+| 1 | Установливаем XAMPP сервера | https://www.apachefriends.org/ru/index.html |
+| 2 | Запускаем веб-сервер apache и базу данных mysql | ![Alt text](image.png) |
+| 3 | Установливаем Composer. Не забываем установить галку "Прописать PATH PHP" | https://getcomposer.org/ |
+| 4 | Клонирование репозитория в XAMPP в папку htdocs через git | git clone https://github.com/smileperez/fs-diplom fs-app |
+| 5 | Клонирование репозитория в XAMPP в папку htdocs через git | git clone https://github.com/smileperez/fs-diplom fs-app |
 
 
-
-
-Установка Composer, не забываем установить галку "Прописать PATH PHP"
 
 Клонирование репозитория в XAMPP в папку htdocs через git
 
@@ -73,3 +72,17 @@ react@\fs-app\react
 В папке приложения запускаем команду
 
 Проверить, что Laravel запустился корректно
+
+Ø git clone https://github.com/smileperez/fs-diplom fs-app
+
+Ø composer install
+
+
+
+
+
+Ø php artisan migrate
+
+Ø php artisan key:generate
+
+Ø php artisan serve
