@@ -48,15 +48,15 @@ react@\fs-app\react
 ├── tailwindcss@3.3.3
 └── vite@4.4.9
 
-Инструкция по запуску приложения описана ниже.
+**Инструкция по запуску приложения описана ниже.**
 
-*Запуск приложения Laravel:*
+*1. Запуск приложения Laravel:*
 | № | Действие | Подробности |
 |:- |:----------------|:--------------|
-| 1 | Установливаем XAMPP сервера | https://www.apachefriends.org/ru/index.html |
-| 2 | Запускаем веб-сервер apache и базу данных mysql | ![Alt text](image.png) |
-| 3 | Установливаем Composer. Не забываем установить галку "Прописать PATH PHP" | https://getcomposer.org/ |
-| 4 | Клонирование репозитория в XAMPP в папку htdocs через git | `git clone https://github.com/smileperez/fs-diplom fs-app` |
+| 1.1 | Установливаем XAMPP сервера | https://www.apachefriends.org/ru/index.html |
+| 1.2 | Запускаем веб-сервер apache и базу данных mysql | ![Alt text](image.png) |
+| 1.3 | Установливаем Composer. Не забываем установить галку "Прописать PATH PHP" | https://getcomposer.org/ |
+| 1.4 | Посредством GIT, клонируем репозиторий в директорию сервера XAMPP, в папку htdocs. | `git clone https://github.com/smileperez/fs-diplom fs-app` |
 | 5 | В корневой папке приложения запускаем команду | `composer install` |
 | 6 | В корневой папке проекта файл `.env.example` переименовываем в `.env` | Проверяем файл в корневой папке проекта `.env` на корректность, например что адрес, логин, пароль БД стоит корректный. | |
 | 8 | Через менеджер БД, например phpMyAdmin, создаем новую БД с названием `fs-app` | Одновременно проверяем, что название новой БД сходится с названием в файле `.env`) с кодировкой utf8mb4_unicode_ci|
