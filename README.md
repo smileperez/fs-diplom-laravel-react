@@ -54,8 +54,8 @@
 *1. Запуск приложения Laravel:*
 | **№** | **Действие** | **Подробности** |
 |:- |:----------------|:--------------|
-| 1.1 | Установливаем XAMPP сервер | [Скачать XAMPP](https://www.apachefriends.org/ru/index.html )|
-| 1.2 | Запускаем веб-сервер apache и базу данных mysql | Картинка |
+| 1.1 | Установливаем XAMPP сервер | [Скачать XAMPP](https://www.apachefriends.org/ru/index.html) |
+| 1.2 | Запускаем веб-сервер apache и базу данных mysql | ![Сервер](https://github.com/smileperez/smileperez/blob/main/assets/apache.png?raw=true) |
 | 1.3 | Установливаем Composer. Не забываем установить галку "Прописать PATH PHP" | [Скачать Composer](https://getcomposer.org/) |
 | 1.4 | Посредством GIT, клонируем репозиторий в директорию сервера XAMPP, в папку htdocs. | `git clone https://github.com/smileperez/fs-diplom fs-app` |
 | 1.5 | В корневой папке приложения запускаем команду | `composer install` |
