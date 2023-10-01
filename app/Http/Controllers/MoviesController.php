@@ -12,9 +12,9 @@ class MoviesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
+        //
     }
 
     /**
