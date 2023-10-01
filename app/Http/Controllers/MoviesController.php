@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Movies;
 use App\Http\Requests\StoreMoviesRequest;
 use App\Http\Requests\UpdateMoviesRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 class MoviesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = $request->user();
     }
 
     /**

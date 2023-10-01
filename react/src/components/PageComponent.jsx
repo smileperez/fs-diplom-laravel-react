@@ -10,7 +10,7 @@ export default function PageComponent({ title, buttons = '', children }) {
                 </div>
             </header>
 
-            <main>
+            <main className="bg-white shadow mt-5">
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                     {children}
                 </div>
