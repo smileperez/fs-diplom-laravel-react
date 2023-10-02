@@ -64,7 +64,75 @@ export default function Halls() {
                 setOpen={setOpen}
                 title="Добавление нового зала"
             >
-                лол
+                {/* FIXME: */}
+                <form onSubmit="#" action="#" method="POST">
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Название зала
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="name"
+                                name="name"
+                                type="name"
+                                required
+                                value={name}
+                                onChange={(ev) => setName(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-2">
+                        <label
+                            htmlFor="rows"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Количество рядов
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="rows"
+                                name="rows"
+                                type="rows"
+                                value={rows}
+                                onChange={(ev) => setRows(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-2">
+                        <label
+                            htmlFor="seats"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Краткое описание фильма
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="seats"
+                                name="seats"
+                                type="seats"
+                                value={seats}
+                                onChange={(ev) => setSeats(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <button
+                            type="submit"
+                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
+                        >
+                            Добавить
+                        </button>
+                    </div>
+                </form>
             </SlidePopupComponent>
         </PageComponent>
     );
