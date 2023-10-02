@@ -8,7 +8,7 @@ export default function Movies() {
     const { movies } = useStateContext();
 
     // Состояние для передачи в SlidePopupComponent
-    const [open, setOpen] = useState(false);
+    const [add, setAdd] = useState(false);
 
     // Состояния для добавления нового фильма
     const [name, setName] = useState();
@@ -49,7 +49,7 @@ export default function Movies() {
             <div className="flex flex-col">
                 <div className="flex justify-end">
                     <button
-                        onClick={() => setOpen(true)}
+                        onClick={() => setAdd(true)}
                         type="button"
                         className="border border-[#63536C] bg-[#63536C] text-gray-300 rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0 focus:outline-none focus:shadow-outline"
                     >
@@ -62,8 +62,8 @@ export default function Movies() {
             </div>
 
             <SlidePopupComponent
-                open={open}
-                setOpen={setOpen}
+                open={add}
+                setOpen={setAdd}
                 title="Добавление нового фильма"
             >
                 {/* FIXME: */}
@@ -73,7 +73,7 @@ export default function Movies() {
                             htmlFor="name"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Название фильма
+                            Название фильма <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -166,12 +166,19 @@ export default function Movies() {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="flex">
                         <button
                             type="submit"
                             className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >
                             Добавить
+                        </button>
+                        <button
+                            onClick={() => setAdd(false)}
+                            type="button"
+                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
+                        >
+                            Отменить
                         </button>
                     </div>
                 </form>

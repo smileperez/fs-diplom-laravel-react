@@ -26,7 +26,7 @@ class StoreMoviesRequest extends FormRequest
             'img_url' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
             'duration' => 'nullable|numeric',
-            'origin' => 'nullable|string|max:100',
+            'origin' => 'nullable|string|max:100'
         ];
     }
 }

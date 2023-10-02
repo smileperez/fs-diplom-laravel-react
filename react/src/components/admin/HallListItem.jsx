@@ -8,11 +8,12 @@ import { useState } from "react";
 
 export default function HallListItem({ hall }) {
     // Состояние для передачи в SlidePopupComponent
-    const [open, setOpen] = useState(false);
+    const [del, setDel] = useState(false);
 
-    const onConfigureClick = (event) => {
+    // Функция удаления зала
+    const onClickDelete = (event) => {
         event.preventDefault();
-        console.log("Configure this hall");
+        console.log("Происходит удаление зала");
 
         // axiosClient.post("/signout").then((res) => {
         //     setCurrentUser({});
@@ -59,11 +60,12 @@ export default function HallListItem({ hall }) {
                     </div>
                     <div className="flex items-center">
                         <AdjustmentsHorizontalIcon
-                            onClick={onConfigureClick}
+                            // FIXME:
+                            // onClick={onConfigureClick}
                             className="block w-6 h-7 mr-4 text-[#63536C] cursor-pointer"
                         />
                         <TrashIcon
-                            onClick={() => setOpen(true)}
+                            onClick={() => setDel(true)}
                             className="block w-6 h-7 mr-4 text-red-500 cursor-pointer"
                         />
                     </div>
@@ -71,29 +73,25 @@ export default function HallListItem({ hall }) {
             </section>
 
             <SlidePopupComponent
-                open={open}
-                setOpen={setOpen}
+                open={del}
+                setOpen={setDel}
                 title="Удаление фильма"
             >
                 <form onSubmit="#" action="#" method="POST">
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Вы действительно хотите удалить зал ?
-                        </label>
+                    <div className="block text-sm font-medium leading-6 text-gray-900">
+                        Вы действительно хотите удалить этот зал?
                     </div>
 
                     <div className="flex">
                         <button
-                            type="submit"
+                            onClick={onClickDelete}
+                            type="button"
                             className="flex w-full justify-center rounded bg-red-500 px-3 py-1.5 mt-6 text-black font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >
                             Удалить
                         </button>
                         <button
-                            onClick={() => setOpen(false)}
+                            onClick={() => setDel(false)}
                             type="button"
                             className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >

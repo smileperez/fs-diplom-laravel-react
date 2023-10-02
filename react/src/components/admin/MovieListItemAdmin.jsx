@@ -67,7 +67,7 @@ export default function MovieListItemAdmin({ movie }) {
             >
                 <form onSubmit="#" action="#" method="POST">
                     <div className="block text-sm font-medium leading-6 text-gray-900">
-                        Вы действительно хотите удалить зал ?
+                        Вы действительно хотите удалить этот фильм?
                     </div>
 
                     <div className="flex">
