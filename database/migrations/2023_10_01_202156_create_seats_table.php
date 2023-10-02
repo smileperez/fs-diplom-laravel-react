@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Halls;
-use App\Models\SeatsType;
+use App\Models\SeatTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Halls::class)->constrained();
-            $table->tinyInteger('row');
-            $table->tinyInteger('seat');
-            $table->foreignIdFor(SeatsType::class)->constrained();
+            $table->unsignedTinyInteger('row');
+            $table->unsignedTinyInteger('seat');
+            $table->foreignIdFor(SeatTypes::class)->constrained();
         });
     }
 

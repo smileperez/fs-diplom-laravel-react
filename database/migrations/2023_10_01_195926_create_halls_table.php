@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('number');
-            $table->tinyInteger('rows');
-            $table->tinyInteger('seats');
+            $table->unsignedTinyInteger('number');
+            $table->unsignedTinyInteger('rows');
+            $table->unsignedTinyInteger('seats');
         });
     }
 

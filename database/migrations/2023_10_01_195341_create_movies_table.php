@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('title');
             $table->text('img_url');
             $table->text('description')->nullable();
-            $table->smallInteger('duration')->nullable();
+            $table->unsignedSmallInteger('duration')->nullable();
             $table->text('origin');
         });
     }
