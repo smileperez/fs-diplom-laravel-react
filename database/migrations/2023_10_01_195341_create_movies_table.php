@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->text('img_url');
+            $table->text('img_url')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedSmallInteger('duration')->nullable();
-            $table->text('origin');
+            $table->smallInteger('duration')->nullable();
+            $table->text('origin')->nullable();
         });
     }
 

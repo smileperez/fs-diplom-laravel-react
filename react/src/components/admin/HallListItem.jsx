@@ -5,6 +5,26 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function HallListItem({ hall }) {
+    const onConfigureClick = (event) => {
+        event.preventDefault();
+        console.log("Configure this hall");
+
+        // axiosClient.post("/signout").then((res) => {
+        //     setCurrentUser({});
+        //     setUserToken(null);
+        // });
+    };
+
+    const onDeleteClick = (event) => {
+        event.preventDefault();
+        console.log("Delete this hall");
+
+        // axiosClient.post("/signout").then((res) => {
+        //     setCurrentUser({});
+        //     setUserToken(null);
+        // });
+    };
+
     return (
         <section className="mt-4 flex">
             <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
@@ -42,8 +62,14 @@ export default function HallListItem({ hall }) {
                     </div>
                 </div>
                 <div className="flex items-center">
-                    <AdjustmentsHorizontalIcon className="block w-6 h-7 mr-4 text-[#63536C] cursor-pointer" />
-                    <TrashIcon className="block w-6 h-7 mr-4 text-red-500 cursor-pointer" />
+                    <AdjustmentsHorizontalIcon
+                        onClick={onConfigureClick}
+                        className="block w-6 h-7 mr-4 text-[#63536C] cursor-pointer"
+                    />
+                    <TrashIcon
+                        onClick={onDeleteClick}
+                        className="block w-6 h-7 mr-4 text-red-500 cursor-pointer"
+                    />
                 </div>
             </div>
         </section>
