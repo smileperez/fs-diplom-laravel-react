@@ -15,22 +15,39 @@ export default function Halls() {
     const [rows, setRows] = useState();
     const [seats, setSeats] = useState();
 
-    const onCreateClick = (event) => {
-        event.preventDefault();
-        console.log("Create new hall");
+    // TODO:
+    // const onSubmit = (ev) => {
+    //     ev.preventDefault();
+    //     setError({ __html: "" });
+    //     console.log('Отправляем запрос в БД')
 
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
-    };
+    // Request в сторону контрлллера Laravel
+    // axiosClient
+    //     .post("/signin", {
+    //         email,
+    //         password,
+    //     })
+    //     .then(({ data }) => {
+    //         setCurrentUser(data.user);
+    //         setUserToken(data.token);
+    //     })
+    //     .catch((error) => {
+    //         if (error.response) {
+    //             const finalErrors = Object.values(
+    //                 error.response.data.errors
+    //             ).reduce((accum, next) => [...accum, ...next], []);
+    //             setError({ __html: finalErrors.join("<br>") });
+    //         }
+    //         console.error(error);
+    //     });
+    // };
 
     return (
         <PageComponent title="Управление залами">
             <div className="flex flex-col">
                 <div className="flex justify-end">
                     <button
-                        onClick={onCreateClick}
+                        onClick={() => setOpen(true)}
                         type="button"
                         className="border border-[#63536C] bg-[#63536C] text-gray-300 rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0 focus:outline-none focus:shadow-outline"
                     >
@@ -47,7 +64,7 @@ export default function Halls() {
                 setOpen={setOpen}
                 title="Добавление нового зала"
             >
-
+                лол
             </SlidePopupComponent>
         </PageComponent>
     );
