@@ -1,5 +1,5 @@
 import { useStateContext } from "../../context/ContextProvider";
-import MovieListUserItem from "../../components/guest/MovieListUserItem";
+import MovieListItemUser from "../../components/guest/MovieListItemUser";
 import NavItem from "../../components/guest/NavItem";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export default function Tickets() {
 
             <main>
                 {movies.map((movie) => (
-                    <MovieListUserItem movie={movie} key={movie.id} />
+                    <MovieListItemUser movie={movie} key={movie.id} />
                 ))}
             </main>
         </>

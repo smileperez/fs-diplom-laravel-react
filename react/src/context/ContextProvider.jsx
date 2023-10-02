@@ -8,6 +8,7 @@ const StateContext = createContext({
     setCurrentUser: () => {},
     setUserToken: () => {},
     movies: [],
+    halls: [],
     calendar: [],
 });
 
@@ -59,6 +60,48 @@ const tmpMovies = [
     },
 ];
 
+const tmpHalls = [
+    {
+        id: 1,
+        name: 'Обычный 1',
+        rows: 7,
+        seats: 12,
+    },
+    {
+        id: 2,
+        name: 'Обычный 2',
+        rows: 10,
+        seats: 10,
+    },
+    {
+        id: 3,
+        name: 'Black',
+        rows: 4,
+        seats: 4,
+    },
+];
+
+const tmpSeats = [
+    {
+        id: 1,
+        name: 'Обычный 1',
+        rows: 7,
+        seats: 12,
+    },
+    {
+        id: 2,
+        name: 'Обычный 2',
+        rows: 10,
+        seats: 10,
+    },
+    {
+        id: 3,
+        name: 'Black',
+        rows: 4,
+        seats: 4,
+    },
+];
+
 const tmpCalendar = [
     {
         name_of_day: "Пн",
@@ -103,6 +146,7 @@ export const ContextProvider = ({ children }) => {
         localStorage.getItem("TOKEN") || ""
     );
     const [movies, setMovies] = useState(tmpMovies);
+    const [halls, setHalls] = useState(tmpHalls);
     const [calendar, setCalendar] = useState(tmpCalendar);
 
     const setUserToken = (token) => {
@@ -122,6 +166,7 @@ export const ContextProvider = ({ children }) => {
                 userToken,
                 setUserToken,
                 movies,
+                halls,
                 calendar,
             }}
         >

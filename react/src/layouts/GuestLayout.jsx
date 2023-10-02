@@ -1,6 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
-import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import LogoComponent from "../components/guest/LogoComponent";
 
 export default function GuestLayout() {
