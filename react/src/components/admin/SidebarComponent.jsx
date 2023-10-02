@@ -11,9 +11,9 @@ import {
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import LogoAdminComponent from '../components/LogoAdminComponent';
-import axiosClient from '../axios';
-import { useStateContext } from "../context/ContextProvider";
+import LogoAdminComponent from './LogoAdminComponent';
+import axiosClient from '../../axios';
+import { useStateContext } from "../../context/ContextProvider";
 
 export default function SidebarComponent() {
 
@@ -72,8 +72,8 @@ export default function SidebarComponent() {
                         icon={item.icon}
                         className={({ isActive }) => classNames(
                             isActive
-                                ? 'bg-[#89639e] text-white'
-                                : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium'
+                                ? 'bg-[#89639e] text-white transition duration-500'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white transition duration-500', 'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                     >
                         <div className='flex items-center text-lg space-x-3'>
@@ -89,12 +89,12 @@ export default function SidebarComponent() {
                     <div className="text-base font-medium leading-none text-white">{currentUser.name}</div>
                     <div className="text-sm font-medium leading-none text-gray-400">{currentUser.email}</div>
                 </div>
-                <UserIcon className='block w-10 h-10 p-2 rounded-full text-white cursor-pointer hover:bg-gray-700 active:bg-[#89639e]' />
+                <UserIcon className='block w-10 h-10 p-2 rounded-full text-white cursor-pointer transition duration-500 hover:bg-gray-700 active:bg-[#89639e] ' />
             </div>
 
             <div className='p-4 flex'>
                 <div
-                    className="flex-1 text-red-300 hover:text-red-400 hover:bg-gray-700  text-lg px-3 py-2 space-x-3 font-medium inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center cursor-pointer active:bg-[#89639e] active:text-white"
+                    className="flex-1 text-red-300 transition duration-500 hover:text-red-400 hover:bg-gray-700 text-lg px-3 py-2 space-x-3 font-medium inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center cursor-pointer active:bg-[#89639e] active:text-white active:duration-0"
                     onClick={(event) => logout(event)}
                 >
                     <ArrowLeftOnRectangleIcon className='block w-6 h-7' />

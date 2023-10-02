@@ -1,4 +1,4 @@
-import LogoComponent from "./LogoComponent"
+import LogoComponent from "../guest/LogoComponent"
 
 export default function LogoAdminComponent() {
     return (

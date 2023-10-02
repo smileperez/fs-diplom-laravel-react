@@ -1,4 +1,4 @@
-import PageComponent from "../../components/PageComponent";
+import PageComponent from "../../components/admin/PageComponent";
 
 export default function Sessions() {
     return (

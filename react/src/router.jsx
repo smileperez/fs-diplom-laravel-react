@@ -4,15 +4,15 @@ import GuestLayout from "./layouts/GuestLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import AdminLayout from "./layouts/AdminLayout";
 // Admins
-import Dashboard from "./views/admins/Dashboard";
-import Movies from "./views/admins/Movies";
-import Halls from "./views/admins/Halls";
-import ConfigHalls from "./views/admins/ConfigHalls";
-import Prices from "./views/admins/Prices";
-import Sessions from "./views/admins/Sessions";
-import Users from "./views/admins/Users";
+import Dashboard from "./views/admin/Dashboard";
+import Movies from "./views/admin/Movies";
+import Halls from "./views/admin/Halls";
+import ConfigHalls from "./views/admin/ConfigHalls";
+import Prices from "./views/admin/Prices";
+import Sessions from "./views/admin/Sessions";
+import Users from "./views/admin/Users";
 // Guests
-import Tickets from "./views/guests/Tickets";
+import Tickets from "./views/guest/Tickets";
 // Auth
 import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";

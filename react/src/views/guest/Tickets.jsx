@@ -1,10 +1,9 @@
 import { useStateContext } from "../../context/ContextProvider";
-import UserMovieListItem from "../../components/UserMovieListItem";
-import NavItem from "../../components/NavItem";
-import { useState } from 'react';
+import MovieListUserItem from "../../components/guest/MovieListUserItem";
+import NavItem from "../../components/guest/NavItem";
+import { useState } from "react";
 
 export default function Tickets() {
-
     const [weekend, setWeekend] = useState();
 
     const { movies } = useStateContext();
@@ -13,20 +12,18 @@ export default function Tickets() {
     return (
         <>
             <nav className="h-100 flex justify-between">
-                {calendar.map(day => (
+                {calendar.map((day) => (
                     <NavItem day={day} key={day.day} />
                 ))}
 
-                <div className="bg-white p-3 ml-px">
-
-                </div>
+                <div className="bg-white p-3 ml-px"></div>
             </nav>
 
             <main>
-                {movies.map(movie => (
-                    <UserMovieListItem movie={movie} key={movie.id} />
+                {movies.map((movie) => (
+                    <MovieListUserItem movie={movie} key={movie.id} />
                 ))}
             </main>
         </>
-    )
+    );
 }

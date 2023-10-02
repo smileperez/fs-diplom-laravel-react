@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function UserMovieListItem({ movie }) {
+export default function MovieListUserItem({ movie }) {
     return (
         <section className="mt-8 h-100 bg-[#F1EBE6]/95 p-3.5 rounded">
             <div className="flex">

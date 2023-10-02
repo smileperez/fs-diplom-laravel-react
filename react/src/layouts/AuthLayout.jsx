@@ -1,13 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useStateContext } from '../context/ContextProvider'
-import LogoAdminComponent from '../components/LogoAdminComponent';
+import { Navigate, Outlet } from "react-router-dom";
+import { useStateContext } from "../context/ContextProvider";
+import LogoAdminComponent from "../components/admin/LogoAdminComponent";
 
 export default function AuthLayout() {
-
     const { userToken } = useStateContext();
 
     if (userToken) {
-        return <Navigate to='/admin/dashboard' />
+        return <Navigate to="/admin/dashboard" />;
     }
 
     return (
@@ -17,5 +16,5 @@ export default function AuthLayout() {
             </header>
             <Outlet />
         </div>
-    )
+    );
 }
