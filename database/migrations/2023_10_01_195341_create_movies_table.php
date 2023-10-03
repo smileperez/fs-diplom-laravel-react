@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->smallInteger('duration')->nullable();
             $table->text('origin')->nullable();
+            $table->timestamps();
         });
     }
 

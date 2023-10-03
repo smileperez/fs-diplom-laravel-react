@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Halls::class)->constrained();
             $table->foreignIdFor(SeatTypes::class)->constrained();
             $table->smallInteger('price')->nullable()->default(0);
+            $table->timestamps();
         });
     }
 

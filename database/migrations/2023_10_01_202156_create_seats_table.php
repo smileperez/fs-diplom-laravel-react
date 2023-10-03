@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->unsignedTinyInteger('row');
             $table->unsignedTinyInteger('seat');
             $table->foreignIdFor(SeatTypes::class)->constrained();
+            $table->timestamps();
         });
     }
 

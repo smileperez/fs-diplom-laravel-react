@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Movies::class)->constrained();
             $table->foreignIdFor(Halls::class)->constrained();
-            $table->date('sessionDate')->nullable();;
+            $table->date('sessionDate')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Sessions::class)->constrained();
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
+            $table->timestamps();
         });
     }
 

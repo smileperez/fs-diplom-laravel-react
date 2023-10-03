@@ -6,6 +6,7 @@ import { useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import EButton from "../../components/core/EButton";
+import axiosClient from "../../axios.js";
 
 export default function Movies() {
     const { movies } = useStateContext();
@@ -37,35 +38,19 @@ export default function Movies() {
         reader.readAsDataURL(file);
     };
 
-    // TODO:
-    const onSubmit = (ev) => {
-        ev.preventDefault();
-        setError({ __html: "" });
-        //     console.log('Отправляем запрос в БД')
+    // TODO: 3:29:41
+    const onSubmit = (event) => {
+        event.preventDefault();
 
-        // Request в сторону контрлллера Laravel
-        // axiosClient
-        //     .post("/signin", {
-        //         email,
-        //         password,
-        //     })
-        //     .then(({ data }) => {
-        //         setCurrentUser(data.user);
-        //         setUserToken(data.token);
-        //     })
-        //     .catch((error) => {
-        //         if (error.response) {
-        //             const finalErrors = Object.values(
-        //                 error.response.data.errors
-        //             ).reduce((accum, next) => [...accum, ...next], []);
-        //             setError({ __html: finalErrors.join("<br>") });
-        //         }
-        //         console.error(error);
-        //     });
+        axiosClient.post("/movies", {
+            title: "Первый фильм",
+            description: "Какая-то информация",
+            duration: 120,
+            origin: "США",
+        });
     };
 
     return (
-        // TODO: 1:46:51
         <PageComponent
             title="Управление фильмами"
             button={
@@ -105,7 +90,9 @@ export default function Movies() {
                                 id="name"
                                 name="name"
                                 value={movies.name}
-                                onChange={(ev) => setName(ev.target.value)}
+                                onChange={(event) =>
+                                    setName(event.target.value)
+                                }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -161,8 +148,8 @@ export default function Movies() {
                                 name="description"
                                 value={movies.description}
                                 defaultValue={""}
-                                onChange={(ev) =>
-                                    setDescription(ev.target.value)
+                                onChange={(event) =>
+                                    setDescription(event.target.value)
                                 }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
@@ -184,7 +171,7 @@ export default function Movies() {
                                 id="duration"
                                 name="duration"
                                 value={movies.duration}
-                                onChange={(ev) => setDuration(ev.target.value)}
+                                onChange={(event) => setDuration(event.target.value)}
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -205,7 +192,7 @@ export default function Movies() {
                                 id="origin"
                                 name="origin"
                                 value={movies.origin}
-                                onChange={(ev) => setOrigin(ev.target.value)}
+                                onChange={(event) => setOrigin(event.target.value)}
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>

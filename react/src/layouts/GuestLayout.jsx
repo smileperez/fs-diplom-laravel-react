@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import LogoComponent from "../components/guest/LogoComponent";
 
 export default function GuestLayout() {
