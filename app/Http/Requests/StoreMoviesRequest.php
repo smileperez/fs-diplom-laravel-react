@@ -23,7 +23,7 @@ class StoreMoviesRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:100',
-            'img_url' => 'nullable|string',
+            'img' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
             'duration' => 'nullable|numeric',
             'origin' => 'nullable|string|max:100'

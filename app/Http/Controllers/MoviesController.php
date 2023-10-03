@@ -32,9 +32,9 @@ class MoviesController extends Controller
         $data = $request->validated();
 
         // Проверяем, если была получена картинка, то сохраняем ее локально
-        if (isset($data['image'])) {
-            $relativePath = $this->saveImage($data['image']);
-            $data['image'] = $relativePath;
+        if (isset($data['img'])) {
+            $relativePath = $this->saveImage($data['img']);
+            $data['img'] = $relativePath;
         }
 
         $movie = Movies::create($data);
@@ -92,28 +92,28 @@ class MoviesController extends Controller
         return response('', 204);
     }
 
-    // Функция сохранения картинки в локальное хранилизе и возвращение пути до картинки
+    // Функция сохранения картинки в локальное хранилище и возвращение пути до картинки
     private function saveImage($image)
     {
         // Проверяем, если каринка валидна base64 строке
-        if (preg_match('/^data:image\/(\w+);Base64,/', $image, $type)) {
+        if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
             // Получение декодированого чистого Base64 текста
             $image = substr($image, strpos($image, ',') + 1);
             // Получение типа расширения
             $type = strtolower($type[1]); // jpg, png, gif
             // Проверка файла на поддерживаемые расширения картинок
             if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
-                throw new \Exception('MoviesController->saveImage->Invalid image type');
+                throw new \Exception('Неверный тип изображения.');
             }
             $image = str_replace(' ', '+', $image);
             $image = base64_decode($image);
 
             if ($image === false) {
-                throw new \Exception('MoviesController->saveImage->Base64_decode failed');
+                throw new \Exception('Ошибка декодирования Base64.');
             }
 
         } else {
-            throw new \Exception('MoviesController->saveImage->Did not match data URI with image data');
+            throw new \Exception('URI данных не соответствует данным изображения.');
         }
 
         $dir = 'images/';

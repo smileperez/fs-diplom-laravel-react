@@ -24,12 +24,9 @@ export default function Movies() {
         origin: "",
     });
 
-    // const [name, setName] = useState();
-    // const [img, setImg] = useState();
-    // const [description, setDescription] = useState();
-    // const [duration, setDuration] = useState();
-    // const [origin, setOrigin] = useState();
+    const [error, setError] = useState("");
 
+    // Функция подгрузки изображения из input
     const onImageChoose = (event) => {
         const file = event.target.files[0];
 
@@ -46,16 +43,34 @@ export default function Movies() {
         reader.readAsDataURL(file);
     };
 
+    // Отправка request в БД с новым фильмом
     const onSubmit = (event) => {
         event.preventDefault();
-        // FIXME:
-        // TODO: ГОТОВО, ЗАПРОС ОТПРАВЛЯЕТСЯ В БД (НАЧАЛО НАСТРОЙКИ НА 3:29:41)
-        axiosClient.post("/movies", {
-            title: "Первый фильм",
-            description: "Какая-то информация",
-            duration: 120,
-            origin: "США",
-        });
+
+        const payload = { ...movie };
+        if (payload.img) {
+            payload.img = payload.img_url;
+        }
+
+        delete payload.img_url;
+
+        axiosClient
+            .post("/movies", payload)
+
+            .then((response) => {
+                console.log(response);
+                // Закрываем slider-popup
+                setOpen(false);
+                // Перезагружаем страницу
+                window.location.reload();
+            })
+            .catch((error) => {
+                if (error && error.response) {
+                    // Записываем error в состояние 
+                    setError(error.response.data.message);
+                }
+                console.log(error, error.response);
+            });
     };
 
     return (
@@ -80,7 +95,12 @@ export default function Movies() {
                 setOpen={setOpen}
                 title="Добавление нового фильма"
             >
-                {/* FIXME: */}
+                {error && (
+                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
+                        {error}
+                    </div>
+                )}
+
                 {/* Название фильма */}
                 <form onSubmit={onSubmit} action="#" method="POST">
                     <div>
@@ -94,7 +114,6 @@ export default function Movies() {
                         <div className="mt-2">
                             <input
                                 type="text"
-                                required
                                 id="title"
                                 name="title"
                                 value={movie.title}
