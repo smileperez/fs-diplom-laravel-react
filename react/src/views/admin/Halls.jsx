@@ -5,6 +5,7 @@ import SlidePopupComponent from "../../components/admin/popups/SlidePopupCompone
 import { useState } from "react";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import EButton from "../../components/core/EButton";
+import axiosClient from "../../axios.js";
 
 export default function Halls() {
     const { halls } = useStateContext();
@@ -13,36 +14,38 @@ export default function Halls() {
     const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового зала
-    const [name, setName] = useState();
-    const [rows, setRows] = useState();
-    const [seats, setSeats] = useState();
+    const [hall, setHall] = useState({
+        name: "",
+        rows: null,
+        seats: null,
+    });
 
-    // TODO:
-    // const onSubmit = (ev) => {
-    //     ev.preventDefault();
-    //     setError({ __html: "" });
-    //     console.log('Отправляем запрос в БД')
+    const [error, setError] = useState("");
 
-    // Request в сторону контрлллера Laravel
-    // axiosClient
-    //     .post("/signin", {
-    //         email,
-    //         password,
-    //     })
-    //     .then(({ data }) => {
-    //         setCurrentUser(data.user);
-    //         setUserToken(data.token);
-    //     })
-    //     .catch((error) => {
-    //         if (error.response) {
-    //             const finalErrors = Object.values(
-    //                 error.response.data.errors
-    //             ).reduce((accum, next) => [...accum, ...next], []);
-    //             setError({ __html: finalErrors.join("<br>") });
-    //         }
-    //         console.error(error);
-    //     });
-    // };
+    // Отправка request в БД с новым залом
+    const onSubmit = (event) => {
+        event.preventDefault();
+
+        const payload = { ...hall };
+
+        axiosClient
+            .post("/halls", payload)
+
+            .then((response) => {
+                console.log(response);
+                // Закрываем slider-popup
+                setOpen(false);
+                // Перезагружаем страницу
+                window.location.reload();
+            })
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
+                }
+                console.log(err, err.response);
+            });
+    };
 
     return (
         <PageComponent
@@ -58,13 +61,20 @@ export default function Halls() {
                 <HallListItem hall={hall} key={hall.id} />
             ))}
 
+            {/* Slide-Popup для добавления нового зала */}
             <SlidePopupComponent
                 open={open}
                 setOpen={setOpen}
                 title="Добавление нового зала"
             >
-                {/* FIXME: */}
+                {error && (
+                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
+                        {error}
+                    </div>
+                )}
+
                 <form onSubmit="#" action="#" method="POST">
+                    {/* Название зала */}
                     <div>
                         <label
                             htmlFor="name"
@@ -75,17 +85,23 @@ export default function Halls() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="text"
                                 id="name"
                                 name="name"
-                                type="name"
-                                required
-                                value={name}
-                                onChange={(ev) => setName(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={hall.name}
+                                onChange={(event) =>
+                                    setHall({
+                                        ...hall,
+                                        name: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Название зала */}
 
+                    {/* Количество рядов */}
                     <div className="mt-2">
                         <label
                             htmlFor="rows"
@@ -95,16 +111,23 @@ export default function Halls() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="number"
                                 id="rows"
                                 name="rows"
-                                type="number"
-                                value={rows}
-                                onChange={(ev) => setRows(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={hall.rows}
+                                onChange={(event) =>
+                                    setHall({
+                                        ...hall,
+                                        rows: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Количество рядов */}
 
+                    {/* Количество мест в ряду */}
                     <div className="mt-2">
                         <label
                             htmlFor="seats"
@@ -114,15 +137,20 @@ export default function Halls() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="number"
                                 id="seats"
                                 name="seats"
-                                type="number"
-                                value={seats}
-                                onChange={(ev) => setSeats(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={hall.seats}
+                                onChange={(event) => 
+                                    setHall({
+                                        ...hall,
+                                        seats: event.target.value,
+                                    })}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Количество мест в ряду */}
 
                     <div className="flex justify-between mt-6">
                         <EButton submit>

@@ -64,12 +64,12 @@ export default function Movies() {
                 // Перезагружаем страницу
                 window.location.reload();
             })
-            .catch((error) => {
-                if (error && error.response) {
-                    // Записываем error в состояние 
-                    setError(error.response.data.message);
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
                 }
-                console.log(error, error.response);
+                console.log(err, err.response);
             });
     };
 
@@ -83,11 +83,9 @@ export default function Movies() {
                 </EButton>
             }
         >
-            <div>
-                {movies.map((movie) => (
-                    <MovieListItemAdmin movie={movie} key={movie.id} />
-                ))}
-            </div>
+            {movies.map((movie) => (
+                <MovieListItemAdmin movie={movie} key={movie.id} />
+            ))}
 
             {/* Slide-Popup для добавления нового фильма */}
             <SlidePopupComponent
@@ -101,8 +99,8 @@ export default function Movies() {
                     </div>
                 )}
 
-                {/* Название фильма */}
                 <form onSubmit={onSubmit} action="#" method="POST">
+                    {/* Название фильма */}
                     <div>
                         <label
                             htmlFor="title"
