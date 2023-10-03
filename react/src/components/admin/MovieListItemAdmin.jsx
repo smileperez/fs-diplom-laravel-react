@@ -62,7 +62,7 @@ export default function MovieListItemAdmin({ movie }) {
 
     return (
         <>
-            <section className="mt-4 flex h-auto">
+            <section className="mb-4 flex h-auto">
                 <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
                     <h2 className="text-lg font-bold">{movie.id}</h2>
                 </div>
@@ -106,7 +106,7 @@ export default function MovieListItemAdmin({ movie }) {
                         <ESelection>№{movie.id}</ESelection> ?
                     </div>
                     <div className="flex justify-between mt-5">
-                        <EButton submit color="danger" onClick={onClickDelete}>
+                        <EButton submit color="danger">
                             <TrashIcon className="h-6 w-6 mr-2" />
                             Удалить
                         </EButton>
@@ -233,7 +233,7 @@ export default function MovieListItemAdmin({ movie }) {
                     </div>
 
                     <div className="flex justify-between mt-6">
-                        <EButton submit color="regular" onClick={onClickUpdate}>
+                        <EButton submit color="regular">
                             <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                             Изменить
                         </EButton>

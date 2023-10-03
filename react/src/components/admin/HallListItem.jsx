@@ -1,7 +1,9 @@
 import React from "react";
 import {
     AdjustmentsHorizontalIcon,
+    CloudArrowUpIcon,
     TrashIcon,
+    XCircleIcon,
 } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "./popups/SlidePopupComponent";
 import { useState } from "react";
@@ -13,11 +15,26 @@ export default function HallListItem({ hall }) {
     const [del, setDel] = useState(false);
     const [change, setChange] = useState(false);
 
+    // Состояния для изменения зала
+    const [name, setName] = useState();
+    const [rows, setRows] = useState();
+    const [seats, setSeats] = useState();
+
     // Функция удаления зала
     const onClickDelete = (event) => {
         event.preventDefault();
-        console.log("Происходит удаление зала");
+        console.log(`Отправка запроса удаления зала №${hall.id}`);
+        // TODO:
+        // axiosClient.post("/signout").then((res) => {
+        //     setCurrentUser({});
+        //     setUserToken(null);
+        // });
+    };
 
+    const onClickUpdate = (event) => {
+        event.preventDefault();
+        console.log(`Отправка запроса изменения данных зала №${hall.id}`);
+        // TODO:
         // axiosClient.post("/signout").then((res) => {
         //     setCurrentUser({});
         //     setUserToken(null);
@@ -26,12 +43,12 @@ export default function HallListItem({ hall }) {
 
     return (
         <>
-            <section className="mt-4 flex">
+            <section className="mb-4 flex">
                 <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
                     <h2 className="text-xl font-bold">{hall.id}</h2>
                 </div>
                 <div className="flex flex-1 justify-between h-18 ml-2 p-2 bg-[#F1EBE6]/95 rounded">
-                    <div className="flex flex">
+                    <div className="flex">
                         <div className="w-auto">
                             <h2 className="text-sm font-light">
                                 Название зала:{" "}
@@ -45,7 +62,7 @@ export default function HallListItem({ hall }) {
                             </h2>
                         </div>
                         <div className="ml-6">
-                            <h2 className="text-sm font-light font-thin">
+                            <h2 className="text-sm font-light">
                                 Общее кол-во мест:{" "}
                                 <ESelection>
                                     {hall.rows * hall.seats}
@@ -84,21 +101,97 @@ export default function HallListItem({ hall }) {
                         Вы действительно хотите удалить этот зал?
                     </div>
 
-                    <div className="flex">
-                        <button
-                            onClick={onClickDelete}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-red-500 px-3 py-1.5 mt-6 text-black font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                    <div className="flex justify-between mt-5">
+                        <EButton submit color="danger">
+                            <TrashIcon className="h-6 w-6 mr-2" />
                             Удалить
-                        </button>
-                        <button
-                            onClick={() => setDel(false)}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                        </EButton>
+                        <EButton color="regular" onClick={() => setDel(false)}>
+                            <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
-                        </button>
+                        </EButton>
+                    </div>
+                </form>
+            </SlidePopupComponent>
+
+            <SlidePopupComponent
+                open={change}
+                setOpen={setChange}
+                title="Изменение зала"
+            >
+                {/* FIXME: */}
+                <form onSubmit="#" action="#" method="POST">
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Название зала
+                            <span className="text-red-500">*</span>
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                required
+                                value={name}
+                                onChange={(ev) => setName(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-2">
+                        <label
+                            htmlFor="rows"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Количество рядов
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="rows"
+                                name="rows"
+                                type="number"
+                                value={rows}
+                                onChange={(ev) => setRows(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-2">
+                        <label
+                            htmlFor="seats"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Количество мест в ряду
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="seats"
+                                name="seats"
+                                type="number"
+                                value={seats}
+                                onChange={(ev) => setSeats(ev.target.value)}
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex justify-between mt-6">
+                        <EButton submit color="regular">
+                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
+                            Изменить
+                        </EButton>
+                        <EButton
+                            color="regular"
+                            onClick={() => setChange(false)}
+                        >
+                            <XCircleIcon className="h-6 w-6 mr-2" />
+                            Отменить
+                        </EButton>
                     </div>
                 </form>
             </SlidePopupComponent>

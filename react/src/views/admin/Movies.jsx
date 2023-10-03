@@ -4,7 +4,7 @@ import { useStateContext } from "../../context/ContextProvider";
 import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import EButton from "../../components/core/EButton";
 
 export default function Movies() {
@@ -196,20 +196,16 @@ export default function Movies() {
                         </div>
                     </div>
 
-                    <div className="flex">
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                    <div className="flex justify-between mt-6">
+                        <EButton submit>
+                            <PlusCircleIcon className="h-6 w-6 mr-2" />
                             Добавить
-                        </button>
-                        <button
-                            onClick={() => setOpen(false)}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                        </EButton>
+
+                        <EButton onClick={() => setOpen(false)}>
+                            <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
-                        </button>
+                        </EButton>
                     </div>
                 </form>
             </SlidePopupComponent>
