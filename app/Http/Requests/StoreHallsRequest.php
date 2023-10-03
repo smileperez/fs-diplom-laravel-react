@@ -23,8 +23,8 @@ class StoreHallsRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'rows' => 'nullable|numeric',
-            'seats' => 'nullable|numeric'
+            'rows' => 'nullable|numeric|max:50',
+            'seats' => 'nullable|numeric|max:50'
         ];
     }
 }

@@ -1,14 +1,13 @@
-import React from "react";
+import SlidePopupComponent from "../core/SlidePopupComponent";
+import EButton from "../core/EButton";
+import ESelection from "../core/ESelection";
+import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     CloudArrowUpIcon,
     TrashIcon,
     XCircleIcon,
 } from "@heroicons/react/24/outline";
-import SlidePopupComponent from "./popups/SlidePopupComponent";
-import { useState } from "react";
-import EButton from "../core/EButton";
-import ESelection from "../core/ESelection";
 
 export default function HallListItem({ hall }) {
     // Состояние для открытия/закрытия SlidePopupComponent

@@ -1,8 +1,7 @@
-import React from "react";
-import SlidePopupComponent from "./popups/SlidePopupComponent";
-import { useState } from "react";
+import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
 import ESelection from "../core/ESelection";
+import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     TrashIcon,

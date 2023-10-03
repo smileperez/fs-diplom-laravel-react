@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MoviesResource;
 use App\Models\Movies;
+
 use App\Http\Requests\StoreMoviesRequest;
 use App\Http\Requests\UpdateMoviesRequest;
 use Illuminate\Support\Str;
@@ -31,7 +32,9 @@ class MoviesController extends Controller
     {
         $data = $request->validated();
 
-        // Проверяем, если была получена картинка, то сохраняем ее локально
+        // Проверяем:
+        // - если была получена картинка, 
+        // - то сохраняем ее локально в /public и в БД пишем корректную ссылку
         if (isset($data['img'])) {
             $relativePath = $this->saveImage($data['img']);
             $data['img'] = $relativePath;
@@ -45,15 +48,15 @@ class MoviesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movies $movies)
+    public function show(Movies $movie)
     {
-        return new MoviesResource($movies);
+        return new MoviesResource($movie);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMoviesRequest $request, Movies $movies)
+    public function update(UpdateMoviesRequest $request, Movies $movie)
     {
         $data = $request->validated();
 
@@ -62,30 +65,28 @@ class MoviesController extends Controller
             $data['image'] = $relativePath;
 
             // Если существует ранее загруженная картинка, удаляем её
-            if ($movies->image) {
-                $absolutePath = public_path($movies->image);
+            if ($movie->image) {
+                $absolutePath = public_path($movie->image);
                 File::delete($absolutePath);
             }
         }
 
         // Обновляем данные фильма в базе-данных
-        $movies->update($data);
+        $movie->update($data);
 
-        return new MoviesResource($movies);
+        return new MoviesResource($movie);
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movies $movies)
+    public function destroy(Movies $movie)
     {
-        $movies->delete();
+        $movie->delete();
 
         // Если есть старая картинка, тоже удаляем её
-        if ($movies->image) {
-            $absolutePath = public_path($movies->image);
+        if ($movie->image) {
+            $absolutePath = public_path($movie->image);
             File::delete($absolutePath);
         }
 

@@ -1,11 +1,14 @@
 import PageComponent from "../../components/admin/PageComponent";
+import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import MovieListItemAdmin from "../../components/admin/MovieListItemAdmin";
-import { useStateContext } from "../../context/ContextProvider";
-import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
-import { useState } from "react";
-import { PhotoIcon } from "@heroicons/react/24/solid";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import EButton from "../../components/core/EButton";
+import { useStateContext } from "../../context/ContextProvider";
+import { useState } from "react";
+import {
+    PlusCircleIcon,
+    XCircleIcon,
+    PhotoIcon,
+} from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 
 export default function Movies() {
@@ -56,7 +59,6 @@ export default function Movies() {
 
         axiosClient
             .post("/movies", payload)
-
             .then((response) => {
                 console.log(response);
                 // Закрываем slider-popup

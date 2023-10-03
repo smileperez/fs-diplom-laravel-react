@@ -9,6 +9,8 @@ const StateContext = createContext({
     setUserToken: () => {},
     movies: [],
     halls: [],
+    prices: [],
+    seat_types: [],
     calendar: [],
 });
 
@@ -102,6 +104,44 @@ const tmpSeats = [
     },
 ];
 
+const tmpPrices = [
+    {
+        id: 1,
+        hall_id: 1,
+        seatsType_id: 1,
+        price: 300,
+    },
+    {
+        id: 2,
+        hall_id: 1,
+        seatsType_id: 2,
+        price: 400,
+    },
+    {
+        id: 3,
+        hall_id: 2,
+        seatsType_id: 1,
+        price: 250,
+    },
+    {
+        id: 4,
+        hall_id: 2,
+        seatsType_id: 2,
+        price: 350,
+    },
+];
+
+const tmpSeatsType = [
+    {
+        id: 1,
+        type: 'Обычный',
+    },
+    {
+        id: 2,
+        type: 'VIP',
+    },
+];
+
 const tmpCalendar = [
     {
         name_of_day: "Пн",
@@ -147,6 +187,8 @@ export const ContextProvider = ({ children }) => {
     );
     const [movies, setMovies] = useState(tmpMovies);
     const [halls, setHalls] = useState(tmpHalls);
+    const [prices, setPrices] = useState(tmpCalendar);
+    const [seat_types, setSeat_types] = useState(tmpCalendar);
     const [calendar, setCalendar] = useState(tmpCalendar);
 
     const setUserToken = (token) => {
@@ -167,6 +209,8 @@ export const ContextProvider = ({ children }) => {
                 setUserToken,
                 movies,
                 halls,
+                prices,
+                seat_types,
                 calendar,
             }}
         >

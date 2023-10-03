@@ -1,10 +1,10 @@
 import PageComponent from "../../components/admin/PageComponent";
+import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import HallListItem from "../../components/admin/HallListItem";
+import EButton from "../../components/core/EButton";
 import { useStateContext } from "../../context/ContextProvider";
-import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
-import EButton from "../../components/core/EButton";
 import axiosClient from "../../axios.js";
 
 export default function Halls() {
@@ -30,7 +30,6 @@ export default function Halls() {
 
         axiosClient
             .post("/halls", payload)
-
             .then((response) => {
                 console.log(response);
                 // Закрываем slider-popup
@@ -73,7 +72,7 @@ export default function Halls() {
                     </div>
                 )}
 
-                <form onSubmit="#" action="#" method="POST">
+                <form onSubmit={onSubmit} action="#" method="POST">
                     {/* Название зала */}
                     <div>
                         <label
@@ -141,11 +140,12 @@ export default function Halls() {
                                 id="seats"
                                 name="seats"
                                 value={hall.seats}
-                                onChange={(event) => 
+                                onChange={(event) =>
                                     setHall({
                                         ...hall,
                                         seats: event.target.value,
-                                    })}
+                                    })
+                                }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
