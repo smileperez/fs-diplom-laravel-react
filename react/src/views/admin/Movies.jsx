@@ -4,6 +4,8 @@ import { useStateContext } from "../../context/ContextProvider";
 import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import AButton from "../../components/core/AButton";
 
 export default function Movies() {
     const { movies } = useStateContext();
@@ -63,17 +65,17 @@ export default function Movies() {
     // };
 
     return (
-        <PageComponent title="Управление фильмами">
-            <div className="flex flex-col">
-                <div className="flex justify-end">
-                    <button
-                        onClick={() => setOpen(true)}
-                        type="button"
-                        className="border border-[#63536C] bg-[#63536C] text-gray-300 rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0 focus:outline-none focus:shadow-outline"
-                    >
-                        Добавить новый фильм
-                    </button>
-                </div>
+        // TODO: 1:46:51
+        <PageComponent
+            title="Управление фильмами"
+            button={
+                <AButton color="default" onClick={() => setOpen(true)}>
+                    <PlusCircleIcon className="h-6 w-6 mr-2" />
+                    Добавить новый фильм
+                </AButton>
+            }
+        >
+            <div>
                 {movies.map((movie) => (
                     <MovieListItemAdmin movie={movie} key={movie.id} />
                 ))}
@@ -202,7 +204,7 @@ export default function Movies() {
                             Добавить
                         </button>
                         <button
-                            onClick={() => setAdd(false)}
+                            onClick={() => setOpen(false)}
                             type="button"
                             className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >

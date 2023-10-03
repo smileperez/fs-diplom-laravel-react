@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PageComponent({ title, buttons = "", children }) {
+export default function PageComponent({ title, button = "", children }) {
     return (
         <>
             <header className="bg-white shadow">
@@ -8,11 +8,13 @@ export default function PageComponent({ title, buttons = "", children }) {
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                         {title}
                     </h1>
-                    {buttons}
                 </div>
             </header>
 
-            <main className="bg-white shadow mt-5 px-4 py-6">{children}</main>
+            <main className="bg-white shadow mt-5 px-4 py-6">
+                {button}
+                {children}
+            </main>
         </>
     );
 }

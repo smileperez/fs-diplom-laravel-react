@@ -8,11 +8,11 @@ import SlidePopupComponent from "./popups/SlidePopupComponent";
 import { useState } from "react";
 
 export default function MovieListItemAdmin({ movie }) {
-    // Состояние для передачи в SlidePopupComponent
+    // Состояние для открытия/закрытия SlidePopupComponent
     const [del, setDel] = useState(false);
     const [change, setChange] = useState(false);
 
-    // Состояния для добавления нового фильма
+    // Состояния для изменения фильма
     const [name, setName] = useState();
     const [img, setImg] = useState();
     const [description, setDescription] = useState();
