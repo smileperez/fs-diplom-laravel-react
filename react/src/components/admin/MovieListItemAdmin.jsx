@@ -48,13 +48,13 @@ export default function MovieListItemAdmin({ movie }) {
 
     return (
         <>
-            <section className="mt-4 flex">
+            <section className="mt-4 flex h-auto">
                 <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
                     <h2 className="text-lg font-bold">{movie.id}</h2>
                 </div>
-                <div className="flex flex-1 justify-between h-[100px] ml-2 p-2 bg-[#F1EBE6]/95 rounded">
+                <div className="flex flex-1 justify-between h-auto ml-2 p-2 bg-[#F1EBE6]/95 rounded">
                     <div className="flex">
-                        <div className="flex-1 w-[70px] h-full">
+                        <div className="flex-1 min-w-[80px] h-[100px]">
                             <img
                                 className="max-h-full"
                                 alt={movie.title}
