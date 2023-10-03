@@ -3,19 +3,37 @@ import MovieListItemAdmin from "../../components/admin/MovieListItemAdmin";
 import { useStateContext } from "../../context/ContextProvider";
 import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 
 export default function Movies() {
     const { movies } = useStateContext();
 
-    // Состояние для передачи в SlidePopupComponent
-    const [add, setAdd] = useState(false);
+    // Состояния для открытия/закрытия в SlidePopupComponent
+    const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового фильма
     const [name, setName] = useState();
-    const [img_url, setImg_url] = useState();
+    const [img, setImg] = useState();
     const [description, setDescription] = useState();
     const [duration, setDuration] = useState();
     const [origin, setOrigin] = useState();
+
+    const onImageChoose = (ev) => {
+        const file = ev.target.files[0];
+
+        // FIXME:
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSurvey({
+                ...survey,
+                image: file,
+                image_url: reader.result,
+            });
+
+            ev.target.value = "";
+        };
+        reader.readAsDataURL(file);
+    };
 
     // TODO:
     // const onSubmit = (ev) => {
@@ -49,7 +67,7 @@ export default function Movies() {
             <div className="flex flex-col">
                 <div className="flex justify-end">
                     <button
-                        onClick={() => setAdd(true)}
+                        onClick={() => setOpen(true)}
                         type="button"
                         className="border border-[#63536C] bg-[#63536C] text-gray-300 rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0 focus:outline-none focus:shadow-outline"
                     >
@@ -62,8 +80,8 @@ export default function Movies() {
             </div>
 
             <SlidePopupComponent
-                open={add}
-                setOpen={setAdd}
+                open={open}
+                setOpen={setOpen}
                 title="Добавление нового фильма"
             >
                 {/* FIXME: */}
@@ -73,7 +91,8 @@ export default function Movies() {
                             htmlFor="name"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Название фильма <span className="text-red-500">*</span>
+                            Название фильма{" "}
+                            <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -90,20 +109,27 @@ export default function Movies() {
 
                     <div className="mt-2">
                         <label
-                            htmlFor="img_url"
+                            htmlFor="img"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            URL постера
+                            Загрузить постер
                         </label>
+                        <PhotoIcon
+                            className="mx-auto h-12 w-12 text-gray-300"
+                            aria-hidden="true"
+                        />
                         <div className="mt-2">
-                            <input
-                                id="img_url"
-                                name="img_url"
-                                type="img_url"
-                                value={img_url}
-                                onChange={(ev) => setImg_url(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
+                            <button
+                                type="button"
+                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            >
+                                <input
+                                    type="file"
+                                    onChange={onImageChoose}
+                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                                Добавить
+                            </button>
                         </div>
                     </div>
 
@@ -115,11 +141,13 @@ export default function Movies() {
                             Краткое описание фильма
                         </label>
                         <div className="mt-2">
-                            <input
+                            <textarea
                                 id="description"
                                 name="description"
                                 type="description"
                                 value={description}
+                                rows={3}
+                                defaultValue={""}
                                 onChange={(ev) =>
                                     setDescription(ev.target.value)
                                 }

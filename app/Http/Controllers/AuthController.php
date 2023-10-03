@@ -35,7 +35,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials, $remember)) {
             return response([
-                'error' => 'Данные не подходят'
+                'errors' => 'The provided credentials are not correct'
             ], 422);
         }
 

@@ -1,46 +1,55 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axiosClient from '../../axios';
+import axiosClient from "../../axios";
 import { useStateContext } from "../../context/ContextProvider";
 
 export default function Signin() {
     const { setCurrentUser, setUserToken } = useStateContext();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [error, setError] = useState({ __html: '' });
+    const [error, setError] = useState({ __html: "" });
 
     const onSubmit = (ev) => {
         ev.preventDefault();
-        setError({ __html: '' })
+        setError({ __html: "" });
 
         // Request в сторону контрлллера Laravel
         axiosClient
-            .post('/signin', {
+            .post("/signin", {
                 email,
-                password
+                password,
             })
             .then(({ data }) => {
-                setCurrentUser(data.user)
-                setUserToken(data.token)
+                setCurrentUser(data.user);
+                setUserToken(data.token);
             })
             .catch((error) => {
                 if (error.response) {
-                    const finalErrors = Object.values(error.response.data.errors).reduce((accum, next) => [...accum, ...next], []);
-                    setError({ __html: finalErrors.join('<br>') });
+                    setError({ __html: error.response.data.errors });
                 }
                 console.error(error);
-            })
-    }
+            });
+    };
 
     return (
         <div className="p-5 bg-[#eae9eb]">
-
-            {error.__html && (<div className="bg-red-500 rounded py-2 px-3 text-white" dangerouslySetInnerHTML={error}>
-            </div>)}
-
-            <form onSubmit={onSubmit} className="space-y-6" action="#" method="POST">
+            {error.__html && (
+                <div
+                    className="bg-red-500 rounded py-2 px-3 text-white"
+                    dangerouslySetInnerHTML={error}
+                ></div>
+            )}
+            <form
+                onSubmit={onSubmit}
+                className="space-y-6"
+                action="#"
+                method="POST"
+            >
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                    >
                         E-mail
                     </label>
                     <div className="mt-2">
@@ -50,7 +59,7 @@ export default function Signin() {
                             type="email"
                             required
                             value={email}
-                            onChange={ev => setEmail(ev.target.value)}
+                            onChange={(ev) => setEmail(ev.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -58,7 +67,10 @@ export default function Signin() {
 
                 <div>
                     <div className="flex items-center justify-between">
-                        <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label
+                            htmlFor="password"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
                             Пароль
                         </label>
                     </div>
@@ -69,7 +81,7 @@ export default function Signin() {
                             type="password"
                             required
                             value={password}
-                            onChange={ev => setPassword(ev.target.value)}
+                            onChange={(ev) => setPassword(ev.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -84,13 +96,15 @@ export default function Signin() {
                     </button>
                 </div>
             </form>
-
             <p className="mt-7 text-center text-sm text-gray-500">
-                Не зарегистрированы?{' '}
-                <Link to='/auth/signup' className="text-[#63536C] font-semibold hover:text-[#89639e]">
+                Не зарегистрированы?{" "}
+                <Link
+                    to="/auth/signup"
+                    className="text-[#63536C] font-semibold hover:text-[#89639e]"
+                >
                     Регистрация
                 </Link>
             </p>
         </div>
-    )
+    );
 }
