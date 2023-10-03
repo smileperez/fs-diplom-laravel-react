@@ -187,8 +187,8 @@ export const ContextProvider = ({ children }) => {
     );
     const [movies, setMovies] = useState(tmpMovies);
     const [halls, setHalls] = useState(tmpHalls);
-    const [prices, setPrices] = useState(tmpCalendar);
-    const [seat_types, setSeat_types] = useState(tmpCalendar);
+    const [prices, setPrices] = useState(tmpPrices);
+    const [seat_types, setSeat_types] = useState(tmpSeatsType);
     const [calendar, setCalendar] = useState(tmpCalendar);
 
     const setUserToken = (token) => {
