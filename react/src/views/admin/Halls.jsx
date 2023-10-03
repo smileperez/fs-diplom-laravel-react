@@ -3,12 +3,14 @@ import HallListItem from "../../components/admin/HallListItem";
 import { useStateContext } from "../../context/ContextProvider";
 import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import EfimButton from "../../components/core/EfimButton";
 
 export default function Halls() {
     const { halls } = useStateContext();
 
     // Состояние для передачи в SlidePopupComponent
-    const [add, setAdd] = useState(false);
+    const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового зала
     const [name, setName] = useState();
@@ -43,25 +45,22 @@ export default function Halls() {
     // };
 
     return (
-        <PageComponent title="Управление залами">
-            <div className="flex flex-col">
-                <div className="flex justify-end">
-                    <button
-                        onClick={() => setAdd(true)}
-                        type="button"
-                        className="border border-[#63536C] bg-[#63536C] text-gray-300 rounded-md px-4 py-2 transition duration-500 ease select-none hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0 focus:outline-none focus:shadow-outline"
-                    >
-                        Добавить новый зал
-                    </button>
-                </div>
-                {halls.map((hall) => (
-                    <HallListItem hall={hall} key={hall.id} />
-                ))}
-            </div>
+        <PageComponent
+            title="Управление залами"
+            button={
+                <EfimButton color="regular" onClick={() => setOpen(true)}>
+                    <PlusCircleIcon className="h-6 w-6 mr-2" />
+                    Добавить новый зал
+                </EfimButton>
+            }
+        >
+            {halls.map((hall) => (
+                <HallListItem hall={hall} key={hall.id} />
+            ))}
 
             <SlidePopupComponent
-                open={add}
-                setOpen={setAdd}
+                open={open}
+                setOpen={setOpen}
                 title="Добавление нового зала"
             >
                 {/* FIXME: */}
@@ -71,7 +70,8 @@ export default function Halls() {
                             htmlFor="name"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Название зала <span className="text-red-500">*</span>
+                            Название зала{" "}
+                            <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-2">
                             <input
@@ -110,7 +110,7 @@ export default function Halls() {
                             htmlFor="seats"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                           Количество мест в ряду
+                            Количество мест в ряду
                         </label>
                         <div className="mt-2">
                             <input
@@ -132,7 +132,7 @@ export default function Halls() {
                             Добавить
                         </button>
                         <button
-                            onClick={() => setAdd(false)}
+                            onClick={() => setOpen(false)}
                             type="button"
                             className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >

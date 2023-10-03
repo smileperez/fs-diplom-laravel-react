@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "./popups/SlidePopupComponent";
 import { useState } from "react";
+import EfimButton from "../core/EfimButton";
 
 export default function MovieListItemAdmin({ movie }) {
     // Состояние для открытия/закрытия SlidePopupComponent
@@ -95,22 +96,15 @@ export default function MovieListItemAdmin({ movie }) {
                     <div className="block text-sm font-medium leading-6 text-gray-900">
                         Вы действительно хотите удалить этот фильм?
                     </div>
-
-                    <div className="flex">
-                        <button
-                            onClick={onClickDelete}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-red-500 px-3 py-1.5 mt-6 text-black font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                    <div className="flex justify-between">
+                        <EfimButton color="danger" onClick={onClickDelete}>
+                            <TrashIcon className="h-6 w-6 mr-2" />
                             Удалить
-                        </button>
-                        <button
-                            onClick={() => setDel(false)}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                        </EfimButton>
+                        <EfimButton color="regular" onClick={() => setDel(false)}>
+                            <TrashIcon className="h-6 w-6 mr-2" />
                             Отменить
-                        </button>
+                        </EfimButton>
                     </div>
                 </form>
             </SlidePopupComponent>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function TButton({
+export default function EfimButton({
     color = "indigo",
     to = "",
     circle = false,
@@ -37,9 +37,7 @@ export default function TButton({
                 classes = [...classes, "text-red-500", "focus:border-red-500"];
         }
     } else {
-        classes = [
-            ...classes
-        ];
+        classes = [...classes, "font-semibold"];
 
         switch (color) {
             case "indigo":
@@ -50,15 +48,18 @@ export default function TButton({
                     "focus:ring-indigo-500",
                 ];
                 break;
-            case "red":
+            case "danger":
                 classes = [
                     ...classes,
-                    "bg-red-600",
-                    "hover:bg-red-700",
-                    "focus:ring-red-500",
+                    "bg-red-700",
+                    "text-gray-300",
+                    "hover:bg-red-900",
+                    "hover:text-white",
+                    "active:bg-red-600",
+                    "active:duration-0",
                 ];
                 break;
-            case "default":
+            case "regular":
                 classes = [
                     ...classes,
                     "bg-[#63536C]",
