@@ -15,33 +15,35 @@ export default function Movies() {
     const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового фильма
-    const [name, setName] = useState();
-    const [img, setImg] = useState();
-    const [description, setDescription] = useState();
-    const [duration, setDuration] = useState();
-    const [origin, setOrigin] = useState();
+    const [movie, setMovie] = useState({
+        title: "",
+        img: null,
+        img_url: null,
+        description: "",
+        duration: 0,
+        origin: "",
+    });
 
-    const onImageChoose = (ev) => {
-        const file = ev.target.files[0];
+    // const [name, setName] = useState();
+    // const [img, setImg] = useState();
+    // const [description, setDescription] = useState();
+    // const [duration, setDuration] = useState();
+    // const [origin, setOrigin] = useState();
 
-        // FIXME:
+    const onImageChoose = (event) => {
+        const file = event.target.files[0];
+
         const reader = new FileReader();
         reader.onload = () => {
-            setSurvey({
-                ...survey,
-                image: file,
-                image_url: reader.result,
-            });
-
-            ev.target.value = "";
+            setMovi;
         };
         reader.readAsDataURL(file);
     };
 
-    // TODO: 3:29:41
     const onSubmit = (event) => {
         event.preventDefault();
-
+        // FIXME:
+        // TODO: ГОТОВО, ЗАПРОС ОТПРАВЛЯЕТСЯ В БД (НАЧАЛО НАСТРОЙКИ НА 3:29:41)
         axiosClient.post("/movies", {
             title: "Первый фильм",
             description: "Какая-то информация",
@@ -77,7 +79,7 @@ export default function Movies() {
                 <form onSubmit={onSubmit} action="#" method="POST">
                     <div>
                         <label
-                            htmlFor="name"
+                            htmlFor="title"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
                             Название фильма{" "}
@@ -87,11 +89,14 @@ export default function Movies() {
                             <input
                                 type="text"
                                 required
-                                id="name"
-                                name="name"
-                                value={movies.name}
+                                id="title"
+                                name="title"
+                                value={movie.title}
                                 onChange={(event) =>
-                                    setName(event.target.value)
+                                    setMovie({
+                                        ...movie,
+                                        title: event.target.value,
+                                    })
                                 }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
@@ -106,14 +111,14 @@ export default function Movies() {
                         </label>
 
                         <div className="mt-1 flex items-center">
-                            {movies.img_url && (
+                            {movie.img_url && (
                                 <img
                                     src={movies.img_url}
                                     alt=""
                                     className="w-32 h-32 object-cover"
                                 />
                             )}
-                            {!movies.img_url && (
+                            {!movie.img_url && (
                                 <span className="flex justify-center items-center text-[#63536C] h-12 w-12 overflow-hidden rounded-full bg-gray-200">
                                     <PhotoIcon className="w-8 h-8" />
                                 </span>
@@ -146,10 +151,13 @@ export default function Movies() {
                                 rows={3}
                                 id="description"
                                 name="description"
-                                value={movies.description}
+                                value={movie.description}
                                 defaultValue={""}
                                 onChange={(event) =>
-                                    setDescription(event.target.value)
+                                    setMovie({
+                                        ...movie,
+                                        description: event.target.value,
+                                    })
                                 }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
@@ -170,8 +178,13 @@ export default function Movies() {
                                 type="number"
                                 id="duration"
                                 name="duration"
-                                value={movies.duration}
-                                onChange={(event) => setDuration(event.target.value)}
+                                value={movie.duration}
+                                onChange={(event) =>
+                                    setMovie({
+                                        ...movie,
+                                        duration: event.target.value,
+                                    })
+                                }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -191,8 +204,13 @@ export default function Movies() {
                                 type="text"
                                 id="origin"
                                 name="origin"
-                                value={movies.origin}
-                                onChange={(event) => setOrigin(event.target.value)}
+                                value={movie.origin}
+                                onChange={(event) =>
+                                    setMovie({
+                                        ...movie,
+                                        origin: event.target.value,
+                                    })
+                                }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
