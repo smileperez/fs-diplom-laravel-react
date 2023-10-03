@@ -9,7 +9,7 @@ import EButton from "../../components/core/EButton";
 export default function Halls() {
     const { halls } = useStateContext();
 
-    // Состояние для передачи в SlidePopupComponent
+    // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового зала
@@ -50,7 +50,7 @@ export default function Halls() {
             button={
                 <EButton color="regular" onClick={() => setOpen(true)}>
                     <PlusCircleIcon className="h-6 w-6 mr-2" />
-                    Добавить новый зал
+                    Добавить зал
                 </EButton>
             }
         >

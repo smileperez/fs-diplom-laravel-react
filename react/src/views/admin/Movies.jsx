@@ -38,31 +38,31 @@ export default function Movies() {
     };
 
     // TODO:
-    // const onSubmit = (ev) => {
-    //     ev.preventDefault();
-    //     setError({ __html: "" });
-    //     console.log('Отправляем запрос в БД')
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+        setError({ __html: "" });
+        //     console.log('Отправляем запрос в БД')
 
-    // Request в сторону контрлллера Laravel
-    // axiosClient
-    //     .post("/signin", {
-    //         email,
-    //         password,
-    //     })
-    //     .then(({ data }) => {
-    //         setCurrentUser(data.user);
-    //         setUserToken(data.token);
-    //     })
-    //     .catch((error) => {
-    //         if (error.response) {
-    //             const finalErrors = Object.values(
-    //                 error.response.data.errors
-    //             ).reduce((accum, next) => [...accum, ...next], []);
-    //             setError({ __html: finalErrors.join("<br>") });
-    //         }
-    //         console.error(error);
-    //     });
-    // };
+        // Request в сторону контрлллера Laravel
+        // axiosClient
+        //     .post("/signin", {
+        //         email,
+        //         password,
+        //     })
+        //     .then(({ data }) => {
+        //         setCurrentUser(data.user);
+        //         setUserToken(data.token);
+        //     })
+        //     .catch((error) => {
+        //         if (error.response) {
+        //             const finalErrors = Object.values(
+        //                 error.response.data.errors
+        //             ).reduce((accum, next) => [...accum, ...next], []);
+        //             setError({ __html: finalErrors.join("<br>") });
+        //         }
+        //         console.error(error);
+        //     });
+    };
 
     return (
         // TODO: 1:46:51
@@ -71,7 +71,7 @@ export default function Movies() {
             button={
                 <EButton color="regular" onClick={() => setOpen(true)}>
                     <PlusCircleIcon className="h-6 w-6 mr-2" />
-                    Добавить новый фильм
+                    Добавить фильм
                 </EButton>
             }
         >
@@ -81,13 +81,15 @@ export default function Movies() {
                 ))}
             </div>
 
+            {/* Slide-Popup для добавления нового фильма */}
             <SlidePopupComponent
                 open={open}
                 setOpen={setOpen}
                 title="Добавление нового фильма"
             >
                 {/* FIXME: */}
-                <form onSubmit="#" action="#" method="POST">
+                {/* Название фильма */}
+                <form onSubmit={onSubmit} action="#" method="POST">
                     <div>
                         <label
                             htmlFor="name"
@@ -98,43 +100,53 @@ export default function Movies() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="text"
+                                required
                                 id="name"
                                 name="name"
-                                type="name"
-                                required
-                                value={name}
+                                value={movies.name}
                                 onChange={(ev) => setName(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Название фильма */}
 
+                    {/* Загрузка картинки */}
                     <div className="mt-2">
-                        <label
-                            htmlFor="img"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
+                        <label className="block text-sm font-medium text-gray-900">
                             Загрузить постер
                         </label>
-                        <PhotoIcon
-                            className="mx-auto h-12 w-12 text-gray-300"
-                            aria-hidden="true"
-                        />
-                        <div className="mt-2">
+
+                        <div className="mt-1 flex items-center">
+                            {movies.img_url && (
+                                <img
+                                    src={movies.img_url}
+                                    alt=""
+                                    className="w-32 h-32 object-cover"
+                                />
+                            )}
+                            {!movies.img_url && (
+                                <span className="flex justify-center items-center text-[#63536C] h-12 w-12 overflow-hidden rounded-full bg-gray-200">
+                                    <PhotoIcon className="w-8 h-8" />
+                                </span>
+                            )}
                             <button
                                 type="button"
-                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                className="relative flex items-center text-sm transition duration-500 outline-none font-semibold whitespace-nowrap p-2 px-4 ml-5 rounded-md bg-[#63536C] text-gray-300 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                             >
                                 <input
                                     type="file"
                                     onChange={onImageChoose}
-                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer "
                                 />
-                                Добавить
+                                Выбрать
                             </button>
                         </div>
                     </div>
+                    {/* Загрузка картинки */}
 
+                    {/* Описание */}
                     <div className="mt-2">
                         <label
                             htmlFor="description"
@@ -144,20 +156,21 @@ export default function Movies() {
                         </label>
                         <div className="mt-2">
                             <textarea
+                                rows={3}
                                 id="description"
                                 name="description"
-                                type="description"
-                                value={description}
-                                rows={3}
+                                value={movies.description}
                                 defaultValue={""}
                                 onChange={(ev) =>
                                     setDescription(ev.target.value)
                                 }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Описание */}
 
+                    {/* Длительность */}
                     <div className="mt-2">
                         <label
                             htmlFor="duration"
@@ -167,16 +180,18 @@ export default function Movies() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="number"
                                 id="duration"
                                 name="duration"
-                                type="duration"
-                                value={duration}
+                                value={movies.duration}
                                 onChange={(ev) => setDuration(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Длительность */}
 
+                    {/* Страны происхождения */}
                     <div className="mt-2">
                         <label
                             htmlFor="origin"
@@ -186,15 +201,16 @@ export default function Movies() {
                         </label>
                         <div className="mt-2">
                             <input
+                                type="text"
                                 id="origin"
                                 name="origin"
-                                type="origin"
-                                value={origin}
+                                value={movies.origin}
                                 onChange={(ev) => setOrigin(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
+                    {/* Страны происхождения */}
 
                     <div className="flex justify-between mt-6">
                         <EButton submit>
