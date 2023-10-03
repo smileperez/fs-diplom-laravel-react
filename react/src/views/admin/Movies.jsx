@@ -35,7 +35,13 @@ export default function Movies() {
 
         const reader = new FileReader();
         reader.onload = () => {
-            setMovi;
+            setMovie({
+                ...movie,
+                img: file,
+                img_url: reader.result,
+            });
+
+            event.target.value = "";
         };
         reader.readAsDataURL(file);
     };
@@ -113,7 +119,7 @@ export default function Movies() {
                         <div className="mt-1 flex items-center">
                             {movie.img_url && (
                                 <img
-                                    src={movies.img_url}
+                                    src={movie.img_url}
                                     alt=""
                                     className="w-32 h-32 object-cover"
                                 />
