@@ -4,7 +4,7 @@ import { useStateContext } from "../../context/ContextProvider";
 import SlidePopupComponent from "../../components/admin/popups/SlidePopupComponent";
 import { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import EfimButton from "../../components/core/EfimButton";
+import EButton from "../../components/core/EButton";
 
 export default function Halls() {
     const { halls } = useStateContext();
@@ -48,10 +48,10 @@ export default function Halls() {
         <PageComponent
             title="Управление залами"
             button={
-                <EfimButton color="regular" onClick={() => setOpen(true)}>
+                <EButton color="regular" onClick={() => setOpen(true)}>
                     <PlusCircleIcon className="h-6 w-6 mr-2" />
                     Добавить новый зал
-                </EfimButton>
+                </EButton>
             }
         >
             {halls.map((hall) => (

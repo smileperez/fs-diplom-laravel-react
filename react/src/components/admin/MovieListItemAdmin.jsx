@@ -1,12 +1,15 @@
 import React from "react";
+import SlidePopupComponent from "./popups/SlidePopupComponent";
+import { useState } from "react";
+import EButton from "../core/EButton";
+import ESelection from "../core/ESelection";
 import {
     AdjustmentsHorizontalIcon,
     TrashIcon,
+    XCircleIcon,
     PhotoIcon,
+    CloudArrowUpIcon,
 } from "@heroicons/react/24/outline";
-import SlidePopupComponent from "./popups/SlidePopupComponent";
-import { useState } from "react";
-import EfimButton from "../core/EfimButton";
 
 export default function MovieListItemAdmin({ movie }) {
     // Состояние для открытия/закрытия SlidePopupComponent
@@ -22,7 +25,17 @@ export default function MovieListItemAdmin({ movie }) {
 
     const onClickDelete = (event) => {
         event.preventDefault();
-        console.log("Происходит удаление фильма");
+        console.log(`Отправка запроса удаления фильма №${movie.id}`);
+        // TODO:
+        // axiosClient.post("/signout").then((res) => {
+        //     setCurrentUser({});
+        //     setUserToken(null);
+        // });
+    };
+
+    const onClickUpdate = (event) => {
+        event.preventDefault();
+        console.log(`Отправка запроса изменения данных фильма №${movie.id}`);
         // TODO:
         // axiosClient.post("/signout").then((res) => {
         //     setCurrentUser({});
@@ -66,23 +79,18 @@ export default function MovieListItemAdmin({ movie }) {
                             <h2 className="text-base font-light">
                                 {movie.title}
                             </h2>
-                            <p className="text-xs font-normal mt-2">
-                                <span className="inline-block w-auto px-2 py-1 bg-[#63536C] rounded text-white">
-                                    {movie.duration} минут
-                                </span>
+                            <p className="mt-2">
+                                <ESelection>{movie.duration} минут</ESelection>
                             </p>
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <AdjustmentsHorizontalIcon
-                            // FIXME:
-                            onClick={() => setChange(true)}
-                            className="block w-6 h-7 mr-4 text-[#63536C] cursor-pointer"
-                        />
-                        <TrashIcon
-                            onClick={() => setDel(true)}
-                            className="block w-6 h-7 mr-4 text-red-500 cursor-pointer"
-                        />
+                        <EButton circle onClick={() => setChange(true)}>
+                            <AdjustmentsHorizontalIcon className="w-6 h-7" />
+                        </EButton>
+                        <EButton circle color="danger" onClick={() => setDel(true)}>
+                            <TrashIcon className="w-6 h-7" />
+                        </EButton>
                     </div>
                 </div>
             </section>
@@ -94,17 +102,18 @@ export default function MovieListItemAdmin({ movie }) {
             >
                 <form onSubmit="#" action="#" method="POST">
                     <div className="block text-sm font-medium leading-6 text-gray-900">
-                        Вы действительно хотите удалить этот фильм?
+                        Вы действительно хотите удалить фильм{" "}
+                        <ESelection>№{movie.id}</ESelection> ?
                     </div>
-                    <div className="flex justify-between">
-                        <EfimButton color="danger" onClick={onClickDelete}>
+                    <div className="flex justify-between mt-5">
+                        <EButton submit color="danger" onClick={onClickDelete}>
                             <TrashIcon className="h-6 w-6 mr-2" />
                             Удалить
-                        </EfimButton>
-                        <EfimButton color="regular" onClick={() => setDel(false)}>
-                            <TrashIcon className="h-6 w-6 mr-2" />
+                        </EButton>
+                        <EButton color="regular" onClick={() => setDel(false)}>
+                            <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
-                        </EfimButton>
+                        </EButton>
                     </div>
                 </form>
             </SlidePopupComponent>
@@ -223,20 +232,18 @@ export default function MovieListItemAdmin({ movie }) {
                         </div>
                     </div>
 
-                    <div className="flex">
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
-                        >
+                    <div className="flex justify-between mt-6">
+                        <EButton submit color="regular" onClick={onClickUpdate}>
+                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                             Изменить
-                        </button>
-                        <button
+                        </EButton>
+                        <EButton
+                            color="regular"
                             onClick={() => setChange(false)}
-                            type="button"
-                            className="flex w-full justify-center rounded bg-[#63536C] px-3 py-1.5 mt-6 ml-10 text-gray-300 font-semibold leading-6 shadow-sm transition duration-500 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
                         >
+                            <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
-                        </button>
+                        </EButton>
                     </div>
                 </form>
             </SlidePopupComponent>

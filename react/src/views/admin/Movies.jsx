@@ -5,7 +5,7 @@ import SlidePopupComponent from "../../components/admin/popups/SlidePopupCompone
 import { useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import EfimButton from "../../components/core/EfimButton";
+import EButton from "../../components/core/EButton";
 
 export default function Movies() {
     const { movies } = useStateContext();
@@ -69,10 +69,10 @@ export default function Movies() {
         <PageComponent
             title="Управление фильмами"
             button={
-                <EfimButton color="regular" onClick={() => setOpen(true)}>
+                <EButton color="regular" onClick={() => setOpen(true)}>
                     <PlusCircleIcon className="h-6 w-6 mr-2" />
                     Добавить новый фильм
-                </EfimButton>
+                </EButton>
             }
         >
             <div>

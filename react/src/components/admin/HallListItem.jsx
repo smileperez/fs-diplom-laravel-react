@@ -5,10 +5,13 @@ import {
 } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "./popups/SlidePopupComponent";
 import { useState } from "react";
+import EButton from "../core/EButton";
+import ESelection from "../core/ESelection";
 
 export default function HallListItem({ hall }) {
-    // Состояние для передачи в SlidePopupComponent
+    // Состояние для открытия/закрытия SlidePopupComponent
     const [del, setDel] = useState(false);
+    const [change, setChange] = useState(false);
 
     // Функция удаления зала
     const onClickDelete = (event) => {
@@ -32,42 +35,41 @@ export default function HallListItem({ hall }) {
                         <div className="w-auto">
                             <h2 className="text-sm font-light">
                                 Название зала:{" "}
-                                <span className="inline-block w-auto px-2 py-1 bg-[#63536C] rounded text-white text-xs font-normal">
-                                    {hall.name}
-                                </span>
+                                <ESelection>{hall.name}</ESelection>
                             </h2>
                             <h2 className="text-sm font-light mt-1">
                                 Конфигурация зала:{" "}
-                                <span className="inline-block w-auto px-2 py-1 bg-[#63536C] rounded text-white text-xs font-normal">
+                                <ESelection>
                                     {hall.rows} x {hall.seats}
-                                </span>
+                                </ESelection>
                             </h2>
                         </div>
                         <div className="ml-6">
                             <h2 className="text-sm font-light font-thin">
                                 Общее кол-во мест:{" "}
-                                <span className="inline-block w-auto px-2 py-1 bg-[#63536C] rounded text-white text-xs font-normal">
+                                <ESelection>
                                     {hall.rows * hall.seats}
-                                </span>
+                                </ESelection>
                             </h2>
                             <h2 className="text-sm font-light mt-1">
                                 Количество VIP мест:{" "}
-                                <span className="inline-block w-auto px-2 py-1 bg-[#b89e14] rounded text-black text-xs font-semibold">
+                                <ESelection color="gold">
                                     {hall.seats}
-                                </span>
+                                </ESelection>
                             </h2>
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <AdjustmentsHorizontalIcon
-                            // FIXME:
-                            // onClick={onConfigureClick}
-                            className="block w-6 h-7 mr-4 text-[#63536C] cursor-pointer"
-                        />
-                        <TrashIcon
+                        <EButton circle onClick={() => setChange(true)}>
+                            <AdjustmentsHorizontalIcon className="w-6 h-7" />
+                        </EButton>
+                        <EButton
+                            circle
+                            color="danger"
                             onClick={() => setDel(true)}
-                            className="block w-6 h-7 mr-4 text-red-500 cursor-pointer"
-                        />
+                        >
+                            <TrashIcon className="w-6 h-7" />
+                        </EButton>
                     </div>
                 </div>
             </section>
