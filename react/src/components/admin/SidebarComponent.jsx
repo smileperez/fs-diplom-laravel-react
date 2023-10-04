@@ -68,7 +68,7 @@ export default function SidebarComponent() {
     }
 
     // Для скрытия Sidebar
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     return (
         <div
@@ -101,7 +101,7 @@ export default function SidebarComponent() {
                         className={({ isActive }) =>
                             classNames(
                                 isActive
-                                    ? "bg-[#89639e] text-white transition duration-500"
+                                    ? "bg-[#89639e] text-white transition duration-0"
                                     : "text-gray-300 hover:bg-gray-700 hover:text-white transition duration-500",
                                 "rounded-md px-3 py-2 text-sm font-medium"
                             )

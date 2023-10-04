@@ -15,6 +15,9 @@ export default function Halls() {
     // Соятоние загрузки данных из БД
     const [loading, setLoading] = useState(false);
 
+    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
+    const [meta, setMeta] = useState({});
+
     // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
 
@@ -28,15 +31,34 @@ export default function Halls() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // TODO:
     // Загрузка списка залов при обновлении страницы
     useEffect(() => {
         setLoading(true);
         axiosClient.get("/halls").then(({ data }) => {
             setHalls(data.data);
+            setMeta(data.meta);
             setLoading(false);
         });
     }, []);
+
+    // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
+    const getHalls = (url) => {
+        url = url || "/halls";
+        setLoading(true);
+        axiosClient.get(url).then(({ data }) => {
+            setHalls(data.data);
+            setMeta(data.meta);
+            setLoading(false);
+        });
+    };
+    // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
+    useEffect(() => {
+        getHalls();
+    }, []);
+    // Callback для пагинации (компонент PaginationComponent)
+    const onPageClick = (link) => {
+        getHalls(link.url);
+    };
 
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
@@ -67,8 +89,8 @@ export default function Halls() {
             title="Управление залами"
             button={
                 <EButton color="regular" onClick={() => setOpen(true)}>
-                    <PlusCircleIcon className="h-6 w-6 mr-2" />
-                    Добавить зал
+                    <PlusCircleIcon className="h-6 w-6" />
+                    <div className="hidden md:ml-2 md:block">Добавить зал</div>
                 </EButton>
             }
         >
@@ -79,7 +101,10 @@ export default function Halls() {
                     {halls.map((hall) => (
                         <HallListItem hall={hall} key={hall.id} />
                     ))}
-                    <PaginationComponent />
+                    <PaginationComponent
+                        meta={meta}
+                        onPageClick={onPageClick}
+                    />
                 </div>
             )}
 

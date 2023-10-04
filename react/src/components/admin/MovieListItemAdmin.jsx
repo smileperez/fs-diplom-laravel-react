@@ -68,7 +68,7 @@ export default function MovieListItemAdmin({ movie }) {
                 </div>
                 <div className="flex flex-1 justify-between h-auto ml-2 p-2 bg-[#F1EBE6]/95 rounded">
                     <div className="flex">
-                        <div className="flex-1 min-w-[55px] max-w-[80px]">
+                        <div className="flex-1 min-w-[55px] max-w-[55px]">
                             <img
                                 className="max-h-full"
                                 alt={movie.title}

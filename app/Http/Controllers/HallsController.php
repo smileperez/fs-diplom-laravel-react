@@ -15,7 +15,7 @@ class HallsController extends Controller
     public function index()
     {
         return HallsResource::collection(
-            Halls::orderBy('id', 'desc')->paginate(10)
+            Halls::orderBy('id', 'desc')->paginate(2)
         );
     }
 

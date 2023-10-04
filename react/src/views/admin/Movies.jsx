@@ -19,6 +19,9 @@ export default function Movies() {
     // Соятоние загрузки данных из БД
     const [loading, setLoading] = useState(false);
 
+    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
+    const [meta, setMeta] = useState({});
+
     // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
 
@@ -35,15 +38,34 @@ export default function Movies() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // TODO:
     // Загрузка списка фильмов при обновлении страницы
     useEffect(() => {
         setLoading(true);
         axiosClient.get("/movies").then(({ data }) => {
             setMovies(data.data);
+            setMeta(data.meta);
             setLoading(false);
         });
     }, []);
+
+    // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
+    const getMovies = (url) => {
+        url = url || "/movies";
+        setLoading(true);
+        axiosClient.get(url).then(({ data }) => {
+            setMovies(data.data);
+            setMeta(data.meta);
+            setLoading(false);
+        });
+    };
+    // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
+    useEffect(() => {
+        getMovies();
+    }, []);
+    // Callback для пагинации (компонент PaginationComponent)
+    const onPageClick = (link) => {
+        getMovies(link.url);
+    };
 
     // Функция подгрузки изображения из input
     const onImageChoose = (event) => {
@@ -96,8 +118,8 @@ export default function Movies() {
             title="Управление фильмами"
             button={
                 <EButton color="regular" onClick={() => setOpen(true)}>
-                    <PlusCircleIcon className="h-6 w-6 mr-2" />
-                    Добавить фильм
+                    <PlusCircleIcon className="h-6 w-6" />
+                    <div className="hidden md:ml-2 md:block">Добавить фильм</div>
                 </EButton>
             }
         >
@@ -109,7 +131,10 @@ export default function Movies() {
                         <MovieListItemAdmin movie={movie} key={movie.id} />
                     ))}
 
-                    <PaginationComponent />
+                    <PaginationComponent
+                        meta={meta}
+                        onPageClick={onPageClick}
+                    />
                 </div>
             )}
 

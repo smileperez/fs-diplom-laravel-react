@@ -21,7 +21,7 @@ class MoviesController extends Controller
     public function index()
     {
         return MoviesResource::collection(
-            Movies::orderBy('id', 'desc')->paginate(10)
+            Movies::orderBy('id', 'desc')->paginate(2)
         );
     }
 
