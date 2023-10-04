@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/signout', [AuthController::class, 'signout']);
+    Route::get('/current', [AuthController::class, 'current']);
     Route::apiResource('movies', MoviesController::class);
     Route::apiResource('halls', HallsController::class);
 });

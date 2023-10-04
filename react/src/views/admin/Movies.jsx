@@ -3,7 +3,7 @@ import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import MovieListItemAdmin from "../../components/admin/MovieListItemAdmin";
 import EButton from "../../components/core/EButton";
 import { useStateContext } from "../../context/ContextProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     PlusCircleIcon,
     XCircleIcon,
@@ -27,7 +27,12 @@ export default function Movies() {
         origin: "",
     });
 
+    // Состояние для хранения ошибки
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        axiosClient.get('/')
+    }, [])
 
     // Функция подгрузки изображения из input
     const onImageChoose = (event) => {

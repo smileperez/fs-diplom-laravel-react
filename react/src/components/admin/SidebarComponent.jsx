@@ -121,7 +121,7 @@ export default function SidebarComponent() {
                 <div
                     className={`${
                         !open && "hidden"
-                    } flex flex-col justify-evenly`}
+                    } flex flex-col justify-evenly w-[155px]`}
                 >
                     <div className="text-base font-medium leading-none text-white">
                         {currentUser.name}

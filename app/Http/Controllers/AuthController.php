@@ -57,4 +57,10 @@ class AuthController extends Controller
             'success' => true
         ]);
     }
+
+    // Текущий пользователь
+    public function current(Request $request)
+    {
+        return $request->user();
+    }
 }
