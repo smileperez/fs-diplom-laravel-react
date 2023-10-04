@@ -14,24 +14,25 @@ export default function PaginationComponent({ meta, onPageClick }) {
             <div className="flex flex-1 justify-between md:hidden">
                 <a
                     href="#"
-                    className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    onClick={event => onClick(event, meta.links[0])}
+                    className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium transition duration-500 hover:text-white hover:bg-gray-700 active:bg-[#89639e] active:duration-0"
                 >
-                    Previous
+                    Назад
                 </a>
                 <a
                     href="#"
-                    className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    onClick={event => onClick(event, meta.links[meta.links.length - 1])}
+                    className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium transition duration-500 hover:text-white hover:bg-gray-700 active:bg-[#89639e] active:duration-0"
                 >
-                    Next
+                    Вперёд
                 </a>
             </div>
             <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
                 <div>
                     <p className="text-sm text-gray-700">
                         Отображено{" "}
-                        <span className="font-medium">{meta.to}</span> из{" "}
-                        <span className="font-medium">{meta.total}</span>{" "}
-                        результатов
+                        <span className="font-medium">{meta.to}</span>{" "}из{" "}
+                        <span className="font-medium">{meta.total}</span>{" "}результатов
                     </p>
                 </div>
                 <div>
@@ -56,9 +57,14 @@ export default function PaginationComponent({ meta, onPageClick }) {
                                             ? "bg-[#89639e] text-white transition duration-500 "
                                             : "hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0")
                                     }
-                                    dangerouslySetInnerHTML={(idx === 0 ? {__html: '<',} : (idx === meta.links.length - 1 ? {__html: '>',} : {__html: link.label,}))}
-                                >
-                                </a>
+                                    dangerouslySetInnerHTML={
+                                        idx === 0
+                                            ? { __html: "<" }
+                                            : idx === meta.links.length - 1
+                                            ? { __html: ">" }
+                                            : { __html: link.label }
+                                    }
+                                ></a>
                             ))}
                     </nav>
                 </div>
