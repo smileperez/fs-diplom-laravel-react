@@ -43,7 +43,7 @@ export default function HallListItem({ hall }) {
     return (
         <>
             <section className="mb-4 flex">
-                <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
+                <div className="p-2 bg-[#F1EBE6]/95 rounded min-w-[40px] max-w-[40px] flex items-center justify-center">
                     <h2 className="text-xl font-bold">{hall.id}</h2>
                 </div>
                 <div className="flex flex-1 justify-between h-18 ml-2 p-2 bg-[#F1EBE6]/95 rounded">

@@ -3,12 +3,17 @@ import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import HallListItem from "../../components/admin/HallListItem";
 import EButton from "../../components/core/EButton";
 import { useStateContext } from "../../context/ContextProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
+import PaginationComponent from "../../components/admin/PaginationComponent";
 
 export default function Halls() {
-    const { halls } = useStateContext();
+    // Состояние для загрузки из БД общего списка залов
+    const [halls, setHalls] = useState([]);
+
+    // Соятоние загрузки данных из БД
+    const [loading, setLoading] = useState(false);
 
     // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
@@ -20,7 +25,18 @@ export default function Halls() {
         seats: null,
     });
 
+    // Состояние для хранения ошибки
     const [error, setError] = useState("");
+
+    // TODO:
+    // Загрузка списка залов при обновлении страницы
+    useEffect(() => {
+        setLoading(true);
+        axiosClient.get("/halls").then(({ data }) => {
+            setHalls(data.data);
+            setLoading(false);
+        });
+    }, []);
 
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
@@ -56,9 +72,16 @@ export default function Halls() {
                 </EButton>
             }
         >
-            {halls.map((hall) => (
-                <HallListItem hall={hall} key={hall.id} />
-            ))}
+            {loading && <div className="text-center text-lg">Loading...</div>}
+
+            {!loading && (
+                <div>
+                    {halls.map((hall) => (
+                        <HallListItem hall={hall} key={hall.id} />
+                    ))}
+                    <PaginationComponent />
+                </div>
+            )}
 
             {/* Slide-Popup для добавления нового зала */}
             <SlidePopupComponent

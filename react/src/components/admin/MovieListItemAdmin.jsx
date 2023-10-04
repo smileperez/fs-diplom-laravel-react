@@ -17,7 +17,7 @@ export default function MovieListItemAdmin({ movie }) {
 
     // Состояния для изменения фильма
     const [name, setName] = useState();
-    const [img, setImg] = useState();
+    // const [img, setImg] = useState();
     const [description, setDescription] = useState();
     const [duration, setDuration] = useState();
     const [origin, setOrigin] = useState();
@@ -42,6 +42,7 @@ export default function MovieListItemAdmin({ movie }) {
         // });
     };
 
+    // Функция подгрузки фото и показ её в превью
     const onImageChoose = (ev) => {
         const file = ev.target.files[0];
 
@@ -62,20 +63,20 @@ export default function MovieListItemAdmin({ movie }) {
     return (
         <>
             <section className="mb-4 flex h-auto">
-                <div className="p-2 bg-[#F1EBE6]/95 rounded w-[40px] flex items-center justify-center">
+                <div className="p-2 bg-[#F1EBE6]/95 rounded min-w-[40px] max-w-[40px] flex items-center justify-center">
                     <h2 className="text-lg font-bold">{movie.id}</h2>
                 </div>
                 <div className="flex flex-1 justify-between h-auto ml-2 p-2 bg-[#F1EBE6]/95 rounded">
                     <div className="flex">
-                        <div className="flex-1 min-w-[80px] h-[100px]">
+                        <div className="flex-1 min-w-[55px] max-w-[80px]">
                             <img
                                 className="max-h-full"
                                 alt={movie.title}
                                 src={movie.img_url}
                             ></img>
                         </div>
-                        <div className="flex flex-col">
-                            <h2 className="text-base font-light">
+                        <div className="flex flex-col ml-2">
+                            <h2 className="text-base font-medium">
                                 {movie.title}
                             </h2>
                             <p className="mt-2">

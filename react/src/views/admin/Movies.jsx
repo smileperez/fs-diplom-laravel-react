@@ -10,9 +10,14 @@ import {
     PhotoIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
+import PaginationComponent from "../../components/admin/PaginationComponent";
 
 export default function Movies() {
-    const { movies } = useStateContext();
+    // Состояние для загрузки из БД общего списка фильмов
+    const [movies, setMovies] = useState([]);
+
+    // Соятоние загрузки данных из БД
+    const [loading, setLoading] = useState(false);
 
     // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
@@ -30,9 +35,15 @@ export default function Movies() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
+    // TODO:
+    // Загрузка списка фильмов при обновлении страницы
     useEffect(() => {
-        axiosClient.get('/')
-    }, [])
+        setLoading(true);
+        axiosClient.get("/movies").then(({ data }) => {
+            setMovies(data.data);
+            setLoading(false);
+        });
+    }, []);
 
     // Функция подгрузки изображения из input
     const onImageChoose = (event) => {
@@ -90,9 +101,17 @@ export default function Movies() {
                 </EButton>
             }
         >
-            {movies.map((movie) => (
-                <MovieListItemAdmin movie={movie} key={movie.id} />
-            ))}
+            {loading && <div className="text-center text-lg">Loading...</div>}
+
+            {!loading && (
+                <div>
+                    {movies.map((movie) => (
+                        <MovieListItemAdmin movie={movie} key={movie.id} />
+                    ))}
+
+                    <PaginationComponent />
+                </div>
+            )}
 
             {/* Slide-Popup для добавления нового фильма */}
             <SlidePopupComponent

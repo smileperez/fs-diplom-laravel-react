@@ -16,7 +16,7 @@ class MoviesResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'img_url' => $this->img ? URL::to($this->image) : null,
+            'img_url' => $this->img ? URL::to($this->img) : null,
             'title' => $this->title,
             'description' => $this->description,
             'duration' => $this->duration,
