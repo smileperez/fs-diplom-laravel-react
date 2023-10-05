@@ -49,16 +49,14 @@ export default function HallListItem({ hall, getHalls }) {
             });
     };
 
-    // TODO:
     // Функция удаления зала
     const onClickDelete = (event) => {
-        event.preventDefault();
-        console.log(`Отправка запроса удаления зала №${hall.id}`);
-        // TODO:
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
+        axiosClient.delete(`/halls/${hall.id}`).then((response) => {
+            // Закрываем slider-popup
+            setChange(false);
+            // Заново перезагружаем из БД все фильмы
+            getHalls();
+        });
     };
 
     return (
@@ -231,7 +229,7 @@ export default function HallListItem({ hall, getHalls }) {
                 </div>
 
                 <div className="flex justify-between mt-5">
-                    <EButton submit color="danger">
+                    <EButton submit color="danger" onClick={onClickDelete}>
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>

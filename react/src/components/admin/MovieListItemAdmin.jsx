@@ -73,7 +73,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
             });
     };
 
-    // TODO:
+    // Функция удаления фильма
     const onClickDelete = (event) => {
         axiosClient.delete(`/movies/${movie.id}`).then((response) => {
             // Закрываем slider-popup
