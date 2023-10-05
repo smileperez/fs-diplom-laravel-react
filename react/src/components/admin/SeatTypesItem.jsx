@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function SeatTypesItem({ seatType }) {
+export default function SeatTypesItem({ seatType, getSeatTypes }) {
     // Открытие/Закрытие SlidePopupComponent для изменения зала
     const [change, setChange] = useState(false);
     // Открытие/Закрытие SlidePopupComponent для удаления зала
@@ -26,29 +26,14 @@ export default function SeatTypesItem({ seatType }) {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // FIXME:
     // Отправка put-request в БД c изменениями зала
-    // const onSubmit = (event) => {
-    //     event.preventDefault();
+    const onSubmit = (event) => {
+        event.preventDefault();
 
-    //     const payload = { ...updatedSeatType };
-    //     axiosClient
-    //         .put(`/seattypes/${seatType.id}`, payload)
-    //         .then((response) => {
-    //             console.log(response);
-    //             // Закрываем slider-popup
-    //             setChange(false);
-    //             // Заново перезагружаем из БД все залы
-    //             getSeatTypes();
-    //         })
-    //         .catch((err) => {
-    //             if (err && err.response) {
-    //                 // Записываем error в состояние
-    //                 setError(err.response.data.message);
-    //             }
-    //             console.log(err, err.response);
-    //         });
-    // };
+        const payload = { ...updatedSeatType };
+        console.log(payload);
+        axiosClient.put(`/seattypes/${seatType.id}`, payload);
+    };
 
     // FIXME:
     // Функция удаления зала
@@ -103,12 +88,11 @@ export default function SeatTypesItem({ seatType }) {
                     </div>
                 )}
 
-                {/* // TODO: */}
-                <form onSubmit="#" action="#" method="POST">
+                <form onSubmit={onSubmit} action="#" method="POST">
                     {/* Название типа места */}
                     <div>
                         <label
-                            htmlFor="name"
+                            htmlFor="type"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
                             Название типа места
@@ -145,10 +129,10 @@ export default function SeatTypesItem({ seatType }) {
                                 type="text"
                                 id="color"
                                 name="color"
-                                value={seatType.color}
+                                value={updatedSeatType.color}
                                 onChange={(event) =>
                                     setSeatType({
-                                        ...seatType,
+                                        ...updatedSeatType,
                                         color: event.target.value,
                                     })
                                 }
@@ -180,7 +164,7 @@ export default function SeatTypesItem({ seatType }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить тип{" "}
-                    <ESelection>№{seatType.id}</ESelection>{" "}?
+                    <ESelection>№{seatType.id}</ESelection> ?
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
