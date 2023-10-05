@@ -23,11 +23,11 @@ export default function SeatTypes() {
     // Состояния для добавления нового типа места
     const [seatType, setSeatType] = useState({
         type: "",
+        color: "63536C",
     });
 
-    // FIXME:
     // Состояние для хранения ошибки
-    // const [error, setError] = useState("");
+    const [error, setError] = useState("");
 
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getSeatTypes = (url) => {
@@ -59,16 +59,16 @@ export default function SeatTypes() {
             .then((response) => {
                 console.log(response);
                 // Закрываем slider-popup
-                // setOpen(false);
+                setOpen(false);
                 // Перезагружаем страницу
-                // window.location.reload();
+                getSeatTypes();
             })
             .catch((err) => {
                 if (err && err.response) {
                     // Записываем error в состояние
-                    // setError(err.response.data.message);
+                    setError(err.response.data.message);
                 }
-                // console.log(err, err.response);
+                console.log(err, err.response);
             });
     };
 
@@ -92,7 +92,7 @@ export default function SeatTypes() {
                 <div>
                     {/* // TODO: */}
                     {seatTypes.map((type) => (
-                        <SeatTypesItem seatType={type} key={type.id} />
+                        <SeatTypesItem seatType={type} getSeatTypes={getSeatTypes} key={type.id} />
                     ))}
                     <PaginationComponent
                         meta={meta}
