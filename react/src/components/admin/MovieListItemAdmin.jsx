@@ -300,7 +300,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить фильм{" "}
-                    <ESelection>№{movie.id}</ESelection> ?
+                    <ESelection>№{movie.id}</ESelection>{" "}?
                 </div>
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                     <EButton color="danger" onClick={onClickDelete}>

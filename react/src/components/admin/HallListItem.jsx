@@ -30,7 +30,7 @@ export default function HallListItem({ hall, getHalls }) {
     // Отправка put-request в БД c изменениями зала
     const onSubmit = (event) => {
         event.preventDefault();
-        
+
         const payload = { ...updatedHall };
         axiosClient
             .put(`/halls/${hall.id}`, payload)
@@ -233,7 +233,8 @@ export default function HallListItem({ hall, getHalls }) {
                 title="Удаление фильма"
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
-                    Вы действительно хотите удалить этот зал?
+                    Вы действительно хотите удалить зал{" "}
+                    <ESelection>№{hall.id}</ESelection>{" "}?
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
