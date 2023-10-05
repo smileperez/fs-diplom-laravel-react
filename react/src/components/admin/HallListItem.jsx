@@ -238,7 +238,7 @@ export default function HallListItem({ hall, getHalls }) {
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
-                    <EButton submit color="danger" onClick={onClickDelete}>
+                    <EButton color="danger" onClick={onClickDelete}>
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>

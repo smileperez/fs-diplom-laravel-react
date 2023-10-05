@@ -184,7 +184,7 @@ export default function SeatTypesItem({ seatType }) {
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
-                    <EButton submit color="danger" onClick="#">
+                    <EButton color="danger" onClick="#">
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>
