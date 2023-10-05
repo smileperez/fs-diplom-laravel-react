@@ -94,7 +94,7 @@ export default function Halls() {
                 </EButton>
             }
         >
-            {loading && <div className="text-center text-lg">Loading...</div>}
+            {loading && <div className="text-center text-lg">Загрузка данных...</div>}
 
             {!loading && (
                 <div>

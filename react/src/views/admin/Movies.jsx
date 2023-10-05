@@ -2,7 +2,6 @@ import PageComponent from "../../components/admin/PageComponent";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import MovieListItemAdmin from "../../components/admin/MovieListItemAdmin";
 import EButton from "../../components/core/EButton";
-import { useStateContext } from "../../context/ContextProvider";
 import { useEffect, useState } from "react";
 import {
     PlusCircleIcon,
@@ -123,7 +122,7 @@ export default function Movies() {
                 </EButton>
             }
         >
-            {loading && <div className="text-center text-lg">Loading...</div>}
+            {loading && <div className="text-center text-lg">Загрузка данных...</div>}
 
             {!loading && (
                 <div>

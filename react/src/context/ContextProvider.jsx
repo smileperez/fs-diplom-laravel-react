@@ -7,8 +7,6 @@ const StateContext = createContext({
     userToken: null,
     setCurrentUser: () => {},
     setUserToken: () => {},
-    movies: [],
-    halls: [],
     prices: [],
     seat_types: [],
     calendar: [],
@@ -116,8 +114,6 @@ export const ContextProvider = ({ children }) => {
     const [userToken, _setUserToken] = useState(
         localStorage.getItem("TOKEN") || ""
     );
-    const [movies, setMovies] = useState(tmpMovies);
-    const [halls, setHalls] = useState(tmpHalls);
     const [prices, setPrices] = useState(tmpPrices);
     const [seat_types, setSeat_types] = useState(tmpSeatsType);
     const [calendar, setCalendar] = useState(tmpCalendar);
@@ -138,8 +134,6 @@ export const ContextProvider = ({ children }) => {
                 setCurrentUser,
                 userToken,
                 setUserToken,
-                movies,
-                halls,
                 prices,
                 seat_types,
                 calendar,
