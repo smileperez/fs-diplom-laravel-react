@@ -4,7 +4,7 @@ import HallListItem from "../../components/admin/HallListItem";
 import EButton from "../../components/core/EButton";
 import { useStateContext } from "../../context/ContextProvider";
 import { useEffect, useState } from "react";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 import PaginationComponent from "../../components/admin/PaginationComponent";
 
@@ -154,59 +154,63 @@ export default function Halls() {
                     </div>
                     {/* Название зала */}
 
-                    {/* Количество рядов */}
-                    <div className="mt-2">
-                        <label
-                            htmlFor="rows"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Количество рядов
-                        </label>
+                    {/* Количество рядов X Количество мест в ряду */}
+                    <div className="flex items-end">
+                        {/* Количество рядов */}
                         <div className="mt-2">
-                            <input
-                                type="number"
-                                id="rows"
-                                name="rows"
-                                value={hall.rows}
-                                onChange={(event) =>
-                                    setHall({
-                                        ...hall,
-                                        rows: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
-                            />
+                            <label
+                                htmlFor="rows"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                                Количество рядов
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="number"
+                                    id="rows"
+                                    name="rows"
+                                    value={hall.rows}
+                                    onChange={(event) =>
+                                        setHall({
+                                            ...hall,
+                                            rows: event.target.value,
+                                        })
+                                    }
+                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    {/* Количество рядов */}
-
-                    {/* Количество мест в ряду */}
-                    <div className="mt-2">
-                        <label
-                            htmlFor="seats"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Количество мест в ряду
-                        </label>
+                        {/* Количество рядов */}
+                        <XMarkIcon className="w-6 h-6 mb-1.5 mx-6"></XMarkIcon>
+                        {/* Количество мест в ряду */}
                         <div className="mt-2">
-                            <input
-                                type="number"
-                                id="seats"
-                                name="seats"
-                                value={hall.seats}
-                                onChange={(event) =>
-                                    setHall({
-                                        ...hall,
-                                        seats: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
-                            />
+                            <label
+                                htmlFor="seats"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                                Количество мест
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="number"
+                                    id="seats"
+                                    name="seats"
+                                    value={hall.seats}
+                                    onChange={(event) =>
+                                        setHall({
+                                            ...hall,
+                                            seats: event.target.value,
+                                        })
+                                    }
+                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                                />
+                            </div>
                         </div>
+                        {/* Количество мест в ряду */}
                     </div>
-                    {/* Количество мест в ряду */}
+                    {/* Количество рядов X Количество мест в ряду */}
 
-                    <div className="flex justify-between mt-6">
+                    <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit>
                             <PlusCircleIcon className="h-6 w-6 mr-2" />
                             Добавить

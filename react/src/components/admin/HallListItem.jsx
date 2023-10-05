@@ -185,7 +185,7 @@ export default function HallListItem({ hall, getHalls }) {
                                 htmlFor="seats"
                                 className="block text-sm font-medium leading-6 text-gray-900"
                             >
-                                Количество мест в ряду
+                                Количество мест
                             </label>
                             <div className="mt-2">
                                 <input
@@ -210,12 +210,10 @@ export default function HallListItem({ hall, getHalls }) {
                         <label
                             htmlFor="config"
                             className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Конфигурация мест
-                        </label>
+                        ></label>
                     </div>
 
-                    <div className="flex justify-between mt-6">
+                    <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit color="regular">
                             <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                             Изменить
@@ -239,7 +237,7 @@ export default function HallListItem({ hall, getHalls }) {
                     Вы действительно хотите удалить этот зал?
                 </div>
 
-                <div className="flex justify-between mt-5">
+                <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                     <EButton submit color="danger" onClick={onClickDelete}>
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить

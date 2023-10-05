@@ -275,7 +275,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                     </div>
                     {/* Страны происхождения */}
 
-                    <div className="flex justify-between mt-6">
+                    <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit color="regular">
                             <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                             Изменить
@@ -292,7 +292,6 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
             </SlidePopupComponent>
             {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
 
-            {/* // TODO: */}
             {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
             <SlidePopupComponent
                 open={del}
@@ -303,7 +302,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                     Вы действительно хотите удалить фильм{" "}
                     <ESelection>№{movie.id}</ESelection> ?
                 </div>
-                <div className="flex justify-between mt-5">
+                <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                     <EButton color="danger" onClick={onClickDelete}>
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить

@@ -1,15 +1,21 @@
 import { useState } from "react";
 import PageComponent from "../../components/admin/PageComponent";
 import EButton from "../../components/core/EButton";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import axiosClient from "../../axios";
 
 export default function SeatTypes() {
+    // Состояния для открытия/закрытия в SlidePopupComponent
     const [open, setOpen] = useState(false);
     
     // Состояние для загрузки из БД общего списка типов мест
     const [seatTypes, setSeatTypes] = useState([]);
+
+    // Состояния для добавления нового типа места
+    const [seatType, setSeatType] = useState({
+        type: "",
+    });
 
     // Отправка request в БД с новым типом места
     const onSubmit = (event) => {
@@ -66,11 +72,11 @@ export default function SeatTypes() {
                                 type="text"
                                 id="type"
                                 name="type"
-                                value={hall.name}
+                                value={seatType.type}
                                 onChange={(event) =>
-                                    setHall({
-                                        ...hall,
-                                        name: event.target.value,
+                                    setSeatType({
+                                        ...seatType,
+                                        type: event.target.value,
                                     })
                                 }
                                 className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
@@ -79,7 +85,7 @@ export default function SeatTypes() {
                     </div>
                     {/* Название зала */}
 
-                    <div className="flex justify-between mt-6">
+                    <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit>
                             <PlusCircleIcon className="h-6 w-6 mr-2" />
                             Добавить

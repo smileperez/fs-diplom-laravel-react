@@ -295,7 +295,7 @@ export default function Movies() {
                     </div>
                     {/* Страны происхождения */}
 
-                    <div className="flex justify-between mt-6">
+                    <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit>
                             <PlusCircleIcon className="h-6 w-6 mr-2" />
                             Добавить
