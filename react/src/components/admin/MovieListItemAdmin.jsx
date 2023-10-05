@@ -1,7 +1,7 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
 import ESelection from "../core/ESelection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     TrashIcon,
@@ -9,55 +9,79 @@ import {
     PhotoIcon,
     CloudArrowUpIcon,
 } from "@heroicons/react/24/outline";
+import axiosClient from "../../axios";
 
 export default function MovieListItemAdmin({ movie }) {
-    // Состояние для открытия/закрытия SlidePopupComponent
-    const [del, setDel] = useState(false);
+    // Открытие/Закрытие SlidePopupComponent для изменения фильма
     const [change, setChange] = useState(false);
+    // Открытие/Закрытие SlidePopupComponent для удаления фильма
+    const [del, setDel] = useState(false);
 
-    // Состояния для изменения фильма
-    const [name, setName] = useState();
-    // const [img, setImg] = useState();
-    const [description, setDescription] = useState();
-    const [duration, setDuration] = useState();
-    const [origin, setOrigin] = useState();
+    const [updatedMovie, setUpdatedMovie] = useState({
+        title: movie.title,
+        img: movie.img,
+        img_url: movie.img_url,
+        description: movie.description,
+        duration: movie.duration,
+        origin: movie.origin,
+    });
 
+    // Состояние для хранения ошибки
+    const [error, setError] = useState("");
+
+    // Функция подгрузки изображения из input
+    const onImageChoose = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            setUpdatedMovie({
+                ...updatedMovie,
+                img: file,
+                img_url: reader.result,
+            });
+            event.target.value = "";
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Отправка put-request в БД c изменениями фильма
+    const onSubmit = (event) => {
+        event.preventDefault();
+
+        const payload = { ...updatedMovie };
+        if (payload.img) {
+            payload.img = payload.img_url;
+        }
+
+        delete payload.img_url;
+
+        axiosClient
+            .put(`/movies/${movie.id}`, payload)
+            .then((response) => {
+                console.log(response);
+                // Закрываем slider-popup
+                setChange(false);
+                // Перезагружаем страницу
+                window.location.reload();
+            })
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
+                }
+                console.log(err, err.response);
+            });
+    };
+
+    // FIXME:
     const onClickDelete = (event) => {
         event.preventDefault();
         console.log(`Отправка запроса удаления фильма №${movie.id}`);
-        // TODO:
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
-    };
-
-    const onClickUpdate = (event) => {
-        event.preventDefault();
-        console.log(`Отправка запроса изменения данных фильма №${movie.id}`);
-        // TODO:
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
-    };
-
-    // Функция подгрузки фото и показ её в превью
-    const onImageChoose = (ev) => {
-        const file = ev.target.files[0];
-
         // FIXME:
-        const reader = new FileReader();
-        reader.onload = () => {
-            setSurvey({
-                ...survey,
-                image: file,
-                image_url: reader.result,
-            });
-
-            ev.target.value = "";
-        };
-        reader.readAsDataURL(file);
+        // axiosClient.post("/signout").then((res) => {
+        //     setCurrentUser({});
+        //     setUserToken(null);
+        // });
     };
 
     return (
@@ -88,13 +112,185 @@ export default function MovieListItemAdmin({ movie }) {
                         <EButton circle onClick={() => setChange(true)}>
                             <AdjustmentsHorizontalIcon className="w-6 h-7" />
                         </EButton>
-                        <EButton circle color="danger" onClick={() => setDel(true)}>
+                        <EButton
+                            circle
+                            color="danger"
+                            onClick={() => setDel(true)}
+                        >
                             <TrashIcon className="w-6 h-7" />
                         </EButton>
                     </div>
                 </div>
             </section>
 
+            {/* // TODO: */}
+            {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
+            <SlidePopupComponent
+                open={change}
+                setOpen={setChange}
+                title="Изменение фильма"
+            >
+                {/* FIXME: */}
+                <form onSubmit={onSubmit} action="#" method="POST">
+                    {/* Название фильма */}
+                    <div>
+                        <label
+                            htmlFor="title"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Название фильма{" "}
+                            <span className="text-red-500">*</span>
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value={updatedMovie.title}
+                                onChange={(event) =>
+                                    setUpdatedMovie({
+                                        ...updatedMovie,
+                                        title: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Название фильма */}
+
+                    {/* Загрузка картинки */}
+                    <div className="mt-2">
+                        <label className="block text-sm font-medium text-gray-900">
+                            Загрузить постер
+                        </label>
+
+                        <div className="mt-1 flex items-center">
+                            {updatedMovie.img_url && (
+                                <img
+                                    src={updatedMovie.img_url}
+                                    alt=""
+                                    className="w-32 h-32 object-cover"
+                                />
+                            )}
+                            {!updatedMovie.img_url && (
+                                <span className="flex justify-center items-center text-[#63536C] h-12 w-12 overflow-hidden rounded-full bg-gray-200">
+                                    <PhotoIcon className="w-8 h-8" />
+                                </span>
+                            )}
+                            <button
+                                type="button"
+                                className="relative flex items-center text-sm transition duration-500 outline-none font-semibold whitespace-nowrap p-2 px-4 ml-5 rounded-md bg-[#63536C] text-gray-300 hover:bg-gray-700 hover:text-white active:bg-[#89639e] active:duration-0"
+                            >
+                                <input
+                                    type="file"
+                                    onChange={onImageChoose}
+                                    className="block absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer "
+                                />
+                                Выбрать
+                            </button>
+                        </div>
+                    </div>
+                    {/* Загрузка картинки */}
+
+                    {/* Описание */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="description"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Краткое описание фильма
+                        </label>
+
+                        <div className="mt-2">
+                            <textarea
+                                rows={3}
+                                id="description"
+                                name="description"
+                                value={updatedMovie.description}
+                                onChange={(event) =>
+                                    setUpdatedMovie({
+                                        ...updatedMovie,
+                                        description: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Описание */}
+
+                    {/* Длительность */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="duration"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Длительность (мин)
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="number"
+                                id="duration"
+                                name="duration"
+                                value={updatedMovie.duration}
+                                onChange={(event) =>
+                                    setUpdatedMovie({
+                                        ...updatedMovie,
+                                        duration: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Длительность */}
+
+                    {/* Страны происхождения */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="origin"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Страны происхождения (через запятую)
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                id="origin"
+                                name="origin"
+                                value={updatedMovie.origin}
+                                onChange={(event) =>
+                                    setUpdatedMovie({
+                                        ...updatedMovie,
+                                        origin: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Страны происхождения */}
+
+                    <div className="flex justify-between mt-6">
+                        <EButton submit color="regular">
+                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
+                            Изменить
+                        </EButton>
+                        <EButton
+                            color="regular"
+                            onClick={() => setChange(false)}
+                        >
+                            <XCircleIcon className="h-6 w-6 mr-2" />
+                            Отменить
+                        </EButton>
+                    </div>
+                </form>
+            </SlidePopupComponent>
+            {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
+
+            {/* // TODO: */}
+            {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
             <SlidePopupComponent
                 open={del}
                 setOpen={setDel}
@@ -117,136 +313,7 @@ export default function MovieListItemAdmin({ movie }) {
                     </div>
                 </form>
             </SlidePopupComponent>
-            <SlidePopupComponent
-                open={change}
-                setOpen={setChange}
-                title="Изменение фильма"
-            >
-                {/* FIXME: */}
-                <form onSubmit="#" action="#" method="POST">
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Название фильма{" "}
-                            <span className="text-red-500">*</span>
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="name"
-                                name="name"
-                                type="name"
-                                required
-                                value={name}
-                                onChange={(ev) => setName(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="img"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Загрузить постер
-                        </label>
-                        <PhotoIcon
-                            className="mx-auto h-12 w-12 text-gray-300"
-                            aria-hidden="true"
-                        />
-                        <div className="mt-2">
-                            <button
-                                type="button"
-                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                            >
-                                <input
-                                    type="file"
-                                    onChange={onImageChoose}
-                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                                Добавить
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="description"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Краткое описание фильма
-                        </label>
-                        <div className="mt-2">
-                            <textarea
-                                id="description"
-                                name="description"
-                                type="description"
-                                value={description}
-                                rows={3}
-                                defaultValue={""}
-                                onChange={(ev) =>
-                                    setDescription(ev.target.value)
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="duration"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Длительность (мин)
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="duration"
-                                name="duration"
-                                type="duration"
-                                value={duration}
-                                onChange={(ev) => setDuration(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="origin"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Страны происхождения (через запятую)
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="origin"
-                                name="origin"
-                                type="origin"
-                                value={origin}
-                                onChange={(ev) => setOrigin(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex justify-between mt-6">
-                        <EButton submit color="regular">
-                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
-                            Изменить
-                        </EButton>
-                        <EButton
-                            color="regular"
-                            onClick={() => setChange(false)}
-                        >
-                            <XCircleIcon className="h-6 w-6 mr-2" />
-                            Отменить
-                        </EButton>
-                    </div>
-                </form>
-            </SlidePopupComponent>
+            {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
         </>
     );
 }

@@ -69,7 +69,6 @@ export default function Movies() {
     // Функция подгрузки изображения из input
     const onImageChoose = (event) => {
         const file = event.target.files[0];
-
         const reader = new FileReader();
         reader.onload = () => {
             setMovie({
@@ -77,7 +76,6 @@ export default function Movies() {
                 img: file,
                 img_url: reader.result,
             });
-
             event.target.value = "";
         };
         reader.readAsDataURL(file);
@@ -137,7 +135,7 @@ export default function Movies() {
                 </div>
             )}
 
-            {/* Slide-Popup для добавления нового фильма */}
+            {/* Slide-Popup для ДОБАВЛЕНИЯ нового фильма */}
             <SlidePopupComponent
                 open={open}
                 setOpen={setOpen}
@@ -303,6 +301,7 @@ export default function Movies() {
                     </div>
                 </form>
             </SlidePopupComponent>
+            {/* Slide-Popup для ДОБАВЛЕНИЯ нового фильма */}
         </PageComponent>
     );
 }

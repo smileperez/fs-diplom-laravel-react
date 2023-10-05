@@ -60,13 +60,13 @@ class MoviesController extends Controller
     {
         $data = $request->validated();
 
-        if (isset($data['image'])) {
-            $relativePath = $this->saveImage($data['image']);
-            $data['image'] = $relativePath;
+        if (isset($data['img'])) {
+            $relativePath = $this->saveImage($data['img']);
+            $data['img'] = $relativePath;
 
             // Если существует ранее загруженная картинка, удаляем её
-            if ($movie->image) {
-                $absolutePath = public_path($movie->image);
+            if ($movie->img) {
+                $absolutePath = public_path($movie->img);
                 File::delete($absolutePath);
             }
         }
@@ -85,8 +85,8 @@ class MoviesController extends Controller
         $movie->delete();
 
         // Если есть старая картинка, тоже удаляем её
-        if ($movie->image) {
-            $absolutePath = public_path($movie->image);
+        if ($movie->img) {
+            $absolutePath = public_path($movie->img);
             File::delete($absolutePath);
         }
 
