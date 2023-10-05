@@ -7,6 +7,8 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./views/admin/Dashboard";
 import Movies from "./views/admin/Movies";
 import Halls from "./views/admin/Halls";
+import SeatTypes from "./views/admin/SeatTypes";
+import Config from "./views/admin/Config";
 import Prices from "./views/admin/Prices";
 import Sessions from "./views/admin/Sessions";
 import Users from "./views/admin/Users";
@@ -15,6 +17,7 @@ import Tickets from "./views/guest/Tickets";
 // Auth
 import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";
+
 
 const router = createBrowserRouter([
     {
@@ -32,6 +35,14 @@ const router = createBrowserRouter([
             {
                 path: "/admin/halls",
                 element: <Halls />,
+            },
+            {
+                path: "/admin/seattypes",
+                element: <SeatTypes />,
+            },
+            {
+                path: "/admin/config",
+                element: <Config />,
             },
             {
                 path: "/admin/prices",

@@ -73,7 +73,7 @@ export default function Halls() {
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
-                window.location.reload();
+                getHalls();
             })
             .catch((err) => {
                 if (err && err.response) {
@@ -94,12 +94,18 @@ export default function Halls() {
                 </EButton>
             }
         >
-            {loading && <div className="text-center text-lg">Загрузка данных...</div>}
+            {loading && (
+                <div className="text-center text-lg">Загрузка данных...</div>
+            )}
 
             {!loading && (
                 <div>
                     {halls.map((hall) => (
-                        <HallListItem hall={hall} getHalls={getHalls} key={hall.id} />
+                        <HallListItem
+                            hall={hall}
+                            getHalls={getHalls}
+                            key={hall.id}
+                        />
                     ))}
                     <PaginationComponent
                         meta={meta}
@@ -206,7 +212,7 @@ export default function Halls() {
                             Добавить
                         </EButton>
 
-                        <EButton onClick={() => setOpen(false)}>
+                        <EButton color="gray" onClick={() => setOpen(false)}>
                             <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
                         </EButton>

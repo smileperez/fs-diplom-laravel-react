@@ -99,7 +99,7 @@ export default function Movies() {
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
-                window.location.reload();
+                getMovies();
             })
             .catch((err) => {
                 if (err && err.response) {
@@ -116,16 +116,24 @@ export default function Movies() {
             button={
                 <EButton color="regular" onClick={() => setOpen(true)}>
                     <PlusCircleIcon className="h-6 w-6" />
-                    <div className="hidden md:ml-2 md:block">Добавить фильм</div>
+                    <div className="hidden md:ml-2 md:block">
+                        Добавить фильм
+                    </div>
                 </EButton>
             }
         >
-            {loading && <div className="text-center text-lg">Загрузка данных...</div>}
+            {loading && (
+                <div className="text-center text-lg">Загрузка данных...</div>
+            )}
 
             {!loading && (
                 <div>
                     {movies.map((movie) => (
-                        <MovieListItemAdmin movie={movie} getMovies={getMovies} key={movie.id} />
+                        <MovieListItemAdmin
+                            movie={movie}
+                            getMovies={getMovies}
+                            key={movie.id}
+                        />
                     ))}
 
                     <PaginationComponent
@@ -293,7 +301,7 @@ export default function Movies() {
                             Добавить
                         </EButton>
 
-                        <EButton onClick={() => setOpen(false)}>
+                        <EButton color="gray" onClick={() => setOpen(false)}>
                             <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
                         </EButton>

@@ -281,7 +281,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                             Изменить
                         </EButton>
                         <EButton
-                            color="regular"
+                            color="gray"
                             onClick={() => setChange(false)}
                         >
                             <XCircleIcon className="h-6 w-6 mr-2" />
@@ -308,7 +308,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>
-                    <EButton color="regular" onClick={() => setDel(false)}>
+                    <EButton color="gray" onClick={() => setDel(false)}>
                         <XCircleIcon className="h-6 w-6 mr-2" />
                         Отменить
                     </EButton>

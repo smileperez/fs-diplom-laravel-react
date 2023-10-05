@@ -85,6 +85,17 @@ export default function EButton({
                     "active:duration-0",
                 ];
                 break;
+            case "gray":
+                classes = [
+                    ...classes,
+                    "bg-gray-600",
+                    "text-gray-200",
+                    "hover:bg-gray-700",
+                    "hover:text-white",
+                    "active:bg-gray-500",
+                    "active:duration-0",
+                ];
+                break;
         }
     }
 

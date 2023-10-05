@@ -9,6 +9,8 @@ import {
     StarIcon,
     CurrencyDollarIcon,
     ArrowLeftOnRectangleIcon,
+    RectangleGroupIcon,
+    Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import LogoAdminComponent from "./LogoAdminComponent";
@@ -43,8 +45,18 @@ export default function SidebarComponent() {
         },
         {
             name: "Залы",
-            icon: <SquaresPlusIcon className="block w-6 h-7" />,
+            icon: <RectangleGroupIcon className="block w-6 h-7" />,
             to: "/admin/halls",
+        },
+        {
+            name: "Типы мест",
+            icon: <SquaresPlusIcon className="block w-6 h-7" />,
+            to: "/admin/seatstype",
+        },
+        {
+            name: "Настройка залов",
+            icon: <Cog6ToothIcon className="block w-6 h-7" />,
+            to: "/admin/config",
         },
         {
             name: "Цены",
@@ -92,7 +104,7 @@ export default function SidebarComponent() {
                 />
             </div>
 
-            <div className="flex-1 flex flex-col p-4 space-y-3">
+            <div className="flex-1 flex flex-col p-4 space-y-2">
                 {navigation.map((item) => (
                     <NavLink
                         key={item.name}
@@ -103,11 +115,11 @@ export default function SidebarComponent() {
                                 isActive
                                     ? "bg-[#89639e] text-white transition duration-0"
                                     : "text-gray-300 hover:bg-gray-700 hover:text-white transition duration-500",
-                                "rounded-md px-3 py-2 text-sm font-medium"
+                                "rounded-md px-2 py-1"
                             )
                         }
                     >
-                        <div className="flex items-center text-lg space-x-3">
+                        <div className={`flex items-center text-base font-medium space-x-3 + ${!open && "justify-center"}`}>
                             <div>{item.icon}</div>
                             <div className={`${!open && "hidden"}`}>
                                 {item.name}

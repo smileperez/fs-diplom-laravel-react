@@ -1,12 +1,14 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
 import ESelection from "../core/ESelection";
+import ESeat from "../core/ESeat";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     CloudArrowUpIcon,
     TrashIcon,
     XCircleIcon,
+    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
@@ -149,67 +151,76 @@ export default function HallListItem({ hall, getHalls }) {
                     </div>
                     {/* Название зала */}
 
-                    {/* Количество рядов */}
-                    <div className="mt-2">
-                        <label
-                            htmlFor="rows"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Количество рядов
-                        </label>
+                    {/* Количество рядов X Количество мест в ряду */}
+                    <div className="flex items-end">
+                        {/* Количество рядов */}
                         <div className="mt-2">
-                            <input
-                                type="number"
-                                id="rows"
-                                name="rows"
-                                value={updatedHall.rows}
-                                onChange={(event) =>
-                                    setUpdatedHall({
-                                        ...updatedHall,
-                                        rows: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
-                            />
+                            <label
+                                htmlFor="rows"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                                Количество рядов
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="number"
+                                    id="rows"
+                                    name="rows"
+                                    value={updatedHall.rows}
+                                    onChange={(event) =>
+                                        setUpdatedHall({
+                                            ...updatedHall,
+                                            rows: event.target.value,
+                                        })
+                                    }
+                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                                />
+                            </div>
                         </div>
+                        {/* Количество рядов */}
+                        <XMarkIcon className="w-6 h-6 mb-1.5 mx-6"></XMarkIcon>
+                        {/* Количество мест в ряду */}
+                        <div className="mt-2">
+                            <label
+                                htmlFor="seats"
+                                className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                                Количество мест в ряду
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="number"
+                                    id="seats"
+                                    name="seats"
+                                    value={updatedHall.seats}
+                                    onChange={(event) =>
+                                        setUpdatedHall({
+                                            ...updatedHall,
+                                            seats: event.target.value,
+                                        })
+                                    }
+                                    className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+                        {/* Количество мест в ряду */}
                     </div>
-                    {/* Количество рядов */}
 
-                    {/* Количество мест в ряду */}
                     <div className="mt-2">
                         <label
-                            htmlFor="seats"
+                            htmlFor="config"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Количество мест в ряду
+                            Конфигурация мест
                         </label>
-                        <div className="mt-2">
-                            <input
-                                type="number"
-                                id="seats"
-                                name="seats"
-                                value={updatedHall.seats}
-                                onChange={(event) =>
-                                    setUpdatedHall({
-                                        ...updatedHall,
-                                        seats: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
-                            />
-                        </div>
                     </div>
-                    {/* Количество мест в ряду */}
 
                     <div className="flex justify-between mt-6">
                         <EButton submit color="regular">
                             <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                             Изменить
                         </EButton>
-                        <EButton
-                            color="regular"
-                            onClick={() => setChange(false)}
-                        >
+                        <EButton color="gray" onClick={() => setChange(false)}>
                             <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
                         </EButton>
@@ -233,7 +244,7 @@ export default function HallListItem({ hall, getHalls }) {
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>
-                    <EButton color="regular" onClick={() => setDel(false)}>
+                    <EButton color="gray" onClick={() => setDel(false)}>
                         <XCircleIcon className="h-6 w-6 mr-2" />
                         Отменить
                     </EButton>
