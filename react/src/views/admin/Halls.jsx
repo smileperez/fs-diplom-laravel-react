@@ -31,16 +31,6 @@ export default function Halls() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // Загрузка списка залов при обновлении страницы
-    useEffect(() => {
-        setLoading(true);
-        axiosClient.get("/halls").then(({ data }) => {
-            setHalls(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
-    }, []);
-
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getHalls = (url) => {
         url = url || "/halls";

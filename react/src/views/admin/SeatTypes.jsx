@@ -11,9 +11,8 @@ export default function SeatTypes() {
     // Состояние для загрузки из БД общего списка типов мест
     const [seatTypes, setSeatTypes] = useState([]);
 
-    // FIXME:
     // Соятоние загрузки данных из БД
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
     const [meta, setMeta] = useState({});
@@ -30,24 +29,14 @@ export default function SeatTypes() {
     // Состояние для хранения ошибки
     // const [error, setError] = useState("");
 
-    // Загрузка списка типов мест при обновлении страницы
-    useEffect(() => {
-        // setLoading(true);
-        axiosClient.get("/seattypes").then(({ data }) => {
-            setSeatTypes(data.data);
-            // setMeta(data.meta);
-            // setLoading(false);
-        });
-    }, []);
-
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getSeatTypes = (url) => {
         url = url || "/seattypes";
-        // setLoading(true);
+        setLoading(true);
         axiosClient.get(url).then(({ data }) => {
             setSeatTypes(data.data);
             setMeta(data.meta);
-            // setLoading(false);
+            setLoading(false);
         });
     };
 
@@ -95,21 +84,23 @@ export default function SeatTypes() {
                 </EButton>
             }
         >
-            {/* FIXME: */}
-            {/* {loading && (
+            {loading && (
                 <div className="text-center text-lg">Загрузка данных...</div>
-            )} */}
-            {/* // FIXME: */}
-            {/* {!loading && ( */}
-            <div>
-                {/* // TODO: */}
-                {seatTypes.map((type) => (
-                    <SeatTypesItem seatType={type} key={type.id} />
-                ))}
-                <PaginationComponent meta={meta} onPageClick={onPageClick} />
-            </div>
-            {/* // FIXME: */}
-            {/* )} */}
+            )}
+
+            {!loading && (
+                <div>
+                    {/* // TODO: */}
+                    {seatTypes.map((type) => (
+                        <SeatTypesItem seatType={type} key={type.id} />
+                    ))}
+                    <PaginationComponent
+                        meta={meta}
+                        onPageClick={onPageClick}
+                    />
+                </div>
+            )}
+            
             {/* Slide-Popup для ДОБАВЛЕНИЯ нового типа места */}
             <SlidePopupComponent
                 open={open}

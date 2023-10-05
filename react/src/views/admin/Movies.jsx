@@ -37,16 +37,6 @@ export default function Movies() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // Загрузка списка фильмов при обновлении страницы
-    useEffect(() => {
-        setLoading(true);
-        axiosClient.get("/movies").then(({ data }) => {
-            setMovies(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
-    }, []);
-
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getMovies = (url) => {
         url = url || "/movies";
