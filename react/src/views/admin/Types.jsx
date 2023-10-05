@@ -5,7 +5,7 @@ import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import axiosClient from "../../axios";
 import PaginationComponent from "../../components/admin/PaginationComponent";
-import TypesItem from "../../components/admin/TypesItem";
+import TypeItem from "../../components/admin/TypeItem";
 
 export default function SeatTypes() {
     // Состояние для загрузки из БД общего списка типов мест
@@ -93,7 +93,7 @@ export default function SeatTypes() {
                 <div>
                     {/* // TODO: */}
                     {types.map((item) => (
-                        <TypesItem seatType={item} getTypes={getTypes} key={item.id} />
+                        <TypeItem seatType={item} getTypes={getTypes} key={item.id} />
                     ))}
                     <PaginationComponent
                         meta={meta}
