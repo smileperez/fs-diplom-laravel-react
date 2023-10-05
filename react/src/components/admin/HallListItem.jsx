@@ -1,7 +1,6 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
 import ESelection from "../core/ESelection";
-import ESeat from "../core/ESeat";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
@@ -31,7 +30,7 @@ export default function HallListItem({ hall, getHalls }) {
     // Отправка put-request в БД c изменениями зала
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("Клик");
+        
         const payload = { ...updatedHall };
         axiosClient
             .put(`/halls/${hall.id}`, payload)

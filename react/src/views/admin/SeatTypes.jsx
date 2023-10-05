@@ -1,21 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageComponent from "../../components/admin/PageComponent";
 import EButton from "../../components/core/EButton";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import axiosClient from "../../axios";
+import PaginationComponent from "../../components/admin/PaginationComponent";
+import SeatTypesItem from "../../components/admin/SeatTypesItem";
 
 export default function SeatTypes() {
-    // Состояния для открытия/закрытия в SlidePopupComponent
-    const [open, setOpen] = useState(false);
-    
     // Состояние для загрузки из БД общего списка типов мест
     const [seatTypes, setSeatTypes] = useState([]);
+
+    // FIXME:
+    // Соятоние загрузки данных из БД
+    // const [loading, setLoading] = useState(false);
+
+    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
+    const [meta, setMeta] = useState({});
+
+    // Состояния для открытия/закрытия в SlidePopupComponent
+    const [open, setOpen] = useState(false);
 
     // Состояния для добавления нового типа места
     const [seatType, setSeatType] = useState({
         type: "",
     });
+
+    // FIXME:
+    // Состояние для хранения ошибки
+    // const [error, setError] = useState("");
+
+    // Загрузка списка типов мест при обновлении страницы
+    useEffect(() => {
+        // setLoading(true);
+        axiosClient.get("/seattypes").then(({ data }) => {
+            setSeatTypes(data.data);
+            // setMeta(data.meta);
+            // setLoading(false);
+        });
+    }, []);
+
+    // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
+    const getSeatTypes = (url) => {
+        url = url || "/seattypes";
+        // setLoading(true);
+        axiosClient.get(url).then(({ data }) => {
+            setSeatTypes(data.data);
+            setMeta(data.meta);
+            // setLoading(false);
+        });
+    };
+
+    // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
+    useEffect(() => {
+        getSeatTypes();
+    }, []);
+
+    // Callback для пагинации (компонент PaginationComponent)
+    const onPageClick = (link) => {
+        getSeatTypes(link.url);
+    };
 
     // Отправка request в БД с новым типом места
     const onSubmit = (event) => {
@@ -33,9 +77,9 @@ export default function SeatTypes() {
             .catch((err) => {
                 if (err && err.response) {
                     // Записываем error в состояние
-                    setError(err.response.data.message);
+                    // setError(err.response.data.message);
                 }
-                console.log(err, err.response);
+                // console.log(err, err.response);
             });
     };
 
@@ -51,6 +95,21 @@ export default function SeatTypes() {
                 </EButton>
             }
         >
+            {/* FIXME: */}
+            {/* {loading && (
+                <div className="text-center text-lg">Загрузка данных...</div>
+            )} */}
+            {/* // FIXME: */}
+            {/* {!loading && ( */}
+            <div>
+                {/* // TODO: */}
+                {seatTypes.map((type) => (
+                    <SeatTypesItem seatType={type} key={type.id} />
+                ))}
+                <PaginationComponent meta={meta} onPageClick={onPageClick} />
+            </div>
+            {/* // FIXME: */}
+            {/* )} */}
             {/* Slide-Popup для ДОБАВЛЕНИЯ нового типа места */}
             <SlidePopupComponent
                 open={open}
