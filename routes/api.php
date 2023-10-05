@@ -3,8 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HallsController;
 use App\Http\Controllers\MoviesController;
-use App\Http\Controllers\SeatTypesController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TypesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/current', [AuthController::class, 'current']);
     Route::apiResource('movies', MoviesController::class);
     Route::apiResource('halls', HallsController::class);
-    Route::apiResource('seattypes', SeatTypesController::class);
+    Route::apiResource('types', TypesController::class);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);
