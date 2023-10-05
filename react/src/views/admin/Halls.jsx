@@ -24,8 +24,8 @@ export default function Halls() {
     // Состояния для добавления нового зала
     const [hall, setHall] = useState({
         name: "",
-        rows: null,
-        seats: null,
+        rows: "",
+        seats: "",
     });
 
     // Состояние для хранения ошибки
@@ -99,7 +99,7 @@ export default function Halls() {
             {!loading && (
                 <div>
                     {halls.map((hall) => (
-                        <HallListItem hall={hall} key={hall.id} />
+                        <HallListItem hall={hall} getHalls={getHalls} key={hall.id} />
                     ))}
                     <PaginationComponent
                         meta={meta}

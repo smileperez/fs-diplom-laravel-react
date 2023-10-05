@@ -37,7 +37,7 @@ export default function Prices() {
                     </div>
                     <div>
                         {seat_types.map((seat) => (
-                            <div className="mt-1">{seat.type}</div>
+                            <div key={seat.id} className="mt-1">{seat.type}</div>
                         ))}
                     </div>
                 </>

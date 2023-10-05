@@ -125,7 +125,7 @@ export default function Movies() {
             {!loading && (
                 <div>
                     {movies.map((movie) => (
-                        <MovieListItemAdmin movie={movie} key={movie.id} />
+                        <MovieListItemAdmin movie={movie} getMovies={getMovies} key={movie.id} />
                     ))}
 
                     <PaginationComponent

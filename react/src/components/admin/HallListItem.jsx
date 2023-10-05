@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function HallListItem({ hall }) {
+export default function HallListItem({ hall, getHalls }) {
     // Открытие/Закрытие SlidePopupComponent для изменения зала
     const [change, setChange] = useState(false);
     // Открытие/Закрытие SlidePopupComponent для удаления зала
@@ -37,8 +37,8 @@ export default function HallListItem({ hall }) {
                 console.log(response);
                 // Закрываем slider-popup
                 setChange(false);
-                // Перезагружаем страницу
-                window.location.reload();
+                // Заново перезагружаем из БД все залы
+                getHalls();
             })
             .catch((err) => {
                 if (err && err.response) {
@@ -226,22 +226,20 @@ export default function HallListItem({ hall }) {
                 setOpen={setDel}
                 title="Удаление фильма"
             >
-                <form onSubmit="#" action="#" method="POST">
-                    <div className="block text-sm font-medium leading-6 text-gray-900">
-                        Вы действительно хотите удалить этот зал?
-                    </div>
+                <div className="block text-sm font-medium leading-6 text-gray-900">
+                    Вы действительно хотите удалить этот зал?
+                </div>
 
-                    <div className="flex justify-between mt-5">
-                        <EButton submit color="danger">
-                            <TrashIcon className="h-6 w-6 mr-2" />
-                            Удалить
-                        </EButton>
-                        <EButton color="regular" onClick={() => setDel(false)}>
-                            <XCircleIcon className="h-6 w-6 mr-2" />
-                            Отменить
-                        </EButton>
-                    </div>
-                </form>
+                <div className="flex justify-between mt-5">
+                    <EButton submit color="danger">
+                        <TrashIcon className="h-6 w-6 mr-2" />
+                        Удалить
+                    </EButton>
+                    <EButton color="regular" onClick={() => setDel(false)}>
+                        <XCircleIcon className="h-6 w-6 mr-2" />
+                        Отменить
+                    </EButton>
+                </div>
             </SlidePopupComponent>
             {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
         </>

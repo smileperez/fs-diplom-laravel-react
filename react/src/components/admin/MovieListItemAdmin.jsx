@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function MovieListItemAdmin({ movie }) {
+export default function MovieListItemAdmin({ movie, getMovies }) {
     // Открытие/Закрытие SlidePopupComponent для изменения фильма
     const [change, setChange] = useState(false);
     // Открытие/Закрытие SlidePopupComponent для удаления фильма
@@ -59,11 +59,10 @@ export default function MovieListItemAdmin({ movie }) {
         axiosClient
             .put(`/movies/${movie.id}`, payload)
             .then((response) => {
-                console.log(response);
                 // Закрываем slider-popup
                 setChange(false);
-                // Перезагружаем страницу
-                window.location.reload();
+                // Заново перезагружаем из БД все фильмы
+                getMovies();
             })
             .catch((err) => {
                 if (err && err.response) {
@@ -74,15 +73,14 @@ export default function MovieListItemAdmin({ movie }) {
             });
     };
 
-    // FIXME:
+    // TODO:
     const onClickDelete = (event) => {
-        event.preventDefault();
-        console.log(`Отправка запроса удаления фильма №${movie.id}`);
-        // FIXME:
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
+        axiosClient.delete(`/movies/${movie.id}`).then((response) => {
+            // Закрываем slider-popup
+            setChange(false);
+            // Заново перезагружаем из БД все фильмы
+            getMovies();
+        });
     };
 
     return (
@@ -135,7 +133,7 @@ export default function MovieListItemAdmin({ movie }) {
                         {error}
                     </div>
                 )}
-                
+
                 <form onSubmit={onSubmit} action="#" method="POST">
                     {/* Название фильма */}
                     <div>
@@ -301,22 +299,20 @@ export default function MovieListItemAdmin({ movie }) {
                 setOpen={setDel}
                 title="Удаление фильма"
             >
-                <form onSubmit="#" action="#" method="POST">
-                    <div className="block text-sm font-medium leading-6 text-gray-900">
-                        Вы действительно хотите удалить фильм{" "}
-                        <ESelection>№{movie.id}</ESelection> ?
-                    </div>
-                    <div className="flex justify-between mt-5">
-                        <EButton submit color="danger">
-                            <TrashIcon className="h-6 w-6 mr-2" />
-                            Удалить
-                        </EButton>
-                        <EButton color="regular" onClick={() => setDel(false)}>
-                            <XCircleIcon className="h-6 w-6 mr-2" />
-                            Отменить
-                        </EButton>
-                    </div>
-                </form>
+                <div className="block text-sm font-medium leading-6 text-gray-900">
+                    Вы действительно хотите удалить фильм{" "}
+                    <ESelection>№{movie.id}</ESelection> ?
+                </div>
+                <div className="flex justify-between mt-5">
+                    <EButton color="danger" onClick={onClickDelete}>
+                        <TrashIcon className="h-6 w-6 mr-2" />
+                        Удалить
+                    </EButton>
+                    <EButton color="regular" onClick={() => setDel(false)}>
+                        <XCircleIcon className="h-6 w-6 mr-2" />
+                        Отменить
+                    </EButton>
+                </div>
             </SlidePopupComponent>
             {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
         </>
