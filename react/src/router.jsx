@@ -7,7 +7,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./views/admin/Dashboard";
 import Movies from "./views/admin/Movies";
 import Halls from "./views/admin/Halls";
-import SeatTypes from "./views/admin/SeatTypes";
+import Types from "./views/admin/Types";
 import Config from "./views/admin/Config";
 import Prices from "./views/admin/Prices";
 import Sessions from "./views/admin/Sessions";
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
                 element: <Halls />,
             },
             {
-                path: "/admin/seattypes",
-                element: <SeatTypes />,
+                path: "/admin/types",
+                element: <Types />,
             },
             {
                 path: "/admin/config",

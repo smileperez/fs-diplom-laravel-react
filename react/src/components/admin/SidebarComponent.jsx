@@ -51,7 +51,7 @@ export default function SidebarComponent() {
         {
             name: "Типы мест",
             icon: <SquaresPlusIcon className="block w-6 h-7" />,
-            to: "/admin/seattypes",
+            to: "/admin/types",
         },
         {
             name: "Настройка залов",
