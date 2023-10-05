@@ -20,7 +20,7 @@ export default function SeatTypes() {
     // Отправка request в БД с новым типом места
     const onSubmit = (event) => {
         event.preventDefault();
-        const payload = { ...seatTypes };
+        const payload = { ...seatType };
         axiosClient
             .post("/seattypes", payload)
             .then((response) => {
