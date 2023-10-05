@@ -6,7 +6,6 @@ use App\Http\Requests\StoreSeatTypesRequest;
 use App\Http\Requests\UpdateSeatTypesRequest;
 use App\Http\Resources\SeatTypesResource;
 use App\Models\SeatTypes;
-use Illuminate\Http\Request;
 
 class SeatTypesController extends Controller
 {
