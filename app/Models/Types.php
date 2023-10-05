@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Types extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['type', 'color', 'created_at', 'updated_at'];
 }

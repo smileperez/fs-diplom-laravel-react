@@ -11,7 +11,7 @@ class UpdateTypesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'type' => 'required|string|max:100',
+            'color' => 'string|min:6|max:6'
         ];
     }
 }

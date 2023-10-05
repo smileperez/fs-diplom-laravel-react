@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TypesResource;
 use App\Models\Types;
 use App\Http\Requests\StoreTypesRequest;
 use App\Http\Requests\UpdateTypesRequest;
@@ -13,7 +14,9 @@ class TypesController extends Controller
      */
     public function index()
     {
-        //
+        return TypesResource::collection(
+            Types::orderBy('id', 'desc')->paginate(2)
+        );
     }
 
     /**
@@ -21,7 +24,11 @@ class TypesController extends Controller
      */
     public function store(StoreTypesRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $types = Types::create($data);
+
+        return new TypesResource($types);
     }
 
     /**
@@ -29,7 +36,7 @@ class TypesController extends Controller
      */
     public function show(Types $types)
     {
-        //
+        return new TypesResource($types);
     }
 
     /**
@@ -37,7 +44,11 @@ class TypesController extends Controller
      */
     public function update(UpdateTypesRequest $request, Types $types)
     {
-        //
+        $data = $request->validated();
+
+        $types->update($data);
+
+        return new TypesResource($types);
     }
 
     /**
@@ -45,6 +56,7 @@ class TypesController extends Controller
      */
     public function destroy(Types $types)
     {
-        //
+        $types-delete();
+        return response('', 204);
     }
 }
