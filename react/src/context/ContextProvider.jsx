@@ -7,6 +7,7 @@ const StateContext = createContext({
     userToken: null,
     setCurrentUser: () => {},
     setUserToken: () => {},
+    seats: [],
     prices: [],
     seat_types: [],
     calendar: [],
@@ -15,19 +16,19 @@ const StateContext = createContext({
 const tmpSeats = [
     {
         id: 1,
-        name: 'Обычный 1',
+        name: "Обычный 1",
         rows: 7,
         seats: 12,
     },
     {
         id: 2,
-        name: 'Обычный 2',
+        name: "Обычный 2",
         rows: 10,
         seats: 10,
     },
     {
         id: 3,
-        name: 'Black',
+        name: "Black",
         rows: 4,
         seats: 4,
     },
@@ -63,11 +64,11 @@ const tmpPrices = [
 const tmpSeatsType = [
     {
         id: 1,
-        type: 'Обычный',
+        type: "Обычный",
     },
     {
         id: 2,
-        type: 'VIP',
+        type: "VIP",
     },
 ];
 
@@ -116,6 +117,7 @@ export const ContextProvider = ({ children }) => {
     );
     const [prices, setPrices] = useState(tmpPrices);
     const [seat_types, setSeat_types] = useState(tmpSeatsType);
+    const [seats, setSeats] = useState(tmpSeats);
     const [calendar, setCalendar] = useState(tmpCalendar);
 
     const setUserToken = (token) => {
@@ -136,6 +138,7 @@ export const ContextProvider = ({ children }) => {
                 setUserToken,
                 prices,
                 seat_types,
+                seats,
                 calendar,
             }}
         >

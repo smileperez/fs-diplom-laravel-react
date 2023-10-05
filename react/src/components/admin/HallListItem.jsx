@@ -8,17 +8,48 @@ import {
     TrashIcon,
     XCircleIcon,
 } from "@heroicons/react/24/outline";
+import axiosClient from "../../axios";
 
 export default function HallListItem({ hall }) {
-    // Состояние для открытия/закрытия SlidePopupComponent
-    const [del, setDel] = useState(false);
+    // Открытие/Закрытие SlidePopupComponent для изменения зала
     const [change, setChange] = useState(false);
+    // Открытие/Закрытие SlidePopupComponent для удаления зала
+    const [del, setDel] = useState(false);
 
     // Состояния для изменения зала
-    const [name, setName] = useState();
-    const [rows, setRows] = useState();
-    const [seats, setSeats] = useState();
+    const [updatedHall, setUpdatedHall] = useState({
+        name: hall.name,
+        rows: hall.rows,
+        seats: hall.seats,
+    });
 
+    // Состояние для хранения ошибки
+    const [error, setError] = useState("");
+
+    // Отправка put-request в БД c изменениями зала
+    const onSubmit = (event) => {
+        event.preventDefault();
+        console.log("Клик");
+        const payload = { ...updatedHall };
+        axiosClient
+            .put(`/halls/${hall.id}`, payload)
+            .then((response) => {
+                console.log(response);
+                // Закрываем slider-popup
+                setChange(false);
+                // Перезагружаем страницу
+                window.location.reload();
+            })
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
+                }
+                console.log(err, err.response);
+            });
+    };
+
+    // TODO:
     // Функция удаления зала
     const onClickDelete = (event) => {
         event.preventDefault();
@@ -30,19 +61,9 @@ export default function HallListItem({ hall }) {
         // });
     };
 
-    const onClickUpdate = (event) => {
-        event.preventDefault();
-        console.log(`Отправка запроса изменения данных зала №${hall.id}`);
-        // TODO:
-        // axiosClient.post("/signout").then((res) => {
-        //     setCurrentUser({});
-        //     setUserToken(null);
-        // });
-    };
-
     return (
         <>
-            <section className="mb-4 flex">
+            <section className="mb-4 flex h-auto">
                 <div className="p-2 bg-[#F1EBE6]/95 rounded min-w-[40px] max-w-[40px] flex items-center justify-center">
                     <h2 className="text-xl font-bold">{hall.id}</h2>
                 </div>
@@ -90,6 +111,116 @@ export default function HallListItem({ hall }) {
                 </div>
             </section>
 
+            {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
+            <SlidePopupComponent
+                open={change}
+                setOpen={setChange}
+                title={`Изменение зала №` + hall.id}
+            >
+                {error && (
+                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={onSubmit} action="#" method="POST">
+                    {/* Название зала */}
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Название зала
+                            <span className="text-red-500">*</span>
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={updatedHall.name}
+                                onChange={(event) =>
+                                    setUpdatedHall({
+                                        ...updatedHall,
+                                        name: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Название зала */}
+
+                    {/* Количество рядов */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="rows"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Количество рядов
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="number"
+                                id="rows"
+                                name="rows"
+                                value={updatedHall.rows}
+                                onChange={(event) =>
+                                    setUpdatedHall({
+                                        ...updatedHall,
+                                        rows: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Количество рядов */}
+
+                    {/* Количество мест в ряду */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="seats"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Количество мест в ряду
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="number"
+                                id="seats"
+                                name="seats"
+                                value={updatedHall.seats}
+                                onChange={(event) =>
+                                    setUpdatedHall({
+                                        ...updatedHall,
+                                        seats: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Количество мест в ряду */}
+
+                    <div className="flex justify-between mt-6">
+                        <EButton submit color="regular">
+                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
+                            Изменить
+                        </EButton>
+                        <EButton
+                            color="regular"
+                            onClick={() => setChange(false)}
+                        >
+                            <XCircleIcon className="h-6 w-6 mr-2" />
+                            Отменить
+                        </EButton>
+                    </div>
+                </form>
+            </SlidePopupComponent>
+            {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
+
+            {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
             <SlidePopupComponent
                 open={del}
                 setOpen={setDel}
@@ -112,88 +243,7 @@ export default function HallListItem({ hall }) {
                     </div>
                 </form>
             </SlidePopupComponent>
-
-            <SlidePopupComponent
-                open={change}
-                setOpen={setChange}
-                title="Изменение зала"
-            >
-                {/* FIXME: */}
-                <form onSubmit="#" action="#" method="POST">
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Название зала
-                            <span className="text-red-500">*</span>
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                required
-                                value={name}
-                                onChange={(ev) => setName(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="rows"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Количество рядов
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="rows"
-                                name="rows"
-                                type="number"
-                                value={rows}
-                                onChange={(ev) => setRows(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <label
-                            htmlFor="seats"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Количество мест в ряду
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="seats"
-                                name="seats"
-                                type="number"
-                                value={seats}
-                                onChange={(ev) => setSeats(ev.target.value)}
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex justify-between mt-6">
-                        <EButton submit color="regular">
-                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
-                            Изменить
-                        </EButton>
-                        <EButton
-                            color="regular"
-                            onClick={() => setChange(false)}
-                        >
-                            <XCircleIcon className="h-6 w-6 mr-2" />
-                            Отменить
-                        </EButton>
-                    </div>
-                </form>
-            </SlidePopupComponent>
+            {/* Slide-Popup для УДАЛЕНИЯ  фильма */}
         </>
     );
 }

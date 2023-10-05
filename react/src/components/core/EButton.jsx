@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function EButton({
     color = "regular",
     circle = false,
-    onClick = "() => {}",
+    onClick = () => {},
     submit = false,
     children,
 }) {

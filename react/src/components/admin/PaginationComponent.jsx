@@ -43,7 +43,8 @@ export default function PaginationComponent({ meta, onPageClick }) {
                         {meta.links &&
                             meta.links.map((link, idx) => (
                                 <a
-                                    href="#"
+                                key={idx}    
+                                href="#"
                                     onClick={(event) => onClick(event, link)}
                                     aria-current="page"
                                     className={

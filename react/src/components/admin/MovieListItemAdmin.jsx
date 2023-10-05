@@ -1,7 +1,7 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
 import ESelection from "../core/ESelection";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     TrashIcon,
@@ -17,6 +17,7 @@ export default function MovieListItemAdmin({ movie }) {
     // Открытие/Закрытие SlidePopupComponent для удаления фильма
     const [del, setDel] = useState(false);
 
+    // Состояния для изменения фильма
     const [updatedMovie, setUpdatedMovie] = useState({
         title: movie.title,
         img: movie.img,
@@ -123,14 +124,18 @@ export default function MovieListItemAdmin({ movie }) {
                 </div>
             </section>
 
-            {/* // TODO: */}
             {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
             <SlidePopupComponent
                 open={change}
                 setOpen={setChange}
-                title="Изменение фильма"
+                title={`Изменение фильма №` + movie.id}
             >
-                {/* FIXME: */}
+                {error && (
+                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
+                        {error}
+                    </div>
+                )}
+                
                 <form onSubmit={onSubmit} action="#" method="POST">
                     {/* Название фильма */}
                     <div>
