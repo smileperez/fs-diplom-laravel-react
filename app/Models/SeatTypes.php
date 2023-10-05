@@ -9,5 +9,5 @@ class SeatTypes extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'created_at', 'updated_at'];
+    protected $fillable = ['type', 'color', 'created_at', 'updated_at'];
 }

@@ -100,7 +100,7 @@ export default function SeatTypes() {
                     />
                 </div>
             )}
-            
+
             {/* Slide-Popup для ДОБАВЛЕНИЯ нового типа места */}
             <SlidePopupComponent
                 open={open}
@@ -108,7 +108,7 @@ export default function SeatTypes() {
                 title="Добавление нового места"
             >
                 <form onSubmit={onSubmit} action="#" method="POST">
-                    {/* Название типа */}
+                    {/* Название типа места */}
                     <div>
                         <label
                             htmlFor="type"
@@ -133,7 +133,33 @@ export default function SeatTypes() {
                             />
                         </div>
                     </div>
-                    {/* Название зала */}
+                    {/* Название типа места */}
+
+                    {/* Цвет места */}
+                    <div className="mt-2">
+                        <label
+                            htmlFor="color"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                            Цвет места (HEX 6 символов)
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                id="color"
+                                name="color"
+                                value={seatType.color}
+                                onChange={(event) =>
+                                    setSeatType({
+                                        ...seatType,
+                                        color: event.target.value,
+                                    })
+                                }
+                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    {/* Цвет места */}
 
                     <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit>

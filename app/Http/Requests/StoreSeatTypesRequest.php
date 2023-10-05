@@ -22,7 +22,8 @@ class StoreSeatTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|string|max:50'
+            'type' => 'required|string|max:50',
+            'color' => 'string|min:6|max:6'
         ];
     }
 }
