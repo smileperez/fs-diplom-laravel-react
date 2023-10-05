@@ -223,7 +223,6 @@ export default function Movies() {
                                 id="description"
                                 name="description"
                                 value={movie.description}
-                                defaultValue={""}
                                 onChange={(event) =>
                                     setMovie({
                                         ...movie,
