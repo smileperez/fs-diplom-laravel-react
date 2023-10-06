@@ -49,16 +49,15 @@ export default function TypeItem({ type, getTypes }) {
             });
     };
 
-    // FIXME:
     // Функция удаления зала
-    // const onClickDelete = (event) => {
-    //     axiosClient.delete(`/seattypes/${seatType.id}`).then((response) => {
-    //         // Закрываем slider-popup
-    //         setChange(false);
-    //         // Заново перезагружаем из БД все фильмы
-    //         getSeatTypes();
-    //     });
-    // };
+    const onClickDelete = (event) => {
+        axiosClient.delete(`/types/${type.id}`).then((response) => {
+            // Закрываем slider-popup
+            setChange(false);
+            // Заново перезагружаем из БД все фильмы
+            getTypes();
+        });
+    };
 
     return (
         <>
@@ -182,7 +181,7 @@ export default function TypeItem({ type, getTypes }) {
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
-                    <EButton color="danger" onClick="#">
+                    <EButton color="danger" onClick={onClickDelete}>
                         <TrashIcon className="h-6 w-6 mr-2" />
                         Удалить
                     </EButton>

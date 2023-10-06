@@ -26,37 +26,37 @@ class TypesController extends Controller
     {
         $data = $request->validated();
 
-        $types = Types::create($data);
+        $type = Types::create($data);
 
-        return new TypesResource($types);
+        return new TypesResource($type);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Types $types)
+    public function show(Types $type)
     {
-        return new TypesResource($types);
+        return new TypesResource($type);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTypesRequest $request, Types $types)
+    public function update(UpdateTypesRequest $request, Types $type)
     {
         $data = $request->validated();
 
-        $types->update($data);
+        $type->update($data);
 
-        return new TypesResource($types);
+        return new TypesResource($type);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Types $types)
+    public function destroy(Types $type)
     {
-        $types-delete();
+        $type->delete();
         return response('', 204);
     }
 }
