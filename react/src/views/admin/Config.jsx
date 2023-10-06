@@ -64,10 +64,31 @@ export default function Config() {
     };
     // console.log(currentMatrix);
 
-    const onClickSubmit = (event) => {
-        const payload = { ...currentMatrix };
+    // const makePayload = (matrix) => {
+    //     matrix.map((row, i) => {
+    //         console.log(row, i);
+    //     });
+    // };
 
-        console.log(payload);
+    const onClickSubmit = (event) => {
+        const matrix = { ...currentMatrix };
+        let payload = new Array();
+
+        for (let key in matrix) {
+            for (let index in matrix[key]) {
+                // console.log(matrix[key][index]);
+                payload = [...payload, matrix[key][index]];
+                // console.log(payload);
+            }
+        }
+
+        payload.forEach((item) => {
+            console.log(item);
+        });
+        // console.log(payload);
+
+        // console.log(payload);
+        // makePayload(payload);
 
         // axiosClient
         //     .post("/seats", payload)

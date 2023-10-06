@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 
 // Функция создания матрицы
 const makeMatrix = (rows, seats) => {
-    const res = [];
-    for (let y = 0; y < rows; y++) {
-        const row = Array.from({ length: seats }, (__, x) => {
-            return { x, y };
+    const seatsPlus = seats + 1;
+    const line = [];
+    for (let row = 1; row < rows + 1; row++) {
+        const column = Array.from({ length: seatsPlus}, (__, seat) => {
+            return { row, seat };
         });
-        res.push(row);
+        line.push(column);
     }
-    return res;
+    return line;
 };
 
 export default function MatrixComponent({
