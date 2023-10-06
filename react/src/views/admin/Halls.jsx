@@ -2,7 +2,6 @@ import PageComponent from "../../components/admin/PageComponent";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import HallListItem from "../../components/admin/HallListItem";
 import EButton from "../../components/core/EButton";
-import { useStateContext } from "../../context/ContextProvider";
 import { useEffect, useState } from "react";
 import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
