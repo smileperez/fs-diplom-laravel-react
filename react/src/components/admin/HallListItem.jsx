@@ -89,7 +89,7 @@ export default function HallListItem({ hall, getHalls }) {
                             </h2>
                             <h2 className="text-sm font-light mt-1">
                                 Количество VIP мест:{" "}
-                                <ESelection color="gold">
+                                <ESelection color="b89e14">
                                     {hall.seats}
                                 </ESelection>
                             </h2>

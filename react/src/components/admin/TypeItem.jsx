@@ -30,7 +30,7 @@ export default function TypeItem({ type, getTypes }) {
         event.preventDefault();
 
         const payload = { ...updatedType };
-        console.log(payload);
+
         axiosClient
             .put(`/types/${type.id}`, payload)
             .then((response) => {
@@ -66,11 +66,16 @@ export default function TypeItem({ type, getTypes }) {
                     <div className="flex">
                         <div className="w-auto">
                             <h2 className="text-sm font-light">
-                                ID: <ESelection>{type.id}</ESelection>
+                                ID:{" "}
+                                <ESelection>
+                                    {type.id}
+                                </ESelection>
                             </h2>
                             <h2 className="text-sm font-light">
-                                Название:{" "}
-                                <ESelection>{type.type}</ESelection>
+                                Название места:{" "}
+                                <ESelection color={type.color}>
+                                    {type.type}
+                                </ESelection>
                             </h2>
                         </div>
                     </div>
