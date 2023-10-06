@@ -3,8 +3,8 @@ export default function ESeat({ color = "regular" }) {
     let classes = [
         "inline-block",
         "cursor-pointer",
-        "w-[26px]",
-        "h-[26px]",
+        "w-[20px]",
+        "h-[20px]",
         "border-2",
         "rounded",
         "ml-[10px]"
