@@ -19,26 +19,21 @@ export default function Config() {
     const [loading, setLoading] = useState(false);
 
     // Функция получения списка залов из БД
-    const getHalls = () => {
+    useEffect(() => {
         setLoading(true);
         axiosClient.get("/halls").then(({ data }) => {
             setHalls(data.data);
             setLoading(false);
         });
-    };
-    // Функция получения списка типов мест из БД
-    const getTypes = () => {
+    }, []);
+
+    // Функция получения списка залов из БД
+    useEffect(() => {
         setLoading(true);
         axiosClient.get("/types").then(({ data }) => {
             setTypes(data.data);
             setLoading(false);
         });
-    };
-
-    // При каждом обновлении страницы получаем новые списки залов и типов мест
-    useEffect(() => {
-        getHalls();
-        getTypes();
     }, []);
 
     // callback функция, для получения выбранного зала из под компонента Селектора
@@ -55,7 +50,9 @@ export default function Config() {
             {!loading && (
                 <>
                     <div>
-                        <h2 className="font-semibold">Выберите зал для конфигурации:</h2>
+                        <h2 className="font-semibold">
+                            Выберите зал для конфигурации:
+                        </h2>
                         <SelectMenusComponent
                             selectedHall={selectedHall}
                             items={halls}
@@ -76,16 +73,25 @@ export default function Config() {
                                 </div>
                             ))}
                         </div>
-                        <h2 className="text-sm font-normal text-gray-400">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</h2>
+                        <h2 className="text-sm font-normal text-gray-400">
+                            Чтобы изменить вид кресла, нажмите по нему левой
+                            кнопкой мыши
+                        </h2>
                     </div>
 
                     <div className="mt-3">
                         <h2 className="font-semibold">Конфигурация мест:</h2>
                         <div className="border-2 border-[#63536C] rounded p-3 mt-2">
-                            {!hall && <span className="text-sm font-normal text-gray-400">Для отображения конфигурации выберите зал</span>}
+                            {!hall && (
+                                <span className="text-sm font-normal text-gray-400">
+                                    Для отображения конфигурации выберите зал
+                                </span>
+                            )}
                             {hall && (
                                 <div className="flex flex-col justify-center items-center">
-                                    <span className="tracking-[1.25em] ml-5">ЭКРАН</span>
+                                    <span className="tracking-[1.25em] ml-5">
+                                        ЭКРАН
+                                    </span>
                                     <div className="mt-2">
                                         <MatrixComponent
                                             rows={hall.rows}
