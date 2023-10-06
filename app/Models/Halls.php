@@ -9,5 +9,5 @@ class Halls extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'rows', 'seats', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'rows', 'seats'];
 }
