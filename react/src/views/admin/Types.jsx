@@ -7,7 +7,7 @@ import axiosClient from "../../axios";
 import PaginationComponent from "../../components/admin/PaginationComponent";
 import TypeItem from "../../components/admin/TypeItem";
 
-export default function SeatTypes() {
+export default function Types() {
     // Состояние для загрузки из БД общего списка типов мест
     const [types, setTypes] = useState([]);
 
@@ -92,8 +92,8 @@ export default function SeatTypes() {
             {!loading && (
                 <div>
                     {/* // TODO: */}
-                    {types.map((item) => (
-                        <TypeItem seatType={item} getTypes={getTypes} key={item.id} />
+                    {types.map((type) => (
+                        <TypeItem type={type} getTypes={getTypes} key={type.id} />
                     ))}
                     <PaginationComponent
                         meta={meta}

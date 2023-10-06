@@ -7,20 +7,19 @@ import {
     CloudArrowUpIcon,
     TrashIcon,
     XCircleIcon,
-    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function SeatTypesItem({ seatType, getSeatTypes }) {
+export default function TypeItem({ type, getTypes }) {
     // Открытие/Закрытие SlidePopupComponent для изменения зала
     const [change, setChange] = useState(false);
     // Открытие/Закрытие SlidePopupComponent для удаления зала
     const [del, setDel] = useState(false);
 
     // Состояния для изменения зала
-    const [updatedSeatType, setUpdatedSeatType] = useState({
-        type: seatType.type,
-        color: seatType.color,
+    const [updatedType, setUpdatedType] = useState({
+        type: type.type,
+        color: type.color,
     });
 
     // Состояние для хранения ошибки
@@ -30,9 +29,24 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        const payload = { ...updatedSeatType };
-        console.log(payload);
-        axiosClient.put(`/seattypes/${seatType.id}`, payload);
+        const payload = { ...updatedType };
+        // console.log(payload);
+        axiosClient
+            .put(`/types/${type.id}`, payload)
+            .then((response) => {
+                console.log(response);
+                // Закрываем slider-popup
+                setChange(false);
+                // Заново перезагружаем из БД все залы
+                getTypes();
+            })
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
+                }
+                console.log(err, err.response);
+            });
     };
 
     // FIXME:
@@ -53,11 +67,11 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
                     <div className="flex">
                         <div className="w-auto">
                             <h2 className="text-sm font-light">
-                                ID: <ESelection>{seatType.id}</ESelection>
+                                ID: <ESelection>{type.id}</ESelection>
                             </h2>
                             <h2 className="text-sm font-light">
                                 Название:{" "}
-                                <ESelection>{seatType.type}</ESelection>
+                                <ESelection>{type.type}</ESelection>
                             </h2>
                         </div>
                     </div>
@@ -76,11 +90,11 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
                 </div>
             </section>
 
-            {/* Slide-Popup для ИЗМЕНЕНИЯ  фильма */}
+            {/* Slide-Popup для ИЗМЕНЕНИЯ  типа места */}
             <SlidePopupComponent
                 open={change}
                 setOpen={setChange}
-                title={`Изменение типа №` + seatType.id}
+                title={`Изменение места №` + type.id}
             >
                 {error && (
                     <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
@@ -103,10 +117,10 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
                                 type="text"
                                 id="type"
                                 name="type"
-                                value={updatedSeatType.type}
+                                value={updatedType.type}
                                 onChange={(event) =>
-                                    setUpdatedSeatType({
-                                        ...updatedSeatType,
+                                    setUpdatedType({
+                                        ...updatedType,
                                         type: event.target.value,
                                     })
                                 }
@@ -129,10 +143,10 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
                                 type="text"
                                 id="color"
                                 name="color"
-                                value={updatedSeatType.color}
+                                value={updatedType.color}
                                 onChange={(event) =>
-                                    setSeatType({
-                                        ...updatedSeatType,
+                                    setUpdatedType({
+                                        ...updatedType,
                                         color: event.target.value,
                                     })
                                 }
@@ -164,7 +178,7 @@ export default function SeatTypesItem({ seatType, getSeatTypes }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить тип{" "}
-                    <ESelection>№{seatType.id}</ESelection> ?
+                    <ESelection>№{type.id}</ESelection> ?
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">

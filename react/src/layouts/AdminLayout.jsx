@@ -4,7 +4,7 @@ import SidebarComponent from "../components/admin/SidebarComponent";
 import { useEffect } from "react";
 import axiosClient from "../axios";
 
-export default function DefaultLayout() {
+export default function AdminLayout() {
     const { currentUser, userToken, setCurrentUser, setUserToken} = useStateContext();
 
     if (!userToken) {
