@@ -30,7 +30,7 @@ export default function TypeItem({ type, getTypes }) {
         event.preventDefault();
 
         const payload = { ...updatedType };
-        // console.log(payload);
+        console.log(payload);
         axiosClient
             .put(`/types/${type.id}`, payload)
             .then((response) => {

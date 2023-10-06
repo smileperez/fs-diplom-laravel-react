@@ -91,7 +91,6 @@ export default function Types() {
 
             {!loading && (
                 <div>
-                    {/* // TODO: */}
                     {types.map((type) => (
                         <TypeItem type={type} getTypes={getTypes} key={type.id} />
                     ))}
