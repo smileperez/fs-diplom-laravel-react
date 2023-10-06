@@ -11,7 +11,7 @@ class SeatsStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class SeatsStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'halls_id' => 'exists:halls,id',
+            'row' => 'integer|max:25',
+            'seat' => 'integer|max:25',
+            'types_id' => 'exists:types,id'
         ];
     }
 }
