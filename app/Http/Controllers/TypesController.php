@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TypesResource;
 use App\Models\Types;
-use App\Http\Requests\StoreTypesRequest;
-use App\Http\Requests\UpdateTypesRequest;
+use App\Http\Requests\TypesStoreRequest;
+use App\Http\Requests\TypesUpdateRequest;
 
 class TypesController extends Controller
 {
@@ -22,7 +22,7 @@ class TypesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTypesRequest $request)
+    public function store(TypesStoreRequest $request)
     {
         $data = $request->validated();
 
@@ -42,7 +42,7 @@ class TypesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTypesRequest $request, Types $type)
+    public function update(TypesUpdateRequest $request, Types $type)
     {
         $data = $request->validated();
 

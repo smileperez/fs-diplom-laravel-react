@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateHallsRequest extends FormRequest
+class HallsStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class UpdateHallsRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'rows' => 'nullable|numeric',
-            'seats' => 'nullable|numeric'
+            'rows' => 'nullable|numeric|max:25',
+            'seats' => 'nullable|numeric|max:25'
         ];
     }
 }

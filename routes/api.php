@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('movies', MoviesController::class);
     Route::apiResource('halls', HallsController::class);
     Route::apiResource('types', TypesController::class);
+    Route::apiResource('seats', TypesController::class);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);

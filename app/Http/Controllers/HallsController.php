@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\HallsResource;
 use App\Models\Halls;
-use App\Http\Requests\StoreHallsRequest;
-use App\Http\Requests\UpdateHallsRequest;
+use App\Http\Requests\HallsStoreRequest;
+use App\Http\Requests\HallsUpdateRequest;
 
 class HallsController extends Controller
 {
@@ -22,7 +22,7 @@ class HallsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHallsRequest $request)
+    public function store(HallsStoreRequest $request)
     {
         $data = $request->validated();
 
@@ -42,7 +42,7 @@ class HallsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHallsRequest $request, Halls $hall)
+    public function update(HallsUpdateRequest $request, Halls $hall)
     {
         $data = $request->validated();
 

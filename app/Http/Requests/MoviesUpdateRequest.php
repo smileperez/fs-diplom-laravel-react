@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTypesRequest extends FormRequest
+class MoviesUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,11 @@ class StoreTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|string|max:100',
-            'color' => 'string|min:6|max:6'
+            'title' => 'required|string|max:100',
+            'img' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
+            'duration' => 'nullable|numeric',
+            'origin' => 'nullable|string|max:100'
         ];
     }
 }

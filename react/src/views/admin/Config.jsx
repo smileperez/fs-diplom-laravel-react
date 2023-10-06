@@ -4,6 +4,8 @@ import axiosClient from "../../axios";
 import MatrixComponent from "../../components/admin/MatrixComponent";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
 import ESelection from "../../components/core/ESelection";
+import EButton from "../../components/core/EButton";
+import { CloudArrowUpIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
 export default function Config() {
     // Состояние для загрузки залов из БД
@@ -17,6 +19,15 @@ export default function Config() {
 
     // Соятоние загрузки данных
     const [loading, setLoading] = useState(false);
+
+    //
+    const [coord, setCoord] = useState({ x: -1, y: -1 });
+
+    //
+    const [color, setColor] = useState("63536C");
+
+    //
+    const [currentMatrix, setCurrentMatrix] = useState();
 
     // Функция получения списка залов из БД
     useEffect(() => {
@@ -36,9 +47,40 @@ export default function Config() {
         });
     }, []);
 
-    // callback функция, для получения выбранного зала из под компонента Селектора
+    // callback функция, для получения выбранного зала из под компонента <SelectMenusComponent>
     const selectedHall = (hall) => {
         setHall(hall);
+    };
+
+    // callback функция, для получения координат места из под компонента <MatrixComponent>
+    const selectedCoords = (coord) => {
+        setCoord(coord);
+        console.log(coord);
+    };
+
+    // callback функция, для получения матрицы координат  из под компонента <MatrixComponent>
+    const createdMatrix = (matrix) => {
+        setCurrentMatrix(matrix);
+    };
+    // console.log(currentMatrix);
+
+    const onClickSubmit = (event) => {
+        const payload = { ...currentMatrix };
+
+        console.log(payload);
+
+        // axiosClient
+        //     .post("/seats", payload)
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch((err) => {
+        //         if (err && err.response) {
+        //             // Записываем error в состояние
+        //             setError(err.response.data.message);
+        //         }
+        //         console.log(err, err.response);
+        //     });
     };
 
     return (
@@ -51,7 +93,7 @@ export default function Config() {
                 <>
                     <div>
                         <h2 className="font-semibold">
-                            Выберите зал для конфигурации:
+                            Выберите доступный зал для конфигурации:
                         </h2>
                         <SelectMenusComponent
                             selectedHall={selectedHall}
@@ -60,47 +102,82 @@ export default function Config() {
                         />
                     </div>
 
-                    <div className="flex flex-col mt-3">
+                    <div className="flex flex-col mt-3 pt-1 border-t border-gray-200">
                         <h2 className="font-semibold">Доступные типы мест:</h2>
-                        <div className="flex flex-wrap mt-1">
-                            {types.map((type, idx) => (
-                                <div className="mt-1 mr-2 last:mr-0" key={idx}>
-                                    <ESelection color={type.color}>
-                                        <span>
-                                            ID:{type.id} - {type.type}
-                                        </span>
-                                    </ESelection>
+                        {types.length === 0 && (
+                            <h2 className="text-sm font-normal text-gray-400">
+                                Нет доступных типов мест
+                            </h2>
+                        )}
+                        {types.length > 0 && (
+                            <>
+                                <div className="flex flex-wrap mt-1">
+                                    {types.map((type, idx) => (
+                                        <div
+                                            className="mt-1 mr-2 last:mr-0"
+                                            key={idx}
+                                        >
+                                            <ESelection color={type.color}>
+                                                <span>
+                                                    ID:{type.id} - {type.type}
+                                                </span>
+                                            </ESelection>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                        <h2 className="text-sm font-normal text-gray-400">
-                            Чтобы изменить вид кресла, нажмите по нему левой
-                            кнопкой мыши
-                        </h2>
-                    </div>
+                                <h2 className="text-sm font-normal text-gray-400">
+                                    Чтобы изменить тип кресла, нажмите по нему
+                                    левой кнопкой мыши
+                                </h2>
+                                <div className="mt-3 pt-1 border-t border-gray-200">
+                                    <h2 className="font-semibold">
+                                        Конфигурация мест:
+                                    </h2>
+                                    <div className="border-2 border-[#63536C] rounded p-3 mt-2">
+                                        {!hall && (
+                                            <span className="text-sm font-normal text-gray-400">
+                                                Для отображения конфигурации
+                                                выберите зал
+                                            </span>
+                                        )}
+                                        {hall && (
+                                            <div className="flex flex-col justify-center items-center">
+                                                <span className="tracking-[1.25em]">
+                                                    ЭКРАН
+                                                </span>
+                                                <div className="mt-2">
+                                                    <MatrixComponent
+                                                        rows={hall.rows}
+                                                        seats={hall.seats}
+                                                        selectedCoords={
+                                                            selectedCoords
+                                                        }
+                                                        createdMatrix={
+                                                            createdMatrix
+                                                        }
+                                                        color={color}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
 
-                    <div className="mt-3">
-                        <h2 className="font-semibold">Конфигурация мест:</h2>
-                        <div className="border-2 border-[#63536C] rounded p-3 mt-2">
-                            {!hall && (
-                                <span className="text-sm font-normal text-gray-400">
-                                    Для отображения конфигурации выберите зал
-                                </span>
-                            )}
-                            {hall && (
-                                <div className="flex flex-col justify-center items-center">
-                                    <span className="tracking-[1.25em] ml-5">
-                                        ЭКРАН
-                                    </span>
-                                    <div className="mt-2">
-                                        <MatrixComponent
-                                            rows={hall.rows}
-                                            seats={hall.seats}
-                                        />
+                                        <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
+                                            <EButton
+                                                color="regular"
+                                                onClick={onClickSubmit}
+                                            >
+                                                <CloudArrowUpIcon className="h-6 w-6 mr-2" />
+                                                Сохранить
+                                            </EButton>
+                                            <EButton color="gray" onClick="#">
+                                                <XCircleIcon className="h-6 w-6 mr-2" />
+                                                Отменить
+                                            </EButton>
+                                        </div>
                                     </div>
                                 </div>
-                            )}
-                        </div>
+                            </>
+                        )}
                     </div>
                 </>
             )}

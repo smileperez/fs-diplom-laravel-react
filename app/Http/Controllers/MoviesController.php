@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MoviesResource;
 use App\Models\Movies;
 
-use App\Http\Requests\StoreMoviesRequest;
-use App\Http\Requests\UpdateMoviesRequest;
+use App\Http\Requests\MoviesStoreRequest;
+use App\Http\Requests\MoviesUpdateRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-
-// TODO: Остановился на 3:30 ролика.
-// Не завершен контролер, роутер и т.д.
 
 class MoviesController extends Controller
 {
@@ -28,7 +25,7 @@ class MoviesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMoviesRequest $request)
+    public function store(MoviesStoreRequest $request)
     {
         $data = $request->validated();
 
@@ -56,7 +53,7 @@ class MoviesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMoviesRequest $request, Movies $movie)
+    public function update(MoviesUpdateRequest $request, Movies $movie)
     {
         $data = $request->validated();
 

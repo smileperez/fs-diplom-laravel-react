@@ -1,36 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+// Функция создания матрицы
 const makeMatrix = (rows, seats) => {
-    const ans = [];
+    const res = [];
     for (let y = 0; y < rows; y++) {
         const row = Array.from({ length: seats }, (__, x) => {
-            return { y, x };
+            return { x, y };
         });
-        ans.push(row);
+        res.push(row);
     }
-    return ans;
+    return res;
 };
 
-export default function MatrixComponent({ rows, seats }) {
-    const [coords, setCoords] = useState({ x: -1, y: -1 });
+export default function MatrixComponent({
+    rows,
+    seats,
+    selectedCoords,
+    color,
+    createdMatrix,
+}) {
+    // Состояние для хранения координаты
+    const [coords, setCoords] = useState({ row: -1, seat: -1 });
+
+    // Состояние для получения цвета из Parent
+    const [switchedColor, setSwitchedColor] = useState("63536C");
+
+    // Состояние для создания запроса в БД
+    // const [data, setData] = useState({});
+
+    // Создание матрицы на основе данных из Parent
     const matrix = makeMatrix(rows, seats);
 
+    // Получение коррдинат по клику
     function onMouseEnter(event, x, y) {
-        setCoords({ x, y });
+        setCoords({ y, x });
+        // selectedCoords(coords);
     }
+    // Отправка координат в Parent
+    selectedCoords(coords);
+
+    // Передача матрицы в Parent
+    useEffect(() => {
+        createdMatrix(matrix);
+    }, []);
 
     return (
-        <div>
+        <div className="flex flex-col flex-nowrap space-y-2">
             {matrix.map((row, i) => (
-                <div key={i}>
+                <div key={i} className="flex flex-nowrap space-x-2">
                     {row.map((item, j) => (
                         <div
-                            className="inline-block cursor-pointer w-[20px] h-[20px] border border-gray-400 rounded ml-[8px] bg-[#63536C]"
+                            className={`text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded bg-[#63536C]`}
                             key={j}
                             onClick={(event) =>
-                                onMouseEnter(event, item.x, item.y)
+                                onMouseEnter(event, item.y, item.x)
                             }
-                        ></div>
+                        >
+                            {/* {i}
+                            {j} */}
+                        </div>
                     ))}
                 </div>
             ))}
