@@ -15,7 +15,7 @@ class TypesController extends Controller
     public function index()
     {
         return TypesResource::collection(
-            Types::orderBy('id', 'desc')->paginate(2)
+            Types::orderBy('id', 'desc')->paginate(5)
         );
     }
 

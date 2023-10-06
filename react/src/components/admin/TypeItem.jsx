@@ -76,7 +76,6 @@ export default function TypeItem({ type, getTypes }) {
                                 <ESelection color={type.color}>
                                     {type.type}
                                 </ESelection>
-                                {/* <span className="bg-[#16A6AF]">LOL</span> */}
                             </h2>
                         </div>
                     </div>

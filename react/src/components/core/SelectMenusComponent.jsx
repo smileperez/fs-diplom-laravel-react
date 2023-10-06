@@ -6,18 +6,19 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function SelectMenusComponent({ halls }) {
-    const [selected, setSelected] = useState(halls[0]);
+export default function SelectMenusComponent({ items, selectedHall }) {
+    const [selected, setSelected] = useState("");
 
     return (
         <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
                 <>
                     <div className="relative mt-2">
-                        <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#89639e] sm:text-sm sm:leading-6">
+                        <Listbox.Button className="relative h-[40px] w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                             <span className="flex items-center">
                                 <span className="ml-3 block truncate">
-                                    {selected.name}
+                                    {selected.id} - {selected.name} (
+                                    {selected.rows}x{selected.seats})
                                 </span>
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -36,18 +37,18 @@ export default function SelectMenusComponent({ halls }) {
                             leaveTo="opacity-0"
                         >
                             <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {halls.map((hall) => (
+                                {items.map((item) => (
                                     <Listbox.Option
-                                        key={hall.id}
+                                        key={item.id}
                                         className={({ active }) =>
                                             classNames(
                                                 active
-                                                    ? "bg-[#89639e] text-white"
+                                                    ? "bg-indigo-600 text-white"
                                                     : "text-gray-900",
                                                 "relative cursor-default select-none py-2 pl-3 pr-9"
                                             )
                                         }
-                                        value={hall}
+                                        value={item}
                                     >
                                         {({ selected, active }) => (
                                             <>
@@ -60,7 +61,9 @@ export default function SelectMenusComponent({ halls }) {
                                                             "ml-3 block truncate"
                                                         )}
                                                     >
-                                                        {hall.name}
+                                                        ID:{item.id} -{" "}
+                                                        {item.name} ({item.rows}
+                                                        x{item.seats})
                                                     </span>
                                                 </div>
 
@@ -69,7 +72,7 @@ export default function SelectMenusComponent({ halls }) {
                                                         className={classNames(
                                                             active
                                                                 ? "text-white"
-                                                                : "text-[#89639e]",
+                                                                : "text-indigo-600",
                                                             "absolute inset-y-0 right-0 flex items-center pr-4"
                                                         )}
                                                     >
@@ -79,6 +82,9 @@ export default function SelectMenusComponent({ halls }) {
                                                         />
                                                     </span>
                                                 ) : null}
+                                                {selected
+                                                    ? selectedHall(item)
+                                                    : null}
                                             </>
                                         )}
                                     </Listbox.Option>
