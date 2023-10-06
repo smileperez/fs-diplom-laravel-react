@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import PageComponent from "../../components/admin/PageComponent";
 import axiosClient from "../../axios";
-import ConfigItem from "../../components/admin/ConfigItem";
 import MatrixComponent from "../../components/admin/MatrixComponent";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
-import TypeItem from "../../components/admin/TypeItem";
 import ESelection from "../../components/core/ESelection";
 
 export default function Config() {
