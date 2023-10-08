@@ -9,5 +9,5 @@ class Seats extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'img', 'description', 'duration', 'origin'];
+    protected $fillable = ['halls_id', 'row', 'seat', 'types_id', 'created_at', 'updated_at'];
 }

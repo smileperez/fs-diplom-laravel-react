@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SeatsStoreRequest;
 use App\Http\Requests\SeatsUpdateRequest;
 use App\Http\Resources\SeatsResource;
 use App\Models\Seats;
-use Illuminate\Http\Request;
 
 class SeatsController extends Controller
 {
@@ -22,7 +22,7 @@ class SeatsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SeatsStoreRequest $request)
     {
         $data = $request->validated();
 

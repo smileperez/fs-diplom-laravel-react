@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HallsController;
 use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\SeatsController;
 use App\Http\Controllers\TypesController;
 use Illuminate\Support\Facades\Route;
 

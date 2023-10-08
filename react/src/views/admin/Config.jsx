@@ -7,6 +7,20 @@ import ESelection from "../../components/core/ESelection";
 import EButton from "../../components/core/EButton";
 import { CloudArrowUpIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
+// TODO:
+// const seatValues = [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }];
+
+// TODO:
+// const Card = ({ cardValue, change, idx }) => {
+//     return (
+//         <div>
+//             <span>{cardValue}</span>
+//             <button onClick={() => change(idx, 1)}>+</button>
+//             <button onClick={() => change(idx, -1)}>-</button>
+//         </div>
+//     );
+// };
+
 export default function Config() {
     // Состояние для загрузки залов из БД
     const [halls, setHalls] = useState([]);
@@ -55,7 +69,7 @@ export default function Config() {
     // callback функция, для получения координат места из под компонента <MatrixComponent>
     const selectedCoords = (coord) => {
         setCoord(coord);
-        console.log(coord);
+        // console.log(coord);
     };
 
     // callback функция, для получения матрицы координат  из под компонента <MatrixComponent>
@@ -83,25 +97,27 @@ export default function Config() {
         }
 
         payload.forEach((item) => {
-            console.log(item);
+            // console.log(item);
+            item.halls_id = hall.id;
+            item.types_id = 8;
         });
-        // console.log(payload);
+        console.log(payload);
 
         // console.log(payload);
         // makePayload(payload);
 
-        // axiosClient
-        //     .post("/seats", payload)
-        //     .then((response) => {
-        //         console.log(response);
-        //     })
-        //     .catch((err) => {
-        //         if (err && err.response) {
-        //             // Записываем error в состояние
-        //             setError(err.response.data.message);
-        //         }
-        //         console.log(err, err.response);
-        //     });
+        axiosClient
+            .post("/seats", payload)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                if (err && err.response) {
+                    // Записываем error в состояние
+                    setError(err.response.data.message);
+                }
+                console.log(err, err.response);
+            });
     };
 
     return (
