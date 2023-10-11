@@ -43,6 +43,9 @@ export default function Config() {
     //
     const [currentMatrix, setCurrentMatrix] = useState();
 
+    // Состояние для хранения ошибки
+    const [error, setError] = useState("");
+
     // Функция получения списка залов из БД
     useEffect(() => {
         setLoading(true);
@@ -101,7 +104,7 @@ export default function Config() {
             item.halls_id = hall.id;
             item.types_id = 8;
         });
-        console.log(payload);
+        // console.log(payload);
 
         // console.log(payload);
         // makePayload(payload);
