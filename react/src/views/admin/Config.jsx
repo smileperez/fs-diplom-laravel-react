@@ -35,7 +35,7 @@ export default function Config() {
     const [loading, setLoading] = useState(false);
 
     //
-    const [coord, setCoord] = useState({ x: -1, y: -1 });
+    const [coord, setCoord] = useState({ row: -1, seat: -1 });
 
     //
     const [color, setColor] = useState("63536C");
@@ -72,20 +72,16 @@ export default function Config() {
     // callback функция, для получения координат места из под компонента <MatrixComponent>
     const selectedCoords = (coord) => {
         setCoord(coord);
-        // console.log(coord);
     };
+
+    useEffect(() => {
+        console.log(coord);
+    }, [coord]);
 
     // callback функция, для получения матрицы координат  из под компонента <MatrixComponent>
     const createdMatrix = (matrix) => {
         setCurrentMatrix(matrix);
     };
-    // console.log(currentMatrix);
-
-    // const makePayload = (matrix) => {
-    //     matrix.map((row, i) => {
-    //         console.log(row, i);
-    //     });
-    // };
 
     const onClickSubmit = (event) => {
         const matrix = { ...currentMatrix };
@@ -93,16 +89,13 @@ export default function Config() {
 
         for (let key in matrix) {
             for (let index in matrix[key]) {
-                // console.log(matrix[key][index]);
                 payload = [...payload, matrix[key][index]];
-                // console.log(payload);
             }
         }
 
         payload.forEach((item) => {
-            // console.log(item);
             item.halls_id = hall.id;
-            item.types_id = 8;
+            item.types_id = 1;
         });
         // console.log(payload);
 

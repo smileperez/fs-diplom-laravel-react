@@ -25,33 +25,13 @@ class SeatsController extends Controller
     public function store(SeatsStoreRequest $request)
     {
         $data = $request->all();
-        // $data = $request->validated();
-        // dd($data);
 
-        // print_r($data);
+        // Получаем массив из мест кинозала и разбираем его
         if (is_array($data)) {
             foreach ($data as $item) {
-                // echo('///');
-                // print_r($item);
                 $seat = Seats::create($item);
             }
         }
-
-        
-
-        // dd($data);
-        // echo($data);
-
-        // foreach ($data as $item) {
-        //     echo($item);
-        //     return response($item);
-        // }
-
-        // return response($data);
-
-        // $seat = Seats::create($data);
-
-        // return new SeatsResource($seat);
     }
 
     /**

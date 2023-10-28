@@ -44,14 +44,14 @@ export default function SidebarComponent() {
             to: "/admin/movies",
         },
         {
-            name: "Залы",
-            icon: <RectangleGroupIcon className="block w-6 h-7" />,
-            to: "/admin/halls",
-        },
-        {
             name: "Типы мест",
             icon: <SquaresPlusIcon className="block w-6 h-7" />,
             to: "/admin/types",
+        },
+        {
+            name: "Залы",
+            icon: <RectangleGroupIcon className="block w-6 h-7" />,
+            to: "/admin/halls",
         },
         {
             name: "Настройка залов",
@@ -84,22 +84,19 @@ export default function SidebarComponent() {
 
     return (
         <div
-            className={`${
-                open ? "w-[18rem]" : "w-20"
-            } duration-300 flex flex-col justify-between bg-[#63536C] text-white`}
+            className={`${open ? "w-[18rem]" : "w-20"
+                } duration-300 flex flex-col justify-between bg-[#63536C] text-white`}
         >
             <div className="flex justify-evenly items-center relative">
                 <div
-                    className={`${
-                        !open && "invisible"
-                    } h-68 p-2 flex flex-col items-center`}
+                    className={`${!open && "invisible"
+                        } h-68 p-2 flex flex-col items-center`}
                 >
                     <LogoAdminComponent />
                 </div>
                 <ChevronLeftIcon
-                    className={`block w-10 h-10 bg-[#89639e] p-2 rounded-full absolute top-4 -right-5 border-2 border-gray-700 cursor-pointer ${
-                        !open && "rotate-180"
-                    }`}
+                    className={`block w-10 h-10 bg-[#89639e] p-2 rounded-full absolute top-4 -right-5 border-2 border-gray-700 cursor-pointer ${!open && "rotate-180"
+                        }`}
                     onClick={() => setOpen(!open)}
                 />
             </div>
@@ -131,9 +128,8 @@ export default function SidebarComponent() {
 
             <div className="px-4 flex justify-evenly">
                 <div
-                    className={`${
-                        !open && "hidden"
-                    } flex flex-col justify-evenly w-[155px]`}
+                    className={`${!open && "hidden"
+                        } flex flex-col justify-evenly w-[155px]`}
                 >
                     <div className="text-base font-medium leading-none text-white">
                         {currentUser.name}
