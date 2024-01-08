@@ -201,33 +201,6 @@ export default function Halls() {
                     </div>
                     {/* Количество рядов X Количество мест в ряду */}
 
-                    {/* Стандартное место */}
-                    <div className="mt-2">
-                        <label
-                            htmlFor="name"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                            Выберите стандартное место{" "}
-                            <span className="text-red-500">*</span>
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={hall.name}
-                                onChange={(event) =>
-                                    setHall({
-                                        ...hall,
-                                        name: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    {/* Стандартное место */}
-
                     <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                         <EButton submit>
                             <PlusCircleIcon className="h-6 w-6 mr-2" />
