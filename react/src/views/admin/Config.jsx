@@ -74,6 +74,7 @@ export default function Config() {
         setCoord(coord);
     };
 
+    // Функция для выведения координваты в консоль для отладки
     useEffect(() => {
         console.log(coord);
     }, [coord]);
@@ -83,6 +84,7 @@ export default function Config() {
         setCurrentMatrix(matrix);
     };
 
+    // Отправка матрицы в БД
     const onClickSubmit = (event) => {
         const matrix = { ...currentMatrix };
         let payload = new Array();
@@ -188,7 +190,6 @@ export default function Config() {
                                                         createdMatrix={
                                                             createdMatrix
                                                         }
-                                                        color={color}
                                                     />
                                                 </div>
                                             </div>
