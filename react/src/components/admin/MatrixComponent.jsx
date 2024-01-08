@@ -56,7 +56,7 @@ export default function MatrixComponent({
     }, []);
 
 
-    // Функция детектирования кликов по <ESeat> и отправки координат в родитель <MatrixComponent> -> в родитель <Config>
+    // Функция детектирования кликов и отправки координат в родитель <MatrixComponent> -> в родитель <Config>
     function onMouseEnter(event, row, seat) {
         setCoords({ row, seat });
         // changeColor(colors);
