@@ -43,11 +43,12 @@ export default function SidebarComponent() {
             icon: <FilmIcon className="block w-6 h-7" />,
             to: "/admin/movies",
         },
-        {
-            name: "Типы мест",
-            icon: <SquaresPlusIcon className="block w-6 h-7" />,
-            to: "/admin/types",
-        },
+        // Страница отключена до лучших времен.
+        // {
+        //     name: "Типы мест",
+        //     icon: <SquaresPlusIcon className="block w-6 h-7" />,
+        //     to: "/admin/types",
+        // },
         {
             name: "Залы",
             icon: <RectangleGroupIcon className="block w-6 h-7" />,

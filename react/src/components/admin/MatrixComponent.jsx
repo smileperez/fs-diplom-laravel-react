@@ -3,7 +3,7 @@ import ESeat from "../core/ESeat";
 
 // Функция создания матрицы
 const makeMatrix = (rows, seats) => {
-    // Единица добавлена, чтобы в дальyейшем удалить индекс [0], чтобы привести массив сидушек к виду [1, 2, 3...]
+    // Единица добавлена, чтобы в дальнейшем удалить индекс [0], чтобы привести массив сидушек к виду [1, 2, 3...]
     const seatsPlus = seats + 1;
     const line = [];
     for (let row = 1; row < rows + 1; row++) {
@@ -59,7 +59,7 @@ export default function MatrixComponent({
     // Функция детектирования кликов по <ESeat> и отправки координат в родитель <MatrixComponent> -> в родитель <Config>
     function onMouseEnter(event, row, seat) {
         setCoords({ row, seat });
-        changeColor(colors);
+        // changeColor(colors);
     }
 
     // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>, как только setCoords обновит состояние coords
@@ -83,13 +83,6 @@ export default function MatrixComponent({
             {matrix.map((row, i) => (
                 <div key={i} className="flex flex-nowrap space-x-2">
                     {row.map((item, j) => (
-                        // <ESeat
-                        //     key={j}
-                        //     selectedCoords={selectedCoords}
-                        //     row={item.row}
-                        //     seat={item.seat}
-                        // />
-
                         <div
                             className={`text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded ${bgcolor}`}
                             onClick={(event) => onMouseEnter(event, item.row, item.seat)}
