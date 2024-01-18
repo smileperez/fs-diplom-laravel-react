@@ -1,74 +1,45 @@
-import PageComponent from "../../components/admin/PageComponent";
-import SlidePopupComponent from "../../components/core/SlidePopupComponent";
-import EButton from "../../components/core/EButton";
-import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-import axiosClient from "../../axios.js";
-import PaginationComponent from "../../components/admin/PaginationComponent";
-import UserItem from "../../components/admin/UserItem.jsx";
+import SlidePopupComponent from "../core/SlidePopupComponent";
+import EButton from "../core/EButton";
+import ESelection from "../core/ESelection";
+import { useState } from "react";
+import {
+    AdjustmentsHorizontalIcon,
+    CloudArrowUpIcon,
+    TrashIcon,
+    XCircleIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
+import axiosClient from "../../axios";
 
-export default function Users() {
+export default function UserItem({ user, getUsers }) {
 
-    // Состояние для загрузки из БД общего списка пользователей
-    const [users, setUsers] = useState([]);
-
-    // Состояния для открытия/закрытия в SlidePopupComponent
-    const [open, setOpen] = useState(false);
-
+    // Открытие/Закрытие SlidePopupComponent (для изменения пользователя)
+    const [change, setChange] = useState(false);
+    // Открытие/Закрытие SlidePopupComponent (для удаления пользователя)
+    const [del, setDel] = useState(false);
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // Состояния для добавления нового пользователя
-    const [user, setUser] = useState({
-        name: "",
-        email: "",
+    // Состояния для изменения пользователя
+    const [updatedUser, setUpdatedUser] = useState({
+        name: user.name,
         password: "",
-        password_confirmation: "",
+        password_confirmation: ""
     });
 
-    // Соятоние загрузки данных из БД
-    const [loading, setLoading] = useState(false);
-
-    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
-    const [meta, setMeta] = useState({});
-
-    // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
-    const getUsers = (url) => {
-        url = url || "/users";
-        setLoading(true);
-        axiosClient.get(url).then(({ data }) => {
-            setUsers(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
-    };
-
-    // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
-    useEffect(() => {
-        getUsers();
-    }, []);
-
-    // Callback для пагинации (компонент PaginationComponent)
-    const onPageClick = (link) => {
-        getUsers(link.url);
-    };
-
-    // Отправка request в БД с новым залом
+    // Отправка put-request в БД c изменениями зала
     const onSubmit = (event) => {
         event.preventDefault();
 
-        console.log('Тык');
-
-        const payload = { ...user };
-        console.log(payload);
-
+        const payload = { ...updatedUser };
+        // console.log(payload);
         axiosClient
-            .post("/users", payload)
+            .put(`/users/${user.id}`, payload)
             .then((response) => {
                 console.log(response);
                 // Закрываем slider-popup
-                setOpen(false);
-                // Перезагружаем страницу
+                setChange(false);
+                // Заново перезагружаем из БД все залы
                 getUsers();
             })
             .catch((err) => {
@@ -80,38 +51,56 @@ export default function Users() {
             });
     };
 
+    // Функция удаления зала
+    const onClickDelete = (event) => {
+        axiosClient.delete(`/users/${user.id}`).then((response) => {
+            // Закрываем slider-popup
+            setChange(false);
+            // Заново перезагружаем из БД все фильмы
+            getUsers();
+        });
+    };
+
+
     return (
-        <PageComponent title="Управление пользователями" button={
-            <EButton color="regular" onClick={() => setOpen(true)}>
-                <PlusCircleIcon className="h-6 w-6" />
-                <div className="hidden md:ml-2 md:block">Добавить пользователя</div>
-            </EButton>
-        }>
-            {loading && (
-                <div className="text-center text-lg">Загрузка данных...</div>
-            )}
+        <>
+            <section className="mb-4 flex h-auto">
+                <div className="flex flex-1 justify-between h-18 ml-2 p-2 bg-[#F1EBE6]/95 rounded">
+                    <div className="flex items-center">
+                        <h2 className="text-sm font-light">
+                            ID: {" "}
+                            <ESelection>{user.id}</ESelection>
+                        </h2>
+                        <h2 className="text-sm font-light ml-1">
+                            Имя: {" "}
+                            <ESelection>{user.name}</ESelection>
+                        </h2>
+                        <h2 className="text-sm font-light ml-1">
+                            Email: {" "}
 
-            {!loading && (
-                <div>
-                    {users.slice(0).reverse().map((user) => (
-                        <UserItem
-                            user={user}
-                            getUsers={getUsers}
-                            key={user.id}
-                        />
-                    ))}
-                    <PaginationComponent
-                        meta={meta}
-                        onPageClick={onPageClick}
-                    />
+                            <ESelection>{user.email}</ESelection>
+                        </h2>
+                    </div>
+                    <div className="flex items-center">
+                        <EButton circle onClick={() => setChange(true)}>
+                            <AdjustmentsHorizontalIcon className="w-6 h-7" />
+                        </EButton>
+                        <EButton
+                            circle
+                            color="danger"
+                            onClick={() => setDel(true)}
+                        >
+                            <TrashIcon className="w-6 h-7" />
+                        </EButton>
+                    </div>
                 </div>
-            )}
+            </section>
 
-            {/* Slide-Popup для добавления нового зала */}
+            {/* Slide-Popup для ИЗМЕНЕНИЯ пользователя */}
             <SlidePopupComponent
-                open={open}
-                setOpen={setOpen}
-                title="Добавление нового пользователя"
+                open={change}
+                setOpen={setChange}
+                title={`Изменение пользователя №` + user.id}
             >
                 {error && (
                     <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
@@ -136,10 +125,10 @@ export default function Users() {
                                 name="name"
                                 type="text"
                                 required
-                                value={user.name}
+                                value={updatedUser.name}
                                 onChange={(event) =>
-                                    setUser({
-                                        ...user,
+                                    setUpdatedUser({
+                                        ...updatedUser,
                                         name: event.target.value,
                                     })
                                 }
@@ -156,8 +145,7 @@ export default function Users() {
                             htmlFor="email"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Email:{" "}
-                            <span className="text-red-500">*</span>
+                            Email (изменить нельзя):{" "}
                         </label>
                         <div className="mt-2">
 
@@ -165,15 +153,9 @@ export default function Users() {
                                 id="email"
                                 name="email"
                                 type="email"
-                                required
+                                readonly
                                 value={user.email}
-                                onChange={(event) =>
-                                    setUser({
-                                        ...user,
-                                        email: event.target.value,
-                                    })
-                                }
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#89639e] sm:text-sm sm:leading-6"
+                                className="block w-full bg-gray-200 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#89639e] sm:text-sm sm:leading-6"
                                 placeholder="E-mail"
                             />
 
@@ -197,10 +179,10 @@ export default function Users() {
                                 name="password"
                                 type="password"
                                 required
-                                value={user.password}
+                                value={updatedUser.password}
                                 onChange={(event) =>
-                                    setUser({
-                                        ...user,
+                                    setUpdatedUser({
+                                        ...updatedUser,
                                         password: event.target.value,
                                     })
                                 }
@@ -227,10 +209,10 @@ export default function Users() {
                                 name="password_confirmation"
                                 type="password"
                                 required
-                                value={user.password_confirmation}
+                                value={updatedUser.password_confirmation}
                                 onChange={(event) =>
-                                    setUser({
-                                        ...user,
+                                    setUpdatedUser({
+                                        ...updatedUser,
                                         password_confirmation: event.target.value,
                                     })
                                 }
@@ -241,21 +223,43 @@ export default function Users() {
                     </div>
                     {/* Повтор пароля */}
 
-
-
                     <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
-                        <EButton submit>
-                            <PlusCircleIcon className="h-6 w-6 mr-2" />
-                            Добавить
+                        <EButton submit color="regular">
+                            <CloudArrowUpIcon className="h-6 w-6 mr-2" />
+                            Изменить
                         </EButton>
-
-                        <EButton color="gray" onClick={() => setOpen(false)}>
+                        <EButton color="gray" onClick={() => setChange(false)}>
                             <XCircleIcon className="h-6 w-6 mr-2" />
                             Отменить
                         </EButton>
                     </div>
                 </form>
             </SlidePopupComponent>
-        </PageComponent>
+            {/* Slide-Popup для ИЗМЕНЕНИЯ пользователя */}
+
+            {/* Slide-Popup для УДАЛЕНИЯ пользователя */}
+            <SlidePopupComponent
+                open={del}
+                setOpen={setDel}
+                title="Удаление пользователя"
+            >
+                <div className="block text-sm font-medium leading-6 text-gray-900">
+                    Вы действительно хотите удалить пользователя{" "}
+                    <ESelection>№{user.id}</ESelection>{" "}?
+                </div>
+
+                <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
+                    <EButton color="danger" onClick={onClickDelete}>
+                        <TrashIcon className="h-6 w-6 mr-2" />
+                        Удалить
+                    </EButton>
+                    <EButton color="gray" onClick={() => setDel(false)}>
+                        <XCircleIcon className="h-6 w-6 mr-2" />
+                        Отменить
+                    </EButton>
+                </div>
+            </SlidePopupComponent>
+            {/* Slide-Popup для УДАЛЕНИЯ пользователя */}
+        </>
     )
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\HallsController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\SeatsController;
 use App\Http\Controllers\TypesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('halls', HallsController::class);
     Route::apiResource('types', TypesController::class);
     Route::apiResource('seats', SeatsController::class);
+    Route::apiResource('users', UserController::class);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);
