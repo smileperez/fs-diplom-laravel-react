@@ -65,6 +65,11 @@ export default function Halls() {
                 setOpen(false);
                 // Перезагружаем страницу
                 getHalls();
+                setHall({
+                    name: "",
+                    rows: "",
+                    seats: "",
+                });
             })
             .catch((err) => {
                 if (err && err.response) {

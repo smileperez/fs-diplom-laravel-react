@@ -90,6 +90,14 @@ export default function Movies() {
                 setOpen(false);
                 // Перезагружаем страницу
                 getMovies();
+                setMovie({
+                    title: "",
+                    img: null,
+                    img_url: null,
+                    description: "",
+                    duration: 0,
+                    origin: "",
+                });
             })
             .catch((err) => {
                 if (err && err.response) {
@@ -118,7 +126,7 @@ export default function Movies() {
 
             {!loading && (
                 <div>
-                    {movies.map((movie) => (
+                    {movies.slice(0).reverse().map((movie) => (
                         <MovieListItemAdmin
                             movie={movie}
                             getMovies={getMovies}

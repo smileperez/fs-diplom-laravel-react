@@ -18,7 +18,7 @@ class MoviesController extends Controller
     public function index()
     {
         return MoviesResource::collection(
-            Movies::orderBy('id', 'desc')->paginate(2)
+            Movies::orderBy('id', 'desc')->paginate(5)
         );
     }
 
@@ -30,7 +30,7 @@ class MoviesController extends Controller
         $data = $request->validated();
 
         // Проверяем:
-        // - если была получена картинка, 
+        // - если была получена картинка,
         // - то сохраняем ее локально в /public и в БД пишем корректную ссылку
         if (isset($data['img'])) {
             $relativePath = $this->saveImage($data['img']);
