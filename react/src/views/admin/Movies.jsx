@@ -51,6 +51,7 @@ export default function Movies() {
     useEffect(() => {
         getMovies();
     }, []);
+
     // Callback для пагинации (компонент PaginationComponent)
     const onPageClick = (link) => {
         getMovies(link.url);
@@ -90,6 +91,7 @@ export default function Movies() {
                 setOpen(false);
                 // Перезагружаем страницу
                 getMovies();
+                // Стираем предыдущее добавление нового фильма
                 setMovie({
                     title: "",
                     img: null,

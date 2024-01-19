@@ -12,24 +12,24 @@ export default function Tickets() {
     // Состояние для загрузки из БД общего списка фильмов
     const [movies, setMovies] = useState([]);
 
-    // Соятоние загрузки данных из БД
+    // Состояние загрузки данных из БД
     const [loading, setLoading] = useState(false);
 
-    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
+    // Состояние для meta, полученной с ответом на запрос данных из БД (для pagination)
     const [meta, setMeta] = useState({});
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
     // Загрузка списка фильмов при обновлении страницы
-    useEffect(() => {
-        setLoading(true);
-        axiosClient.get("/movies").then(({ data }) => {
-            setMovies(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
-    }, []);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     axiosClient.get("/movies").then(({ data }) => {
+    //         setMovies(data.data);
+    //         setMeta(data.meta);
+    //         setLoading(false);
+    //     });
+    // }, []);
 
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getMovies = (url) => {
@@ -41,10 +41,12 @@ export default function Tickets() {
             setLoading(false);
         });
     };
-    // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
+
+    // // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
     useEffect(() => {
         getMovies();
     }, []);
+
     // Callback для пагинации (компонент PaginationComponent)
     const onPageClick = (link) => {
         getMovies(link.url);
