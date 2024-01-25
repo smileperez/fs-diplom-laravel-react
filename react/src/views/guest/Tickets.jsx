@@ -21,28 +21,19 @@ export default function Tickets() {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // Загрузка списка фильмов при обновлении страницы
-    // useEffect(() => {
-    //     setLoading(true);
-    //     axiosClient.get("/movies").then(({ data }) => {
-    //         setMovies(data.data);
-    //         setMeta(data.meta);
-    //         setLoading(false);
-    //     });
-    // }, []);
-
-    // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
-    const getMovies = (url) => {
-        url = url || "/movies";
+    // Функция получения фильмов и meta данных для пагинации (meta данные пагинации для компонента PaginationComponent)
+    const getMovies = () => {
         setLoading(true);
-        axiosClient.get(url).then(({ data }) => {
-            setMovies(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
+        axiosClient
+            .get('/getmovies')
+            .then(({ data }) => {
+                setMovies(data.data);
+                setMeta(data.meta);
+                setLoading(false);
+            });
     };
 
-    // // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
+    // // При каждом обновлении страницы обновляем список фильмов
     useEffect(() => {
         getMovies();
     }, []);

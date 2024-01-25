@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+Защиненное API для авторизированных пользователей
+*/
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/signout', [AuthController::class, 'signout']);
     Route::get('/current', [AuthController::class, 'current']);
@@ -30,5 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
 });
 
+/*
+API для гостевого доступа
+*/
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/signin', [AuthController::class, 'signin']);
+Route::get('/getmovies', [MoviesController::class, 'index']);
