@@ -6,27 +6,33 @@ import { useEffect, useState } from "react";
 import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 import PaginationComponent from "../../components/admin/PaginationComponent";
-// import CreateMatrix from "../../components/admin/CreateMatrix"
 
 export default function Halls() {
-    // Состояние для загрузки из БД общего списка залов
+    // Состояние общего переченя залов для загрузки из БД
     const [halls, setHalls] = useState([]);
 
-    // Соятоние загрузки данных из БД
+    // Состояние загрузки данных из БД
     const [loading, setLoading] = useState(false);
 
-    // Соятоние для meta, полученной с ответом на запрос данных из БД (для pagination)
+    // Состояние для meta, полученной с ответом на запрос данных из БД (для pagination)
     const [meta, setMeta] = useState({});
 
-    // Состояния для открытия/закрытия в SlidePopupComponent
+    // Состояние открытия/закрытия слайдера (компонент SlidePopupComponent)
     const [open, setOpen] = useState(false);
 
-    // Состояния для добавления нового зала
+    // Состояние нового зала для добавления в таблицу БД "Halls"
     const [hall, setHall] = useState({
         name: "",
         rows: "",
         seats: "",
     });
+
+    // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
+    // const [halls_id, setHalls_id] = useState(0);
+    let halls_id = 0;
+
+    const [types_id, setTypes_id] = useState(1);
+
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
@@ -51,16 +57,34 @@ export default function Halls() {
         getHalls(link.url);
     };
 
+    // console.log(makeMatrix(hall.rows, hall.seat))
+
+    const getMatrix = (rows, seats) => {
+        // Единица добавлена, чтобы в дальнейшем удалить индекс [0], чтобы привести массив сидушек к виду [1, 2, 3...]
+        const seatsPlus = seats + 1;
+        const line = [];
+        for (let row = 1; row < rows + 1; row++) {
+            const column = Array.from({ length: seatsPlus }, (__, seat) => {
+                return { row, seat, halls_id, types_id };
+            });
+            // Приводим массив мест к виду к виду [1, 2, 3...].
+            // Делаем начало индексов массива мест начиная с 1.
+            column.shift();
+            // Добавляем полученную "линию" мест в "ряды".
+            line.push(column);
+        }
+        return line;
+    };
+
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
         event.preventDefault();
+        console.log(halls_id);
 
-        const payload = { ...hall };
 
         axiosClient
-            .post("/halls", payload)
+            .post("/halls", hall)
             .then((response) => {
-                console.log(response);
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
@@ -70,15 +94,36 @@ export default function Halls() {
                     rows: "",
                     seats: "",
                 });
+                // Получаем ID нового зала.
+                // FIXME: Используется переменная let для синхронности получения данных.
+                // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
+                halls_id = response.data.data.id;
+
+                postSeats();
+
             })
-            .catch((err) => {
-                if (err && err.response) {
-                    // Записываем error в состояние
-                    setError(err.response.data.message);
+            .catch((error) => {
+                if (error.response) {
+                    setError({ __html: error.response.data.errors });
                 }
-                console.log(err, err.response);
+                console.error(error);
             });
     };
+
+    const postSeats = () => {
+        const matrixPayload = getMatrix(Number(hall.rows), Number(hall.seats), types_id, halls_id);
+
+        for (let i = 0; i < Number(hall.rows); i++) {
+            axiosClient
+                .post("/seats", matrixPayload[i])
+                .catch((error) => {
+                    if (error.response) {
+                        setError({ __html: error.response.data.errors });
+                    }
+                    console.error(error);
+                });
+        }
+    }
 
     return (
         <PageComponent
@@ -96,7 +141,7 @@ export default function Halls() {
 
             {!loading && (
                 <div>
-                    {halls.map((hall) => (
+                    {halls.slice(0).reverse().map((hall) => (
                         <HallListItem
                             hall={hall}
                             getHalls={getHalls}
