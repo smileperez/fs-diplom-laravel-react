@@ -10,6 +10,7 @@ import {
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
+import makeMatrix from "../core/MakeMatrix.jsx";
 
 export default function HallListItem({ hall, getHalls }) {
     // Открытие/Закрытие SlidePopupComponent для изменения зала
@@ -24,6 +25,12 @@ export default function HallListItem({ hall, getHalls }) {
         seats: hall.seats,
     });
 
+    // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
+    let halls_id = 0;
+
+    // Состояние типа сидушки, по дефолту 1 = "Обычное"
+    const [types_id, setTypes_id] = useState(1);
+
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
@@ -35,7 +42,12 @@ export default function HallListItem({ hall, getHalls }) {
         axiosClient
             .put(`/halls/${hall.id}`, payload)
             .then((response) => {
-                console.log(response);
+                // Получаем из ответа ID измененного зала
+                halls_id = response.data.data.id;
+                // Удавляем все сидушки с ID залом $halls_id
+                deleteSeats(halls_id);
+                // Генерим новую матрицу сидушек и отправляем в БД
+                postSeats(Number(updatedHall.rows), Number(updatedHall.seats), types_id, halls_id);
                 // Закрываем slider-popup
                 setChange(false);
                 // Заново перезагружаем из БД все залы
@@ -49,6 +61,28 @@ export default function HallListItem({ hall, getHalls }) {
                 console.log(err, err.response);
             });
     };
+
+    // Функция удаления всех сидушек при изменении зала
+    const deleteSeats = (hall_id) => {
+        axiosClient.delete(`/seats/${hall_id}`).then((response) => {
+        });
+    }
+
+    // Функция создания матрицы сидушек и отправки ее в БД
+    const postSeats = (rows, seats, types_id, halls_id) => {
+        const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
+
+        for (let i = 0; i < rows; i++) {
+            axiosClient
+                .post("/seats", matrixPayload[i])
+                .catch((error) => {
+                    if (error.response) {
+                        setError({ __html: error.response.data.errors });
+                    }
+                    console.error(error);
+                });
+        }
+    }
 
     // Функция удаления зала
     const onClickDelete = (event) => {

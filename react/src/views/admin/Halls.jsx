@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 import PaginationComponent from "../../components/admin/PaginationComponent";
+import makeMatrix from "../../components/core/MakeMatrix.jsx";
 
 export default function Halls() {
     // Состояние общего переченя залов для загрузки из БД
@@ -28,11 +29,10 @@ export default function Halls() {
     });
 
     // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
-    // const [halls_id, setHalls_id] = useState(0);
     let halls_id = 0;
 
+    // Состояние типа сидушки, по дефолту 1 = "Обычное"
     const [types_id, setTypes_id] = useState(1);
-
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
@@ -57,50 +57,30 @@ export default function Halls() {
         getHalls(link.url);
     };
 
-    // console.log(makeMatrix(hall.rows, hall.seat))
-
-    const getMatrix = (rows, seats) => {
-        // Единица добавлена, чтобы в дальнейшем удалить индекс [0], чтобы привести массив сидушек к виду [1, 2, 3...]
-        const seatsPlus = seats + 1;
-        const line = [];
-        for (let row = 1; row < rows + 1; row++) {
-            const column = Array.from({ length: seatsPlus }, (__, seat) => {
-                return { row, seat, halls_id, types_id };
-            });
-            // Приводим массив мест к виду к виду [1, 2, 3...].
-            // Делаем начало индексов массива мест начиная с 1.
-            column.shift();
-            // Добавляем полученную "линию" мест в "ряды".
-            line.push(column);
-        }
-        return line;
-    };
-
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
         event.preventDefault();
         console.log(halls_id);
 
-
         axiosClient
             .post("/halls", hall)
             .then((response) => {
+                // Получаем ID нового зала.
+                // FIXME: Используется переменная let для синхронности получения данных.
+                // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
+                halls_id = response.data.data.id;
+                // Генерим матрицу сидушек и отправляем в БД (табл. seats)
+                postSeats(Number(hall.rows), Number(hall.seats), types_id, halls_id);
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
                 getHalls();
+                // Обнуляем поля в форме создания нового зала
                 setHall({
                     name: "",
                     rows: "",
                     seats: "",
                 });
-                // Получаем ID нового зала.
-                // FIXME: Используется переменная let для синхронности получения данных.
-                // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
-                halls_id = response.data.data.id;
-
-                postSeats();
-
             })
             .catch((error) => {
                 if (error.response) {
@@ -110,10 +90,11 @@ export default function Halls() {
             });
     };
 
-    const postSeats = () => {
-        const matrixPayload = getMatrix(Number(hall.rows), Number(hall.seats), types_id, halls_id);
+    // Функция создания матрицы сидушек и отправки ее в БД
+    const postSeats = (rows, seats, types_id, halls_id) => {
+        const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
 
-        for (let i = 0; i < Number(hall.rows); i++) {
+        for (let i = 0; i < rows; i++) {
             axiosClient
                 .post("/seats", matrixPayload[i])
                 .catch((error) => {

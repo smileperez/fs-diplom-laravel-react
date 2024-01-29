@@ -57,9 +57,12 @@ class SeatsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Seats $seat)
+    // public function destroy(Seats $seat, $deleted)
+    public function destroy($halls_id)
     {
-        $seat->delete();
+        // $seat->delete();
+        Seats::where('halls_id', $halls_id)->delete();
+
         return response('', 204);
     }
 }
