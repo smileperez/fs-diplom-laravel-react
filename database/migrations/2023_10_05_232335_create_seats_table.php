@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Halls::class)->constrained();
+            $table->foreignIdFor(Halls::class)->constrained()->onDelete('cascade');
             $table->unsignedTinyInteger('row');
             $table->unsignedTinyInteger('seat');
             $table->foreignIdFor(Types::class)->constrained();
