@@ -28,7 +28,8 @@ export default function Halls() {
         seats: "",
     });
 
-    // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
+    // Состояние мест зала, для отпарвки в таблицу БД "Seats"
+    // FIXME: Используется переменная вместо состояния useState
     let halls_id = 0;
 
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
@@ -41,12 +42,15 @@ export default function Halls() {
     const getHalls = (url) => {
         url = url || "/halls";
         setLoading(true);
-        axiosClient.get(url).then(({ data }) => {
-            setHalls(data.data);
-            setMeta(data.meta);
-            setLoading(false);
-        });
+        axiosClient
+            .get(url)
+            .then(({ data }) => {
+                setHalls(data.data);
+                setMeta(data.meta);
+                setLoading(false);
+            });
     };
+
     // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
     useEffect(() => {
         getHalls();

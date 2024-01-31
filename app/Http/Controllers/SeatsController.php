@@ -37,9 +37,10 @@ class SeatsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Seats $seat)
+    public function show($hall_id)
     {
-        return new SeatsResource($seat);
+        $data = Seats::where('halls_id', $hall_id)->get()->toArray();
+        return $data;
     }
 
     /**
@@ -57,10 +58,8 @@ class SeatsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Seats $seat, $deleted)
     public function destroy($halls_id)
     {
-        // $seat->delete();
         Seats::where('halls_id', $halls_id)->delete();
 
         return response('', 204);

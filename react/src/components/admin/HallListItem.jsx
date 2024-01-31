@@ -25,7 +25,7 @@ export default function HallListItem({ hall, getHalls }) {
         seats: hall.seats,
     });
 
-    // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
+    // Состояние мест зала, для отпарвки в таблицу БД "Seats"
     // FIXME: Используется переменная вместо состояния useState
     let halls_id = 0;
 

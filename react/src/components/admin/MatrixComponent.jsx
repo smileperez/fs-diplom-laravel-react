@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
 import ESeat from "../core/ESeat";
-
-// Функция создания матрицы
-const makeMatrix = (rows, seats) => {
-    // Единица добавлена, чтобы в дальнейшем удалить индекс [0], чтобы привести массив сидушек к виду [1, 2, 3...]
-    const seatsPlus = seats + 1;
-    const line = [];
-    for (let row = 1; row < rows + 1; row++) {
-        const column = Array.from({ length: seatsPlus }, (__, seat) => {
-            return { row, seat };
-        });
-        // Приводим массив мест к виду к виду [1, 2, 3...].
-        // Делаем начало индексов массива мест начиная с 1.
-        column.shift();
-        // Добавляем полученную "линию" мест в "ряды".
-        line.push(column);
-    }
-    return line;
-};
+import axiosClient from "../../axios";
+import makeMatrix from "../core/MakeMatrix.jsx";
 
 export default function MatrixComponent({
+    hall_id,
     rows,
     seats,
     selectedCoords,
@@ -40,6 +25,8 @@ export default function MatrixComponent({
 
     const [bgcolor, setBgcolor] = useState('63536C');
 
+    const [matrixSeats, setMatrixSeats] = useState();
+
     const colors = [
         '63536C',
         'cfb53b',
@@ -49,12 +36,23 @@ export default function MatrixComponent({
     ];
 
     // Передача созданной матрицы в компонент родитель <Config>
-    useEffect(() => {
-        if (matrix) {
-            createdMatrix(matrix);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (matrix) {
+    //         createdMatrix(matrix);
+    //     }
+    // }, []);
 
+    // Функция получения матрицы сидушек из БД для конкретного зала
+    const getSeats = () => {
+        setLoading(true);
+        axiosClient
+            .get(`/seats/${hall_id}`)
+            .then(({ data }) => {
+                setMatrixSeats(data.data);
+                console.log(data.data);
+                setLoading(false);
+            });
+    };
 
     // Функция детектирования кликов и отправки координат в родитель <MatrixComponent> -> в родитель <Config>
     function onMouseEnter(event, row, seat) {
@@ -67,16 +65,16 @@ export default function MatrixComponent({
         selectedCoords(coords);
     }, [coords]);
 
-    const changeColor = (colors) => {
+    // const changeColor = (colors) => {
 
-        if (index == colors.length - 1) {
-            setIndex(0);
-        } else {
-            setIndex(index + 1);
-        }
-        setBgcolor(`bg-[#${colors[index]}]`);
-        console.log(bgcolor);
-    }
+    //     if (index == colors.length - 1) {
+    //         setIndex(0);
+    //     } else {
+    //         setIndex(index + 1);
+    //     }
+    //     setBgcolor(`bg-[#${colors[index]}]`);
+    //     console.log(bgcolor);
+    // }
 
     return (
         <div className="flex flex-col flex-nowrap space-y-2">

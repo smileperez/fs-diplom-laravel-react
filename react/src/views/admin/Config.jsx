@@ -7,20 +7,6 @@ import ESelection from "../../components/core/ESelection";
 import EButton from "../../components/core/EButton";
 import { CloudArrowUpIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
-// TODO:
-// const seatValues = [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }];
-
-// TODO:
-// const Card = ({ cardValue, change, idx }) => {
-//     return (
-//         <div>
-//             <span>{cardValue}</span>
-//             <button onClick={() => change(idx, 1)}>+</button>
-//             <button onClick={() => change(idx, -1)}>-</button>
-//         </div>
-//     );
-// };
-
 export default function Config() {
     // Состояние для загрузки залов из БД
     const [halls, setHalls] = useState([]);
@@ -38,10 +24,13 @@ export default function Config() {
     const [coord, setCoord] = useState({ row: -1, seat: -1 });
 
     //
-    const [color, setColor] = useState("63536C");
+    // const [color, setColor] = useState("63536C");
 
     //
-    const [currentMatrix, setCurrentMatrix] = useState();
+    // const [currentMatrix, setCurrentMatrix] = useState();
+
+    // Полученный из БД массив сидушек для конкретного зала.
+    const [matrixSeats, setMatrixSeats] = useState();
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
@@ -49,25 +38,48 @@ export default function Config() {
     // Функция получения списка залов из БД
     useEffect(() => {
         setLoading(true);
-        axiosClient.get("/halls").then(({ data }) => {
-            setHalls(data.data);
-            setLoading(false);
-        });
+        axiosClient
+            .get("/halls")
+            .then(({ data }) => {
+                setHalls(data.data);
+                getTypes();
+            });
     }, []);
 
-    // Функция получения списка залов из БД
+    // Функция получения списка типов мест из БД
+    const getTypes = () => {
+        axiosClient
+            .get("/types")
+            .then(({ data }) => {
+                setTypes(data.data);
+                setLoading(false);
+            });
+    };
+
+    // Функция получения матрицы сидушек из БД для конкретного зала
+    const getSeats = (hall_id) => {
+        axiosClient
+            .get(`/seats/${hall_id}`)
+            .then(({ data }) => {
+                setMatrixSeats(data.data);
+                setLoading(false);
+                console.log(data);
+            });
+    };
+
+    // Функция автообновления матрицы сидушек из БД,
+    // в момент когда пользователь тынкул на конкретный зал в выпадающем списке.
     useEffect(() => {
-        setLoading(true);
-        axiosClient.get("/types").then(({ data }) => {
-            setTypes(data.data);
-            setLoading(false);
-        });
-    }, []);
+        if (hall) {
+            getSeats(hall.id);
+        }
+    }, [hall]);
 
     // callback функция, для получения выбранного зала из под компонента <SelectMenusComponent>
     const selectedHall = (hall) => {
         setHall(hall);
     };
+
 
     // callback функция, для получения координат места из под компонента <MatrixComponent>
     const selectedCoords = (coord) => {
@@ -99,10 +111,6 @@ export default function Config() {
             item.halls_id = hall.id;
             item.types_id = 1;
         });
-        // console.log(payload);
-
-        // console.log(payload);
-        // makePayload(payload);
 
         axiosClient
             .post("/seats", payload)
@@ -182,6 +190,8 @@ export default function Config() {
                                                 </span>
                                                 <div className="mt-2">
                                                     <MatrixComponent
+                                                        matrixSeats={matrixSeats}
+                                                        hall_id={hall.id}
                                                         rows={hall.rows}
                                                         seats={hall.seats}
                                                         selectedCoords={
