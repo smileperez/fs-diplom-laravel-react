@@ -26,6 +26,7 @@ export default function HallListItem({ hall, getHalls }) {
     });
 
     // Состояние мест нового зала, для загрузки в таблицу БД "Seats"
+    // FIXME: Используется переменная вместо состояния useState
     let halls_id = 0;
 
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
