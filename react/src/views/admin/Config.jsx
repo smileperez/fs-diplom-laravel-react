@@ -88,7 +88,9 @@ export default function Config() {
 
     // Функция для выведения координваты в консоль для отладки
     useEffect(() => {
-        console.log(coord);
+        if (coord) {
+            console.log(coord);
+        }
     }, [coord]);
 
     // callback функция, для получения матрицы координат  из под компонента <MatrixComponent>
