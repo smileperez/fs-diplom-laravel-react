@@ -61,9 +61,8 @@ export default function Config() {
         axiosClient
             .get(`/seats/${hall_id}`)
             .then(({ data }) => {
-                setMatrixSeats(data.data);
+                setMatrixSeats(data);
                 setLoading(false);
-                console.log(data);
             });
     };
 

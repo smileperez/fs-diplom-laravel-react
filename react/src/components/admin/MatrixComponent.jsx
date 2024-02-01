@@ -18,7 +18,7 @@ export default function MatrixComponent({
 
     // Создание матрицы на основе данных из родителя <Config>
     const matrix = makeMatrix(rows, seats);
-    console.log(matrix);
+    // console.log(matrix);
 
     // Состояние для хранения координаты
     const [coords, setCoords] = useState();
@@ -28,6 +28,26 @@ export default function MatrixComponent({
     // Функция детектирования кликов и отправки координат в родитель <MatrixComponent> -> в родитель <Config>
     function onMouseEnter(event, row, seat) {
         setCoords({ row, seat });
+    }
+
+    if (matrixSeats) {
+        let j = 1;
+        let column = [];
+        let row = [];
+        // console.log(matrixSeats);
+        for (let i = 0; i < matrixSeats.length; i++) {
+
+            if (matrixSeats[i].row === j) {
+                column.push(matrixSeats[i]);
+            }
+            else {
+                row.push(column);
+                column = [];
+                column.push(matrixSeats[i]);
+                j++;
+            }
+        }
+        console.log(row);
     }
 
     // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>, как только setCoords обновит состояние coords
@@ -41,7 +61,7 @@ export default function MatrixComponent({
                 <div key={i} className="flex flex-nowrap space-x-2">
                     {row.map((item, j) => (
                         <div
-                            className={`text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded ${bgcolor}`}
+                            className={`text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded bg-[#${bgcolor}]`}
                             onClick={(event) => onMouseEnter(event, item.row, item.seat)}
                         ></div>
                     ))}
