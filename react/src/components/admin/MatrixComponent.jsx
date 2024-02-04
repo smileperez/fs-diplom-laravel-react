@@ -5,7 +5,7 @@ import makeMatrix from "../core/MakeMatrix.jsx";
 
 export default function MatrixComponent({
     matrixSeats,
-    hall_id,
+    hall,
     rows,
     seats,
     selectedCoords,
@@ -39,12 +39,19 @@ export default function MatrixComponent({
 
             if (matrixSeats[i].row === j) {
                 column.push(matrixSeats[i]);
+                console.log('row = j, просто добавили в column');
             }
-            else {
+            else if (i === hall.seats*hall.rows-1) {
+                row.push(column);
+                console.log(`${i} = ${hall.seats*hall.rows}, завершили и добавили column в row`);
+                // column.push(matrixSeats[i]);
+            } else {
+                j++;
                 row.push(column);
                 column = [];
                 column.push(matrixSeats[i]);
-                j++;
+                // row.push(column);
+                console.log('row != j, стерли и добавили в column в  row');
             }
         }
         console.log(row);
