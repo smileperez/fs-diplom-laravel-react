@@ -40,10 +40,10 @@ export default function MatrixComponent({
 
     return (
         <div className="flex flex-col flex-nowrap space-y-2">
-            {matrix && matrix.map((row, i) => (
+            {matrix.map((row, i) => (
                 <div key={i} className="flex flex-nowrap space-x-2">
                     {row.map((item, j) => (
-                        <div
+                        <div key={item.row.toString() + item.seat.toString()}
                             className={`text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded bg-[#${bgcolor}]`}
                             onClick={(event) => onMouseEnter(event, item.row, item.seat)}
                         ></div>
