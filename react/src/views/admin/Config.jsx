@@ -192,14 +192,10 @@ export default function Config() {
                                                 <div className="mt-2">
                                                     <MatrixComponent
                                                         matrixSeats={matrixSeats}
-                                                        hall={hall}
                                                         rows={hall.rows}
                                                         seats={hall.seats}
                                                         selectedCoords={
                                                             selectedCoords
-                                                        }
-                                                        createdMatrix={
-                                                            createdMatrix
                                                         }
                                                     />
                                                 </div>
