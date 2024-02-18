@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Halls::class)->constrained();
+            $table->foreignIdFor(Halls::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Types::class)->constrained();
             $table->smallInteger('price')->nullable()->default(0);
             $table->timestamps();

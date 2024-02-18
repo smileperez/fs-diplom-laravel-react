@@ -23,12 +23,6 @@ export default function Config() {
     //
     const [coord, setCoord] = useState({ row: -1, seat: -1 });
 
-    //
-    // const [color, setColor] = useState("63536C");
-
-    //
-    // const [currentMatrix, setCurrentMatrix] = useState();
-
     // Полученный из БД массив сидушек для конкретного зала.
     const [matrixSeats, setMatrixSeats] = useState();
 
@@ -142,7 +136,6 @@ export default function Config() {
                         <SelectMenusComponent
                             selectedHall={selectedHall}
                             items={halls}
-                            key={halls.id}
                         />
                     </div>
 

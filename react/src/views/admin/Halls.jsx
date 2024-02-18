@@ -73,8 +73,10 @@ export default function Halls() {
                 // FIXME: Используется переменная let для синхронности получения данных.
                 // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
                 halls_id = response.data.data.id;
-                // Генерим матрицу сидушек и отправляем в БД (табл. seats)
+                // Генерируем матрицу сидушек и отправляем в таблицу Seats
                 postSeats(Number(hall.rows), Number(hall.seats), types_id, halls_id);
+                // Отправляем нулевые цены за сидушки в таблицу Prices
+                postPrices(halls_id)
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
@@ -94,7 +96,7 @@ export default function Halls() {
             });
     };
 
-    // Функция создания матрицы сидушек и отправки ее в БД
+    // Функция создания матрицы сидушек и отправки ее в таблицу Seats
     const postSeats = (rows, seats, types_id, halls_id) => {
         const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
 
@@ -102,12 +104,28 @@ export default function Halls() {
             axiosClient
                 .post("/seats", matrixPayload[i])
                 .catch((error) => {
-                    if (error.response) {
-                        setError({ __html: error.response.data.errors });
-                    }
                     console.error(error);
                 });
         }
+    }
+
+    // Функция заполнения цен в таблице Prices присоздании нового зала
+    const postPrices = (halls_id) => {
+        const payload = [];
+        // Создаем наполнение запроса из нулевых цен
+        for (let i = 1; i < 3; i++) {
+            payload.push({
+                halls_id: halls_id,
+                types_id: i,
+                price: 0
+            })
+        }
+
+        axiosClient
+            .post("/prices", payload)
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     return (

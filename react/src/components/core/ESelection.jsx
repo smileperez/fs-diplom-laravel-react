@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export default function ESelection({ color, children }) {
     let classes = [
         "inline-block",
@@ -12,11 +14,44 @@ export default function ESelection({ color, children }) {
         "text-white",
     ];
 
-    if (color) {
-        classes = [...classes, `bg-[#${color}]`];
-    } else {
-        classes = [...classes, "bg-[#63536C]"];
-    }
+    // Соятоние загрузки данных
+    const [loading, setLoading] = useState(true);
 
-    return <span className={classes.join(" ")}>{children}</span>;
+    // if (color) {
+    //     classes = [...classes, selectedColor];
+    // } else {
+    //     classes = [...classes, 'bg-[#63536C]'];
+    // }
+
+    // if (!color) {
+    //     setLoading(true);
+    // } else {
+    //     setLoading(false);
+    // }
+
+    useEffect(() => {
+        if (color) {
+            setLoading(false);
+        }
+    }, [color]);
+
+
+    // return <div className={classes.join(" ")}>{children}</div>;
+    return (
+        <>
+
+            {loading && (
+                <></>
+            )}
+
+            {!loading && (
+                < div className={`${!color && "ЛОЛ"}`}>{children}</div >
+            )}
+
+        </>
+    )
+
+
+    // <div className={`bg-[#${types[1].color}]`} >VIP</div>
+
 }

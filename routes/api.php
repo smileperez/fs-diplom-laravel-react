@@ -5,7 +5,8 @@ use App\Http\Controllers\HallsController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\SeatsController;
 use App\Http\Controllers\TypesController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PricesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,7 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('halls', HallsController::class);
     Route::apiResource('types', TypesController::class);
     Route::apiResource('seats', SeatsController::class);
-    Route::apiResource('users', UserController::class);
+    Route::apiResource('users', UsersController::class);
+    Route::apiResource('prices', PricesController::class);
 });
 
 /*
