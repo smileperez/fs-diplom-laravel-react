@@ -81,7 +81,7 @@ export default function Users() {
     };
 
     return (
-        <PageComponent title="Управление пользователями" button={
+        <PageComponent title="Управление администраторами" button={
             <EButton color="regular" onClick={() => setOpen(true)}>
                 <PlusCircleIcon className="h-6 w-6" />
                 <div className="hidden md:ml-2 md:block">Добавить пользователя</div>

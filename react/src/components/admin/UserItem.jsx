@@ -1,13 +1,11 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
-import ESelection from "../core/ESelection";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     CloudArrowUpIcon,
     TrashIcon,
     XCircleIcon,
-    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
@@ -32,7 +30,6 @@ export default function UserItem({ user, getUsers }) {
         event.preventDefault();
 
         const payload = { ...updatedUser };
-        // console.log(payload);
         axiosClient
             .put(`/users/${user.id}`, payload)
             .then((response) => {
@@ -69,16 +66,15 @@ export default function UserItem({ user, getUsers }) {
                     <div className="flex items-center">
                         <h2 className="text-sm font-light">
                             ID: {" "}
-                            <ESelection>{user.id}</ESelection>
+                            <div className={`bg-[#63536C] w-auto px-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{user.id}</div>
                         </h2>
-                        <h2 className="text-sm font-light ml-1">
+                        <h2 className="text-sm font-light ml-3">
                             Имя: {" "}
-                            <ESelection>{user.name}</ESelection>
+                            <div className={`bg-[#63536C] w-auto px-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{user.name}</div>
                         </h2>
-                        <h2 className="text-sm font-light ml-1">
+                        <h2 className="text-sm font-light ml-3">
                             Email: {" "}
-
-                            <ESelection>{user.email}</ESelection>
+                            <div className={`bg-[#63536C] w-auto px-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{user.email}</div>
                         </h2>
                     </div>
                     <div className="flex items-center">
@@ -245,7 +241,7 @@ export default function UserItem({ user, getUsers }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить пользователя{" "}
-                    <ESelection>№{user.id}</ESelection>{" "}?
+                    <div className={`bg-[#63536C] w-auto p-1 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>№{user.id}</div>?
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">

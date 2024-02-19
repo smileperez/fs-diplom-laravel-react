@@ -1,6 +1,5 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
-import ESelection from "../core/ESelection";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
@@ -67,15 +66,11 @@ export default function TypeItem({ type, getTypes }) {
                         <div className="w-auto">
                             <h2 className="text-sm font-light">
                                 ID:{" "}
-                                <ESelection>
-                                    {type.id}
-                                </ESelection>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{type.id}</div>
                             </h2>
                             <h2 className="text-sm font-light">
                                 Название места:{" "}
-                                <ESelection color={type.color}>
-                                    {type.type}
-                                </ESelection>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{type.type}</div>
                             </h2>
                         </div>
                     </div>

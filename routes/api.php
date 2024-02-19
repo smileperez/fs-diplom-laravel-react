@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('seats', SeatsController::class);
     Route::apiResource('users', UsersController::class);
     Route::apiResource('prices', PricesController::class);
+    Route::apiResource('sessions', PricesController::class);
 });
 
 /*

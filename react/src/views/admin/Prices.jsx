@@ -76,6 +76,7 @@ export default function Halls() {
                             hall={hall}
                             types={types}
                             key={hall.id}
+                            getHalls={getHalls}
                         />
                     ))}
                     <PaginationComponent

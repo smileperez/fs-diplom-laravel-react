@@ -1,6 +1,5 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
-import ESelection from "../core/ESelection";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
@@ -104,29 +103,23 @@ export default function HallListItem({ hall, getHalls }) {
                 <div className="flex flex-1 justify-between h-18 ml-2 p-2 bg-[#F1EBE6]/95 rounded">
                     <div className="flex">
                         <div className="w-auto">
-                            <h2 className="text-sm font-light">
-                                Название зала:{" "}
-                                <ESelection>{hall.name}</ESelection>
+                            <h2 className="flex text-sm font-light">
+                                <div>Название зала:</div>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.name}</div>
                             </h2>
-                            <h2 className="text-sm font-light mt-1">
-                                Конфигурация зала:{" "}
-                                <ESelection>
-                                    {hall.rows} x {hall.seats}
-                                </ESelection>
+                            <h2 className="flex text-sm font-light mt-1">
+                                <div>Конфигурация зала:</div>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.rows} x {hall.seats}</div>
                             </h2>
                         </div>
                         <div className="ml-6">
-                            <h2 className="text-sm font-light">
-                                Общее кол-во мест:{" "}
-                                <ESelection>
-                                    {hall.rows * hall.seats}
-                                </ESelection>
+                            <h2 className="flex text-sm font-light">
+                                <div>Количество обычных мест:</div>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.rows * hall.seats}</div>
                             </h2>
-                            <h2 className="text-sm font-light mt-1">
-                                Количество VIP мест:{" "}
-                                <ESelection color="b89e14">
-                                    {hall.seats}
-                                </ESelection>
+                            <h2 className="flex text-sm font-light mt-1">
+                                <div>Количество VIP мест:</div>
+                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.seats}</div>
                             </h2>
                         </div>
                     </div>
@@ -269,7 +262,7 @@ export default function HallListItem({ hall, getHalls }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить зал{" "}
-                    <ESelection>№{hall.id}</ESelection>{" "}?
+                    <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>№{hall.id} ?</div>
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">

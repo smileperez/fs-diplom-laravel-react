@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Prices;
+use App\Http\Resources\PricesResource;
 use App\Http\Requests\PricesStoreRequest;
+use App\Http\Requests\PricesUpdateRequest;
+use App\Models\Prices;
 
 class PricesController extends Controller
 {
@@ -59,9 +60,12 @@ class PricesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PricesUpdateRequest $request, $halls_id)
     {
-        //
+        $data = $request->validated();
+
+        Prices::where('halls_id', $halls_id)->where('types_id', $data['types_id'])->update($data);
+        return response('Change successful', 200);
     }
 
     /**

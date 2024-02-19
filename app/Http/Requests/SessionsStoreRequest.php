@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PricesUpdateRequest extends FormRequest
+class SessionsStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class PricesUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'movies_id' => 'exists:movies,id',
             'halls_id' => 'exists:halls,id',
-            'types_id' => 'exists:types,id',
-            'price' => 'integer|max:25000',
+            'sessionTime' => 'date_format:Y-m-d H:i:s',
         ];
     }
 }

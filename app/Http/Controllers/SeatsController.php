@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SeatsResource;
 use App\Http\Requests\SeatsStoreRequest;
 use App\Http\Requests\SeatsUpdateRequest;
-use App\Http\Resources\SeatsResource;
 use App\Models\Seats;
 
 class SeatsController extends Controller

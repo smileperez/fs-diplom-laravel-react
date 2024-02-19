@@ -1,6 +1,6 @@
 import PageComponent from "../../components/admin/PageComponent";
 import SlidePopupComponent from "../../components/core/SlidePopupComponent";
-import MovieListItemAdmin from "../../components/admin/MovieListItemAdmin";
+import MovieItemAdmin from "../../components/admin/MovieItemAdmin.jsx";
 import EButton from "../../components/core/EButton";
 import { useEffect, useState } from "react";
 import {
@@ -129,7 +129,7 @@ export default function Movies() {
             {!loading && (
                 <div>
                     {movies.slice(0).reverse().map((movie) => (
-                        <MovieListItemAdmin
+                        <MovieItemAdmin
                             movie={movie}
                             getMovies={getMovies}
                             key={movie.id}

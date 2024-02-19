@@ -1,6 +1,5 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
-import ESelection from "../core/ESelection";
 import { useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
@@ -103,7 +102,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                                 {movie.title}
                             </h2>
                             <p className="mt-2">
-                                <ESelection>{movie.duration} минут</ESelection>
+                                <div className={`bg-[#63536C] w-auto p-1 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.duration} минут</div>
                             </p>
                         </div>
                     </div>
@@ -300,7 +299,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить фильм{" "}
-                    <ESelection>№{movie.id}</ESelection>{" "}?
+                    <div className={`bg-[#63536C] w-auto px-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>№{movie.id}</div> ?
                 </div>
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">
                     <EButton color="danger" onClick={onClickDelete}>

@@ -3,7 +3,6 @@ import PageComponent from "../../components/admin/PageComponent";
 import axiosClient from "../../axios";
 import MatrixComponent from "../../components/admin/MatrixComponent";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
-import ESelection from "../../components/core/ESelection";
 import EButton from "../../components/core/EButton";
 import { CloudArrowUpIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
@@ -149,26 +148,23 @@ export default function Config() {
                         {types.length > 0 && (
                             <>
                                 <div className="flex flex-wrap mt-1">
-                                    {types.map((type, idx) => (
+                                    {types?.map((type, idx) => (
                                         <div
                                             className="mt-1 mr-2 last:mr-0"
                                             key={idx}
                                         >
-                                            <ESelection color={type.color}>
-                                                <span>
-                                                    ID:{type.id} - {type.type}
-                                                </span>
-                                            </ESelection>
+                                            <div style={{backgroundColor: `#${type.color}`}} className={`w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{type.type}</div>
                                         </div>
                                     ))}
                                 </div>
-                                <h2 className="text-sm font-normal text-gray-400">
-                                    Чтобы изменить тип кресла, нажмите по нему
-                                    левой кнопкой мыши
-                                </h2>
+
                                 <div className="mt-3 pt-1 border-t border-gray-200">
                                     <h2 className="font-semibold">
                                         Конфигурация мест:
+                                    </h2>
+                                    <h2 className="text-sm font-normal text-gray-400">
+                                        Чтобы изменить тип кресла, нажмите по нему
+                                        левой кнопкой мыши
                                     </h2>
                                     <div className="border-2 border-[#63536C] rounded p-3 mt-2">
                                         {!hall && (

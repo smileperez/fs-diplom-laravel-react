@@ -38,11 +38,6 @@ export default function SidebarComponent() {
             icon: <StarIcon className="block w-6 h-7" />,
             to: "/admin/dashboard",
         },
-        {
-            name: "Фильмы",
-            icon: <FilmIcon className="block w-6 h-7" />,
-            to: "/admin/movies",
-        },
         // Страница отключена до лучших времен.
         // {
         //     name: "Типы мест",
@@ -63,6 +58,11 @@ export default function SidebarComponent() {
             name: "Цены",
             icon: <CurrencyDollarIcon className="block w-6 h-7" />,
             to: "/admin/prices",
+        },
+        {
+            name: "Фильмы",
+            icon: <FilmIcon className="block w-6 h-7" />,
+            to: "/admin/movies",
         },
         {
             name: "Сеансы",
