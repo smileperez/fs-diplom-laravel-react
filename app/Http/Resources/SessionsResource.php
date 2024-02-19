@@ -18,7 +18,7 @@ class SessionsResource extends JsonResource
             'id' => $this->id,
             'movies_id' => $this->movies_id,
             'halls_id' => $this->halls_id,
-            'sessionTime' => $this->sessionTime->format('Y-m-d H:i:s'),
+            'sessionStart' => $this->sessionStart,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
         ];

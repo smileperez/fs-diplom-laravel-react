@@ -249,7 +249,8 @@ export default function Movies() {
                             htmlFor="duration"
                             className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                            Длительность (мин)
+                            Длительность (мин){" "}
+                            <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-2">
                             <input

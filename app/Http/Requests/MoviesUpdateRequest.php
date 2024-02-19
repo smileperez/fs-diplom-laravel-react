@@ -25,7 +25,7 @@ class MoviesUpdateRequest extends FormRequest
             'title' => 'required|string|max:100',
             'img' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
-            'duration' => 'nullable|numeric',
+            'duration' => 'required|numeric',
             'origin' => 'nullable|string|max:100'
         ];
     }

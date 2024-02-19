@@ -1,6 +1,7 @@
 import PageComponent from "../../components/admin/PageComponent";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
 import MovieItemSessions from "../../components/admin/MovieItemSessions.jsx";
+import SessionItem from "../../components/admin/SessionItem.jsx";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios.js";
 
@@ -14,8 +15,14 @@ export default function Sessions() {
     // Состояние для выбора конкретного зала
     const [hall, setHall] = useState();
 
+    // Состояние для загрузки из БД общего списка интервалов
+    const [sessions, setSessions] = useState();
+
     // Соятоние загрузки данных из БД
     const [loading, setLoading] = useState(false);
+
+    // Состояние для хранения ошибки
+    const [error, setError] = useState("");
 
     // Функция получения списка залов из БД
     useEffect(() => {
@@ -24,18 +31,24 @@ export default function Sessions() {
             .get("/halls")
             .then(({ data }) => {
                 setHalls(data.data);
-                getMovies()
+                getMovies();
             });
     }, []);
 
+    useEffect(() => {
+        if (hall) {
+            getSessions();
+        }
+    }, [hall]);
+
 
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
-    const getMovies = (url) => {
-        url = url || "/movies";
-        axiosClient.get(url).then(({ data }) => {
-            setMovies(data.data);
-            setLoading(false);
-        });
+    const getMovies = () => {
+        axiosClient.get(`/movies`)
+            .then(({ data }) => {
+                setMovies(data.data);
+                setLoading(false);
+            });
     };
 
     // callback функция, для получения выбранного зала из под компонента <SelectMenusComponent>
@@ -43,6 +56,25 @@ export default function Sessions() {
         setHall(hall);
     };
 
+    const getSessions = () => {
+        axiosClient.get(`/sessions/${hall.id}`)
+            .then(({ data }) => {
+                setSessions(data);
+            });
+    }
+
+    // TODO:
+    const sessionsByTime = sessions?.forEach(element => {
+        // element.map(session => console.log(session))
+        console.log(Object.entries(element))
+    });
+
+    // const sessionsByTime = sessions?.sort((a, b) => Number(a.sessionStart.replace(":", ''))-Number(b.sessionStart.replace(":", '')))
+
+    // const sessionsByTime = () => {
+    //     sessions?.forEach(element => {element.sessionStart = element.sessionStart.slice(0, -3).replace(":", '')})
+
+    // }
 
     return (
         <PageComponent title="Управление сеансами">
@@ -70,16 +102,33 @@ export default function Sessions() {
                         )}
                         {hall && (
                             <>
-                                <div className="flex justify-center items-center my-5">
-                                    Сетка сеансов для зала <div className={`bg-[#63536C] w-auto px-1 ml-1 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>№{hall.id} - {hall.name}</div>
+                                <div className="justify-center items-center my-5">
+                                    <div className="justify-center items-center my-3 font-medium">
+                                        <span>Сетка сеансов для зала </span>
+                                        <span className="bg-[#63536C] px-1 text-center inline-block text-white rounded text-sm border border-gray-500 font-medium">№{hall.id} - {hall.name}</span>
+                                        <span> :</span>
+                                    </div>
 
+                                    <div className="flex border-2 border-[#63536C] rounded p-3">
+                                        {sessions?.map((session) => (
+                                            <SessionItem
+                                                session={session}
+                                                movies={movies}
+                                                key={session.id}
+                                            />
+                                        ))}
 
+                                        {
+                                            console.log(sessionsByTime)
+                                        }
+                                    </div>
                                 </div>
                                 <div className="flex flex-wrap">
-                                    {movies.slice(0).reverse().map((movie) => (
+                                    {movies?.slice(0).reverse().map((movie) => (
                                         <MovieItemSessions
                                             movie={movie}
                                             hall={hall}
+                                            getMovies={getMovies}
                                             key={movie.id}
                                         />
                                     ))}

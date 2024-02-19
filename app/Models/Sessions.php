@@ -9,5 +9,6 @@ class Sessions extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['movies_id', 'halls_id', 'sessionTime', 'created_at', 'updated_at'];
+    protected $fillable = ['halls_id', 'movies_id', 'sessionStart', 'created_at', 'updated_at'];
+    protected $visible = ['id', 'halls_id', 'movies_id', 'sessionStart'];
 }

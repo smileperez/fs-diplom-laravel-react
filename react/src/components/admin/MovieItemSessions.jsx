@@ -13,7 +13,7 @@ export default function MovieItemSession({ movie, hall }) {
 
     // Состояния хранения данных сеанса
     const [session, setSession] = useState({
-        time: ""
+        sessionStart: ""
     });
 
     // Состояние для хранения ошибки
@@ -23,23 +23,28 @@ export default function MovieItemSession({ movie, hall }) {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        console.log(session);
+        const payload = {
+            movies_id: `${movie.id}`,
+            halls_id: `${hall.id}`,
+            sessionStart: `${session.sessionStart}`
+        }
 
-        // axiosClient
-        // .post("/sessions", session)
-        // .then((response) => {
-        //     // Закрываем slider-popup
-        //     setAdd(false);
-        //     // Заново перезагружаем всю информацию на странице
-        //     getHalls();
-        // })
-        // .catch((error) => {
-        //     if (error && error.response) {
-        //         setError(error.response.data.message);
-        //     }
-        //     console.error(error, error.response);
-        // });
+        console.log(payload);
 
+        axiosClient
+        .post("/sessions", payload)
+        .then((response) => {
+            // Закрываем slider-popup
+            setAdd(false);
+            // Заново перезагружаем всю информацию на странице
+            getHalls();
+        })
+        .catch((error) => {
+            if (error && error.response) {
+                setError(error.response.data.message);
+            }
+            console.error(error, error.response);
+        });
     };
 
     return (
@@ -111,7 +116,7 @@ export default function MovieItemSession({ movie, hall }) {
                             value={session.time}
                             onChange={(event) =>
                                 setSession({
-                                    time: event.target.value,
+                                    sessionStart: event.target.value,
                                 })
                             }
                             className="block w-[120px] rounded border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#63536C] sm:text-sm sm:leading-6"

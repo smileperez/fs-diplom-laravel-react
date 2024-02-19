@@ -64,7 +64,7 @@ export default function Halls() {
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(halls_id);
+        console.log(hall);
 
         axiosClient
             .post("/halls", hall)

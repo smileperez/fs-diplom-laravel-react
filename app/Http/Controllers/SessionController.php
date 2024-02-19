@@ -31,9 +31,10 @@ class SessionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($hall_id)
     {
-        //
+        $data = Sessions::where('halls_id', $hall_id)->get()->toArray();
+        return $data;
     }
 
     /**
@@ -47,8 +48,9 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Sessions $session)
     {
-        //
+        $session->delete();
+        return response('', 204);
     }
 }
