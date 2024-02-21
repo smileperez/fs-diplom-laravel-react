@@ -34,15 +34,15 @@ export default function HallListItem({ hall, getHalls }) {
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
-    // Отправка put-request в БД c изменениями зала
+    // Функция изменения зала (корректировака данных -> удаление всех сидушек - добавление новых сидушек)
     const onSubmit = (event) => {
         event.preventDefault();
 
-        const payload = { ...updatedHall };
+        // const payload = { ...updatedHall };
         axiosClient
-            .put(`/halls/${hall.id}`, payload)
+            .put(`/halls/${hall.id}`, updatedHall)
             .then((response) => {
-                // Получаем из ответа ID измененного зала
+                // Получаем из ответа ID измененного зала (так как состояние не успевает отрабатывать)
                 halls_id = response.data.data.id;
                 // Удавляем все сидушки с ID залом $halls_id
                 deleteSeats(halls_id);
@@ -64,7 +64,9 @@ export default function HallListItem({ hall, getHalls }) {
 
     // Функция удаления всех сидушек при изменении зала
     const deleteSeats = (hall_id) => {
-        axiosClient.delete(`/seats/${hall_id}`).then((response) => {
+        axiosClient
+        .delete(`/seats/${hall_id}`)
+        .then((response) => {
         });
     }
 
@@ -72,26 +74,26 @@ export default function HallListItem({ hall, getHalls }) {
     const postSeats = (rows, seats, types_id, halls_id) => {
         const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
 
-        for (let i = 0; i < rows; i++) {
-            axiosClient
-                .post("/seats", matrixPayload[i])
-                .catch((error) => {
-                    if (error.response) {
-                        setError({ __html: error.response.data.errors });
-                    }
-                    console.error(error);
-                });
-        }
+        axiosClient
+            .post("/seats", matrixPayload)
+            .catch((error) => {
+                if (error.response) {
+                    setError({ __html: error.response.data.errors });
+                }
+                console.error(error);
+            });
     }
 
     // Функция удаления зала
     const onClickDelete = (event) => {
-        axiosClient.delete(`/halls/${hall.id}`).then((response) => {
-            // Закрываем slider-popup
-            setChange(false);
-            // Заново перезагружаем из БД все фильмы
-            getHalls();
-        });
+        axiosClient
+            .delete(`/halls/${hall.id}`)
+            .then((response) => {
+                // Закрываем slider-popup
+                setChange(false);
+                // Заново перезагружаем из БД все фильмы
+                getHalls();
+            });
     };
 
     return (
@@ -119,7 +121,7 @@ export default function HallListItem({ hall, getHalls }) {
                             </h2>
                             <h2 className="flex text-sm font-light mt-1">
                                 <div>Количество VIP мест:</div>
-                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.seats}</div>
+                                <div className={`bg-[#FFD700] w-auto px-2 ml-2 text-center inline-block text-black rounded text-s border border-gray-500 font-medium`}>{hall.seats}</div>
                             </h2>
                         </div>
                     </div>

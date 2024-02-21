@@ -10,6 +10,8 @@ export default function Config() {
     // Состояние для загрузки залов из БД
     const [halls, setHalls] = useState([]);
 
+    const [adjustedMatrix, setAdjustedMatrix] = useState();
+
     // Состояние для выбора конкретного зала
     const [hall, setHall] = useState();
 
@@ -72,45 +74,44 @@ export default function Config() {
         setHall(hall);
     };
 
-
     // callback функция, для получения координат места из под компонента <MatrixComponent>
     const selectedCoords = (coord) => {
         setCoord(coord);
+    };
+
+    const sendAdjustedMatrix = (adjustedMatrix) => {
+        setAdjustedMatrix(adjustedMatrix);
     };
 
     // Функция для выведения координваты в консоль для отладки
     useEffect(() => {
         if (coord) {
             console.log(coord);
-        }
-    }, [coord]);
-
-    // callback функция, для получения матрицы координат  из под компонента <MatrixComponent>
-    const createdMatrix = (matrix) => {
-        setCurrentMatrix(matrix);
-    };
-
-    // Отправка матрицы в БД
-    const onClickSubmit = (event) => {
-        const matrix = { ...currentMatrix };
-        let payload = new Array();
-
-        for (let key in matrix) {
-            for (let index in matrix[key]) {
-                payload = [...payload, matrix[key][index]];
-            }
+            // console.log(state[0]);
+            // console.log(matrixSeats);
         }
 
-        payload.forEach((item) => {
-            item.halls_id = hall.id;
-            item.types_id = 1;
-        });
+        if (adjustedMatrix) {
+            console.log(adjustedMatrix);
+            // console.log(state[0]);
+            // console.log(matrixSeats);
+        }
+    }, [coord, adjustedMatrix]);
+
+    // Функция удаления всех сидушек при изменении зала
+    const deleteSeats = (hall_id) => {
+        axiosClient
+            .delete(`/seats/${hall_id}`)
+            .then((response) => {
+            });
+    }
+
+    // Функция создания матрицы сидушек и отправки ее в БД
+    const postSeats = (matrixPayload) => {
+
 
         axiosClient
-            .post("/seats", payload)
-            .then((response) => {
-                console.log(response);
-            })
+            .post("/seats", matrixPayload)
             .catch((err) => {
                 if (err && err.response) {
                     // Записываем error в состояние
@@ -118,6 +119,40 @@ export default function Config() {
                 }
                 console.log(err, err.response);
             });
+    }
+
+    // Отправка скорректированной по типу мест матрицы в БД
+    const onClickSubmit = (event) => {
+
+        console.log('ТЫК');
+        event.preventDefault();
+
+        // const payload = { ...updatedHall };
+
+        deleteSeats(hall.id);
+        postSeats(adjustedMatrix);
+
+        // axiosClient
+        //     .put(`/halls/${hall.id}`, payload)
+        //     .then((response) => {
+        //         // Получаем из ответа ID измененного зала
+        //         halls_id = response.data.data.id;
+        //         // Удавляем все сидушки с ID залом $halls_id
+        //         deleteSeats(halls_id);
+        //         // Генерим новую матрицу сидушек и отправляем в БД
+        //         postSeats(Number(updatedHall.rows), Number(updatedHall.seats), types_id, halls_id);
+        //         // Закрываем slider-popup
+        //         setChange(false);
+        //         // Заново перезагружаем из БД все залы
+        //         getHalls();
+        //     })
+        //     .catch((err) => {
+        //         if (err && err.response) {
+        //             // Записываем error в состояние
+        //             setError(err.response.data.message);
+        //         }
+        //         console.log(err, err.response);
+        //     });
     };
 
     return (
@@ -153,7 +188,7 @@ export default function Config() {
                                             className="mt-1 mr-2 last:mr-0"
                                             key={idx}
                                         >
-                                            <div style={{backgroundColor: `#${type.color}`}} className={`w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{type.type}</div>
+                                            <div style={{ backgroundColor: `#${type.color}` }} className={`w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{type.type}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -183,9 +218,9 @@ export default function Config() {
                                                         matrixSeats={matrixSeats}
                                                         rows={hall.rows}
                                                         seats={hall.seats}
-                                                        selectedCoords={
-                                                            selectedCoords
-                                                        }
+                                                        types={types}
+                                                        selectedCoords={selectedCoords}
+                                                        sendAdjustedMatrix={sendAdjustedMatrix}
                                                     />
                                                 </div>
                                             </div>

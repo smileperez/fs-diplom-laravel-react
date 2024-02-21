@@ -10,4 +10,5 @@ class Types extends Model
     use HasFactory;
 
     protected $fillable = ['type', 'color', 'created_at', 'updated_at'];
+    protected $visible = ['id', 'type', 'color'];
 }

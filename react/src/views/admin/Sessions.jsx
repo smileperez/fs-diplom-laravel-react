@@ -114,6 +114,7 @@ export default function Sessions() {
                                             <SessionItem
                                                 session={session}
                                                 movies={movies}
+                                                getSessions={getSessions}
                                                 key={session.id}
                                             />
                                         ))}
@@ -128,7 +129,7 @@ export default function Sessions() {
                                         <MovieItemSessions
                                             movie={movie}
                                             hall={hall}
-                                            getMovies={getMovies}
+                                            getSessions={getSessions}
                                             key={movie.id}
                                         />
                                     ))}

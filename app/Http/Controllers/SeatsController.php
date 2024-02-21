@@ -29,9 +29,12 @@ class SeatsController extends Controller
         // Получаем массив из мест кинозала и разбираем его
         if (is_array($data)) {
             foreach ($data as $item) {
-                $seat = Seats::create($item);
+                for ($i = 0; $i < count($item); $i++) {
+                    $seat = Seats::create($item[$i]);
+                }
             }
         }
+        return response('Success', 200);
     }
 
     /**
@@ -46,13 +49,9 @@ class SeatsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SeatsUpdateRequest $request, Seats $seat)
+    public function update(Request $request, string $id)
     {
-        $data = $request->validated();
-
-        $seat->update($data);
-
-        return new SeatsResource($seat);
+        //
     }
 
     /**

@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function MovieItemSession({ movie, hall }) {
+export default function MovieItemSession({ movie, hall, getSessions }) {
     // Открытие/Закрытие SlidePopupComponent для изменения фильма
     const [add, setAdd] = useState(false);
 
@@ -36,8 +36,8 @@ export default function MovieItemSession({ movie, hall }) {
         .then((response) => {
             // Закрываем slider-popup
             setAdd(false);
-            // Заново перезагружаем всю информацию на странице
-            getHalls();
+            // Заново перезагружаем всю информацию о всех сессиях
+            getSessions();
         })
         .catch((error) => {
             if (error && error.response) {

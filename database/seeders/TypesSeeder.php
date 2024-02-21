@@ -28,7 +28,7 @@ class TypesSeeder extends Seeder
 
         DB::table('types')->insert([
             'type' => 'Заблокированное',
-            'color' => '808080',
+            'color' => 'A9A9A9',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

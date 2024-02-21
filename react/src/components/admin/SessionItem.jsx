@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function MovieItemSession({ session, movies }) {
+export default function MovieItemSession({ session, movies, getSessions }) {
     // Открытие/Закрытие SlidePopupComponent удаления сеанса
     const [del, setDel] = useState(false);
 
@@ -18,28 +18,12 @@ export default function MovieItemSession({ session, movies }) {
     const onClickDelete = (event) => {
         event.preventDefault();
 
-        // const payload = {
-        //     movies_id: `${movie.id}`,
-        //     halls_id: `${hall.id}`,
-        //     sessionStart: `${session.sessionStart}`
-        // }
-
-        // console.log(payload);
-
-        // axiosClient
-        //     .post("/sessions", payload)
-        //     .then((response) => {
-        //         // Закрываем slider-popup
-        //         setAdd(false);
-        //         // Заново перезагружаем всю информацию на странице
-        //         getHalls();
-        //     })
-        //     .catch((error) => {
-        //         if (error && error.response) {
-        //             setError(error.response.data.message);
-        //         }
-        //         console.error(error, error.response);
-        //     });
+        axiosClient.delete(`/sessions/${session.id}`).then((response) => {
+            // Закрываем slider-popup
+            setDel(false);
+            // Заново перезагружаем всю информацию о всех сессиях
+            getSessions();
+        });
     };
 
     return (
@@ -66,9 +50,9 @@ export default function MovieItemSession({ session, movies }) {
 
                             <div className="block text-sm font-medium leading-6 text-gray-900">
                                 <span>Вы действительно хотите удалить сеанс фильма</span>
-                                <span className={`bg-[#63536C] w-auto px-1 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{movie.title}</span>
+                                <span className={`bg-[#63536C] w-auto px-0.5 mt-0.5 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.title}</span>
                                 <span> на время </span>
-                                <span className={`bg-[#63536C] w-auto px-1 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{session.sessionStart.slice(0, -3)}</span>
+                                <span className={`bg-[#63536C] w-auto px-0.5 mt-1 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{session.sessionStart.slice(0, -3)}</span>
                                 <span> ?</span>
                             </div>
 
