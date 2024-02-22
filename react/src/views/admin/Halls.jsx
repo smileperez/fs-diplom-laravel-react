@@ -69,7 +69,6 @@ export default function Halls() {
     // Отправка request в БД с новым залом
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(hall);
 
         axiosClient
             .post("/halls", hall)
@@ -109,13 +108,10 @@ export default function Halls() {
     // Функция создания матрицы сидушек и отправки ее в таблицу Seats
     const postSeats = (rows, seats, types_id, halls_id) => {
         const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
-        console.log(matrixPayload);
 
-        // for (let i = 0; i < rows; i++) {
         axiosClient.post("/seats", matrixPayload).catch((error) => {
             console.error(error);
         });
-        // }
     };
 
     // Функция заполнения цен в таблице Prices присоздании нового зала

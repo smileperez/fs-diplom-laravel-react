@@ -1,5 +1,6 @@
 import PageComponent from "../../components/admin/PageComponent";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
+import getSessionInMinutes from "../../components/core/getSessionInMinutes.jsx";
 import MovieItemSessions from "../../components/admin/MovieItemSessions.jsx";
 import SessionItem from "../../components/admin/SessionItem.jsx";
 import { useEffect, useState } from "react";
@@ -59,35 +60,11 @@ export default function Sessions() {
         setHall(hall);
     };
 
+    // Функция получения всех сессий по конкретному залу
     const getSessions = () => {
         axiosClient.get(`/sessions/${hall.id}`).then(({ data }) => {
             setSessions(data);
         });
-    };
-
-    // TODO:
-    // const sessionsByTime = sessions?.forEach(element => {
-    //     // element.map(session => console.log(session))
-    //     console.log(Object.entries(element))
-    // });
-
-    // const sessionsByTime = sessions?.sort((a, b) => Number(a.sessionStart.replace(":", ''))-Number(b.sessionStart.replace(":", '')))
-
-    // const sessionsByTime = () => {
-    //     sessions?.forEach(element => {element.sessionStart = element.sessionStart.slice(0, -3).replace(":", '')})
-
-    // }
-
-    // Вспомогательная функция, переводящая тектовый формат времени в минуты
-    const getSessionInMinutes = (session) => {
-        console.log(`${session}`);
-        const hours = Number(session.substr(0, session.indexOf(":")));
-        const minutes = Number(
-            session.slice(3).substr(0, session.indexOf(":"))
-        );
-        console.log(`${hours} x 60 + ${minutes}`);
-        // console.log(hours * 60 + minutes);
-        return hours * 60 + minutes;
     };
 
     return (
@@ -132,25 +109,26 @@ export default function Sessions() {
                                                 <SessionItem
                                                     session={session}
                                                     movies={movies}
+
                                                     getSessions={getSessions}
-                                                    key={session.id}
                                                     pixelStart={getSessionInMinutes(
                                                         session.sessionStart
                                                     )}
+                                                    key={session.id}
                                                 />
                                             ))}
 
-                                            {timeline.map((item) => (
-                                                <ETimeline left={item} />
+                                            {/* Элемент - черточки на линии */}
+                                            {timeline.map((item, idx) => (
+                                                <ETimeline left={item} key={idx} />
                                             ))}
 
-                                            {/* Правый элемент - линия конец дня */}
+                                            {/* Элемент - вертикальная линия конца дня */}
                                             <span
                                                 style={{
                                                     top: -5,
-                                                    left: `${
-                                                        (1440 * 100) / 1620
-                                                    }%`,
+                                                    left: `${(1440 * 100) / 1620
+                                                        }%`,
                                                 }}
                                                 className="absolute h-[80px] w-[1px] border border-gray-500 rounded"
                                             ></span>
@@ -167,6 +145,7 @@ export default function Sessions() {
                                             <MovieItemSessions
                                                 movie={movie}
                                                 hall={hall}
+                                                sessions={sessions}
                                                 getSessions={getSessions}
                                                 key={movie.id}
                                             />

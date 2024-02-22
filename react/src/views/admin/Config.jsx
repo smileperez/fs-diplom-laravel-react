@@ -188,10 +188,10 @@ export default function Config() {
                                                 <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                                                 Сохранить
                                             </EButton>
-                                            <EButton color="gray" onClick="">
+                                            {/* <EButton color="gray" onClick="">
                                                 <XCircleIcon className="h-6 w-6 mr-2" />
                                                 Отменить
-                                            </EButton>
+                                            </EButton> */}
                                         </div>
                                     </div>
                                 </div>

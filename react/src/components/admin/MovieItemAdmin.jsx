@@ -102,7 +102,7 @@ export default function MovieListItemAdmin({ movie, getMovies }) {
                                 {movie.title}
                             </h2>
                             <p className="mt-2">
-                                <div className={`bg-[#63536C] w-auto p-1 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.duration} минут</div>
+                                <span className={`bg-[#63536C] w-auto p-1 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.duration} минут</span>
                             </p>
                         </div>
                     </div>

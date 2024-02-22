@@ -1,4 +1,8 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
+import getSessionInText from "../core/getSessionInText";
+import getSessionInMinutes from "../core/getSessionInMinutes";
+import getBusyTime from "../core/getBusyTime";
+import checkBusyTimeline from "../core/checkBusyTimeline";
 import EButton from "../core/EButton";
 import { useState } from "react";
 import {
@@ -7,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function MovieItemSession({ movie, hall, getSessions }) {
+export default function MovieItemSession({ movie, hall, sessions, getSessions }) {
     // Открытие/Закрытие SlidePopupComponent для изменения фильма
     const [add, setAdd] = useState(false);
 
@@ -31,43 +35,28 @@ export default function MovieItemSession({ movie, hall, getSessions }) {
             sessionEnd: `${getSessionInText(session.sessionStart, movie.duration)}`
         }
 
-        axiosClient
-            .post("/sessions", payload)
-            .then((response) => {
-                // Закрываем slider-popup
-                setAdd(false);
-                // Заново перезагружаем всю информацию о всех сессиях
-                getSessions();
-            })
-            .catch((error) => {
-                if (error && error.response) {
-                    setError(error.response.data.message);
-                }
-                console.error(error, error.response);
-            });
-    };
+        // Проверка на занятое время
+        if (checkBusyTimeline(sessions, payload)) {
+            axiosClient
+                .post("/sessions", payload)
+                .then((response) => {
+                    // Закрываем slider-popup
+                    setAdd(false);
+                    // Заново перезагружаем всю информацию о всех сессиях
+                    getSessions();
+                })
+                .catch((error) => {
+                    if (error && error.response) {
+                        setError(error.response.data.message);
+                    }
+                    console.error(error, error.response);
+                });
+        } else {
+            setError("Выбранное время пересекается с дургими сеансами!");
+            console.error(error);
+        };
 
-    // Вспомогательная функция для получения правильно формата времени окончания фильма
-    const getSessionInText = (sessionStart, duration) => {
-        const hours = Number(sessionStart.substr(0, sessionStart.indexOf(':')));
-        const minutes = Number(sessionStart.slice(-2));
 
-        const sessionEndinMin = hours*60 + minutes + duration;
-
-        let textHours = parseInt(sessionEndinMin/60);
-        let textMinutes = (sessionEndinMin%60);
-
-        if (textHours > 23) {
-            textHours = `0${(textHours - 24).toString()}`;
-        } else if (textHours < 10) {
-            textHours = `0${textHours.toString()}`;
-        }
-
-        if (textMinutes < 10) {
-            textMinutes = `0${textMinutes.toString()}`;
-        }
-
-        return `${textHours}:${textMinutes}`;
     };
 
     return (
@@ -85,7 +74,7 @@ export default function MovieItemSession({ movie, hall, getSessions }) {
                             {movie.title}
                         </h2>
                         <p className="mt-0.5">
-                            <div className={`bg-[#63536C] w-auto px-0.5 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.duration} минут</div>
+                            <span className={`bg-[#63536C] w-auto px-0.5 text-center inline-block text-white rounded text-xs border border-gray-500 font-medium`}>{movie.duration} минут</span>
                         </p>
                     </div>
                 </div>
@@ -98,7 +87,7 @@ export default function MovieItemSession({ movie, hall, getSessions }) {
                 title={`Установка сеанса для фильма №` + movie.id}
             >
                 {error && (
-                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-1 rounded">
+                    <div className="bg-red-500 text-white text-sm py-2 px-2 mb-3 rounded">
                         {error}
                     </div>
                 )}
@@ -117,7 +106,7 @@ export default function MovieItemSession({ movie, hall, getSessions }) {
                             type="text"
                             id="hallname"
                             name="hallname"
-                            value={hall.id}
+                            placeholder={hall.id}
                             className="block w-[120px] bg-gray-200 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#89639e] sm:text-sm sm:leading-6"
                         />
                     </div>
