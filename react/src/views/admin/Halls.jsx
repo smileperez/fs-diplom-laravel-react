@@ -3,7 +3,11 @@ import SlidePopupComponent from "../../components/core/SlidePopupComponent";
 import HallListItem from "../../components/admin/HallListItem";
 import EButton from "../../components/core/EButton";
 import { useEffect, useState } from "react";
-import { PlusCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+    PlusCircleIcon,
+    XCircleIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 import PaginationComponent from "../../components/admin/PaginationComponent";
 import makeMatrix from "../../components/core/MakeMatrix.jsx";
@@ -28,6 +32,9 @@ export default function Halls() {
         seats: "",
     });
 
+    const [vipSeats, setVipSeats] = useState();
+    const [defaultSeats, setDefaultSeats] = useState();
+
     // Состояние мест зала, для отпарвки в таблицу БД "Seats"
     // FIXME: Используется переменная вместо состояния useState
     let halls_id = 0;
@@ -42,13 +49,11 @@ export default function Halls() {
     const getHalls = (url) => {
         url = url || "/halls";
         setLoading(true);
-        axiosClient
-            .get(url)
-            .then(({ data }) => {
-                setHalls(data.data);
-                setMeta(data.meta);
-                setLoading(false);
-            });
+        axiosClient.get(url).then(({ data }) => {
+            setHalls(data.data);
+            setMeta(data.meta);
+            setLoading(false);
+        });
     };
 
     // При каждом обновлении страницы обновляем URL страниц пагинации (для компонента PaginationComponent)
@@ -74,9 +79,14 @@ export default function Halls() {
                 // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
                 halls_id = response.data.data.id;
                 // Генерируем матрицу сидушек и отправляем в таблицу Seats
-                postSeats(Number(hall.rows), Number(hall.seats), types_id, halls_id);
+                postSeats(
+                    Number(hall.rows),
+                    Number(hall.seats),
+                    types_id,
+                    halls_id
+                );
                 // Отправляем нулевые цены за сидушки в таблицу Prices
-                postPrices(halls_id)
+                postPrices(halls_id);
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу
@@ -102,13 +112,11 @@ export default function Halls() {
         console.log(matrixPayload);
 
         // for (let i = 0; i < rows; i++) {
-            axiosClient
-                .post("/seats", matrixPayload)
-                .catch((error) => {
-                    console.error(error);
-                });
+        axiosClient.post("/seats", matrixPayload).catch((error) => {
+            console.error(error);
+        });
         // }
-    }
+    };
 
     // Функция заполнения цен в таблице Prices присоздании нового зала
     const postPrices = (halls_id) => {
@@ -118,16 +126,14 @@ export default function Halls() {
             payload.push({
                 halls_id: halls_id,
                 types_id: i,
-                price: 0
-            })
+                price: 0,
+            });
         }
 
-        axiosClient
-            .post("/prices", payload)
-            .catch((error) => {
-                console.error(error);
-            });
-    }
+        axiosClient.post("/prices", payload).catch((error) => {
+            console.error(error);
+        });
+    };
 
     return (
         <PageComponent
@@ -145,13 +151,16 @@ export default function Halls() {
 
             {!loading && (
                 <div>
-                    {halls.slice(0).reverse().map((hall) => (
-                        <HallListItem
-                            hall={hall}
-                            getHalls={getHalls}
-                            key={hall.id}
-                        />
-                    ))}
+                    {halls
+                        .slice(0)
+                        .reverse()
+                        .map((hall) => (
+                            <HallListItem
+                                hall={hall}
+                                getHalls={getHalls}
+                                key={hall.id}
+                            />
+                        ))}
                     <PaginationComponent
                         meta={meta}
                         onPageClick={onPageClick}

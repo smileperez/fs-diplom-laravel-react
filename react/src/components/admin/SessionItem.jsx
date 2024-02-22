@@ -36,13 +36,12 @@ export default function MovieItemSession({ session, movies, getSessions, pixelSt
                             top: 0,
                             left: `${pixelStart * 100 / 1620}%`
                         }}
-                            className="flex flex-col items-center justify-center p-0.5 h-[50px] bg-[#F1EBE6]/95 text-[7.5px] mr-[1px] rounded cursor-pointer border-black border" onClick={() => setDel(true)}>
+                            className="flex flex-col items-center justify-center p-0.5 h-[50px] bg-[#63536C]/95 text-[7.5px] text-white mr-[1px] rounded cursor-pointer border-black border" onClick={() => setDel(true)}>
                             <span className="font-medium">{movie.title}</span>
-                            <span className="">{pixelStart}</span>
-                            <span className="">{pixelStart * 90 / 1440}</span>
-                            <div className="absolute -bottom-4 flex w-full justify-between">
-                                <div className="">{session.sessionStart.substr(0, 5)}</div>
-                                <div className="">{session.sessionEnd.substr(0, 5)}</div>
+                            <span className="">{session.duration} мин.</span>
+                            <div className="absolute -bottom-3 flex w-full justify-between">
+                                <div className="text-black">{session.sessionStart.substr(0, 5)}</div>
+                                <div className="text-black">{session.sessionEnd.substr(0, 5)}</div>
                             </div>
 
                         </div>

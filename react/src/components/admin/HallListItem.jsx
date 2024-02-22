@@ -1,6 +1,6 @@
 import SlidePopupComponent from "../core/SlidePopupComponent";
 import EButton from "../core/EButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     AdjustmentsHorizontalIcon,
     CloudArrowUpIcon,
@@ -31,6 +31,9 @@ export default function HallListItem({ hall, getHalls }) {
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
     const [types_id, setTypes_id] = useState(1);
 
+    const [vipSeats, setVipSeats] = useState();
+    const [defaultSeats, setDefaultSeats] = useState();
+
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
 
@@ -47,7 +50,12 @@ export default function HallListItem({ hall, getHalls }) {
                 // Удавляем все сидушки с ID залом $halls_id
                 deleteSeats(halls_id);
                 // Генерим новую матрицу сидушек и отправляем в БД
-                postSeats(Number(updatedHall.rows), Number(updatedHall.seats), types_id, halls_id);
+                postSeats(
+                    Number(updatedHall.rows),
+                    Number(updatedHall.seats),
+                    types_id,
+                    halls_id
+                );
                 // Закрываем slider-popup
                 setChange(false);
                 // Заново перезагружаем из БД все залы
@@ -62,38 +70,45 @@ export default function HallListItem({ hall, getHalls }) {
             });
     };
 
+    useEffect(() => {
+        getCountSeats();
+    }, [hall]);
+
     // Функция удаления всех сидушек при изменении зала
     const deleteSeats = (hall_id) => {
-        axiosClient
-        .delete(`/seats/${hall_id}`)
-        .then((response) => {
-        });
-    }
+        axiosClient.delete(`/seats/${hall_id}`).then((response) => {});
+    };
 
     // Функция создания матрицы сидушек и отправки ее в БД
     const postSeats = (rows, seats, types_id, halls_id) => {
         const matrixPayload = makeMatrix(rows, seats, types_id, halls_id);
 
-        axiosClient
-            .post("/seats", matrixPayload)
-            .catch((error) => {
-                if (error.response) {
-                    setError({ __html: error.response.data.errors });
-                }
-                console.error(error);
-            });
-    }
+        axiosClient.post("/seats", matrixPayload).catch((error) => {
+            if (error.response) {
+                setError({ __html: error.response.data.errors });
+            }
+            console.error(error);
+        });
+    };
 
     // Функция удаления зала
     const onClickDelete = (event) => {
-        axiosClient
-            .delete(`/halls/${hall.id}`)
-            .then((response) => {
-                // Закрываем slider-popup
-                setChange(false);
-                // Заново перезагружаем из БД все фильмы
-                getHalls();
-            });
+        axiosClient.delete(`/halls/${hall.id}`).then((response) => {
+            // Закрываем slider-popup
+            setChange(false);
+            // Заново перезагружаем из БД все фильмы
+            getHalls();
+        });
+    };
+
+    // Функция получения количества обычных мест, VIP мест
+    const getCountSeats = () => {
+        axiosClient.get(`/seats/vip/${hall.id}`).then(({ data }) => {
+            setVipSeats(data);
+        });
+        axiosClient.get(`/seats/default/${hall.id}`).then(({ data }) => {
+            setDefaultSeats(data);
+        });
     };
 
     return (
@@ -107,21 +122,37 @@ export default function HallListItem({ hall, getHalls }) {
                         <div className="w-auto">
                             <h2 className="flex text-sm font-light">
                                 <div>Название зала:</div>
-                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.name}</div>
+                                <div
+                                    className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}
+                                >
+                                    {hall.name}
+                                </div>
                             </h2>
                             <h2 className="flex text-sm font-light mt-1">
                                 <div>Конфигурация зала:</div>
-                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.rows} x {hall.seats}</div>
+                                <div
+                                    className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}
+                                >
+                                    {hall.rows} x {hall.seats}
+                                </div>
                             </h2>
                         </div>
                         <div className="ml-6">
                             <h2 className="flex text-sm font-light">
                                 <div>Количество обычных мест:</div>
-                                <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{hall.rows * hall.seats}</div>
+                                <div
+                                    className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}
+                                >
+                                    {defaultSeats ? defaultSeats.length : 0}
+                                </div>
                             </h2>
                             <h2 className="flex text-sm font-light mt-1">
                                 <div>Количество VIP мест:</div>
-                                <div className={`bg-[#FFD700] w-auto px-2 ml-2 text-center inline-block text-black rounded text-s border border-gray-500 font-medium`}>{hall.seats}</div>
+                                <div
+                                    className={`bg-[#FFD700] w-auto px-2 ml-2 text-center inline-block text-black rounded text-s border border-gray-500 font-medium`}
+                                >
+                                    {vipSeats ? vipSeats.length : 0}
+                                </div>
                             </h2>
                         </div>
                     </div>
@@ -264,7 +295,11 @@ export default function HallListItem({ hall, getHalls }) {
             >
                 <div className="block text-sm font-medium leading-6 text-gray-900">
                     Вы действительно хотите удалить зал{" "}
-                    <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>№{hall.id} ?</div>
+                    <div
+                        className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}
+                    >
+                        №{hall.id} ?
+                    </div>
                 </div>
 
                 <div className="flex justify-between pt-4 mt-4 border-t border-gray-200">

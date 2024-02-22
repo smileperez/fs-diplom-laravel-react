@@ -4,6 +4,7 @@ import MovieItemSessions from "../../components/admin/MovieItemSessions.jsx";
 import SessionItem from "../../components/admin/SessionItem.jsx";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios.js";
+import ETimeline from "../../components/core/ETimeline";
 
 export default function Sessions() {
     // Состояние для загрузки из БД общего списка фильмов
@@ -14,6 +15,12 @@ export default function Sessions() {
 
     // Состояние для выбора конкретного зала
     const [hall, setHall] = useState();
+
+    // Состояние для отрисовки временной шкалы
+    const [timeline, setTimeline] = useState([
+        60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840,
+        900, 960, 1020, 1080, 1140, 1200, 1260, 1320, 1380, 1500, 1560
+    ]);
 
     // Состояние для загрузки из БД общего списка интервалов
     const [sessions, setSessions] = useState();
@@ -27,12 +34,10 @@ export default function Sessions() {
     // Функция получения списка залов из БД
     useEffect(() => {
         setLoading(true);
-        axiosClient
-            .get("/halls")
-            .then(({ data }) => {
-                setHalls(data.data);
-                getMovies();
-            });
+        axiosClient.get("/halls").then(({ data }) => {
+            setHalls(data.data);
+            getMovies();
+        });
     }, []);
 
     useEffect(() => {
@@ -41,14 +46,12 @@ export default function Sessions() {
         }
     }, [hall]);
 
-
     // Функция получения актуальных URL для пагинации из БД (для компонента PaginationComponent)
     const getMovies = () => {
-        axiosClient.get(`/movies`)
-            .then(({ data }) => {
-                setMovies(data.data);
-                setLoading(false);
-            });
+        axiosClient.get(`/movies`).then(({ data }) => {
+            setMovies(data.data);
+            setLoading(false);
+        });
     };
 
     // callback функция, для получения выбранного зала из под компонента <SelectMenusComponent>
@@ -57,11 +60,10 @@ export default function Sessions() {
     };
 
     const getSessions = () => {
-        axiosClient.get(`/sessions/${hall.id}`)
-            .then(({ data }) => {
-                setSessions(data);
-            });
-    }
+        axiosClient.get(`/sessions/${hall.id}`).then(({ data }) => {
+            setSessions(data);
+        });
+    };
 
     // TODO:
     // const sessionsByTime = sessions?.forEach(element => {
@@ -79,19 +81,22 @@ export default function Sessions() {
     // Вспомогательная функция, переводящая тектовый формат времени в минуты
     const getSessionInMinutes = (session) => {
         console.log(`${session}`);
-        const hours = Number(session.substr(0, session.indexOf(':')));
-        const minutes = Number(session.slice(3).substr(0, session.indexOf(':')));
+        const hours = Number(session.substr(0, session.indexOf(":")));
+        const minutes = Number(
+            session.slice(3).substr(0, session.indexOf(":"))
+        );
         console.log(`${hours} x 60 + ${minutes}`);
         // console.log(hours * 60 + minutes);
         return hours * 60 + minutes;
-    }
+    };
 
     return (
         <PageComponent title="Управление сеансами">
             <>
-
                 {loading && (
-                    <div className="text-center text-lg">Загрузка данных...</div>
+                    <div className="text-center text-lg">
+                        Загрузка данных...
+                    </div>
                 )}
 
                 {!loading && (
@@ -115,7 +120,9 @@ export default function Sessions() {
                                 <div className="justify-center items-center my-5">
                                     <div className="justify-center items-center my-3 font-medium">
                                         <span>Сетка сеансов для зала </span>
-                                        <span className="bg-[#63536C] px-1 text-center inline-block text-white rounded text-sm border border-gray-500 font-medium">№{hall.id} - {hall.name}</span>
+                                        <span className="bg-[#63536C] px-1 text-center inline-block text-white rounded text-sm border border-gray-500 font-medium">
+                                            №{hall.id} - {hall.name}
+                                        </span>
                                         <span> :</span>
                                     </div>
 
@@ -127,202 +134,49 @@ export default function Sessions() {
                                                     movies={movies}
                                                     getSessions={getSessions}
                                                     key={session.id}
-                                                    pixelStart={getSessionInMinutes(session.sessionStart)}
+                                                    pixelStart={getSessionInMinutes(
+                                                        session.sessionStart
+                                                    )}
                                                 />
                                             ))}
 
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${60 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[8px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${120 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${180 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${240 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${300 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${360 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${420 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: `60px`,
-                                                left: `${480 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${540 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${600 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${660 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${720 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${780 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${840 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${900 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${960 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1020 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1080 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1140 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1200 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1260 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1320 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1380 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
-                                            {/* Правый элемент - линия конец дня */}
-                                            <span style={{
-                                                top: -5,
-                                                left: `${1440 * 100 / 1620}%`
-                                            }}
-                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
-                                            </span>
+                                            {timeline.map((item) => (
+                                                <ETimeline left={item} />
+                                            ))}
 
-
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span
+                                                style={{
+                                                    top: -5,
+                                                    left: `${
+                                                        (1440 * 100) / 1620
+                                                    }%`,
+                                                }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded"
+                                            ></span>
                                         </div>
                                         {/* Нижний элемент - временная линия */}
                                         <span className="relative block w-full h-[1px] border border-gray-500 rounded -bottom-[66px]"></span>
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap">
-                                    {movies?.slice(0).reverse().map((movie) => (
-                                        <MovieItemSessions
-                                            movie={movie}
-                                            hall={hall}
-                                            getSessions={getSessions}
-                                            key={movie.id}
-                                        />
-                                    ))}
+                                    {movies
+                                        ?.slice(0)
+                                        .reverse()
+                                        .map((movie) => (
+                                            <MovieItemSessions
+                                                movie={movie}
+                                                hall={hall}
+                                                getSessions={getSessions}
+                                                key={movie.id}
+                                            />
+                                        ))}
                                 </div>
                             </>
                         )}
-
                     </>
-
                 )}
             </>
         </PageComponent>
-    )
+    );
 }

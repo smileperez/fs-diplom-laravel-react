@@ -45,6 +45,16 @@ class SeatsController extends Controller
         $data = Seats::where('halls_id', $hall_id)->get()->toArray();
         return $data;
     }
+    public function default($hall_id)
+    {
+        $data = Seats::where('halls_id', $hall_id)->where('types_id', 1)->get()->toArray();
+        return $data;
+    }
+    public function vip($hall_id)
+    {
+        $data = Seats::where('halls_id', $hall_id)->where('types_id', 2)->get()->toArray();
+        return $data;
+    }
 
     /**
      * Update the specified resource in storage.
