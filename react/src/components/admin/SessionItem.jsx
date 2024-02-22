@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios";
 
-export default function MovieItemSession({ session, movies, getSessions }) {
+export default function MovieItemSession({ session, movies, getSessions, pixelStart }) {
     // Открытие/Закрытие SlidePopupComponent удаления сеанса
     const [del, setDel] = useState(false);
 
@@ -16,8 +16,6 @@ export default function MovieItemSession({ session, movies, getSessions }) {
 
     // Отправка post-request с удалением сеанса
     const onClickDelete = (event) => {
-        event.preventDefault();
-
         axiosClient.delete(`/sessions/${session.id}`).then((response) => {
             // Закрываем slider-popup
             setDel(false);
@@ -32,9 +30,23 @@ export default function MovieItemSession({ session, movies, getSessions }) {
             {movies.map((movie) => (
                 movie.id == session.movies_id ? (
                     <>
-                        <div style={{ width: `${movie.duration / 2}px` }} className={`mr-1 p-1 h-[50px] bg-[#F1EBE6]/95 text-[7.5px] font-medium rounded cursor-pointer`} onClick={() => setDel(true)}>
-                            {movie.title}
+                        <div style={{
+                            position: `absolute`,
+                            width: `${movie.duration * 100 / 1620}%`,
+                            top: 0,
+                            left: `${pixelStart * 100 / 1620}%`
+                        }}
+                            className="flex flex-col items-center justify-center p-0.5 h-[50px] bg-[#F1EBE6]/95 text-[7.5px] mr-[1px] rounded cursor-pointer border-black border" onClick={() => setDel(true)}>
+                            <span className="font-medium">{movie.title}</span>
+                            <span className="">{pixelStart}</span>
+                            <span className="">{pixelStart * 90 / 1440}</span>
+                            <div className="absolute -bottom-4 flex w-full justify-between">
+                                <div className="">{session.sessionStart.substr(0, 5)}</div>
+                                <div className="">{session.sessionEnd.substr(0, 5)}</div>
+                            </div>
+
                         </div>
+
 
                         {/* Slide-Popup для УДАЛЕНИЯ сеанса */}
                         <SlidePopupComponent

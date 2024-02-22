@@ -74,29 +74,10 @@ export default function Config() {
         setHall(hall);
     };
 
-    // callback функция, для получения координат места из под компонента <MatrixComponent>
-    const selectedCoords = (coord) => {
-        setCoord(coord);
-    };
-
+    // callback функция, для получения измененной матрицы по типу мест из компонента <MatrixComponent>
     const sendAdjustedMatrix = (adjustedMatrix) => {
         setAdjustedMatrix(adjustedMatrix);
     };
-
-    // Функция для выведения координваты в консоль для отладки
-    useEffect(() => {
-        if (coord) {
-            console.log(coord);
-            // console.log(state[0]);
-            // console.log(matrixSeats);
-        }
-
-        if (adjustedMatrix) {
-            console.log(adjustedMatrix);
-            // console.log(state[0]);
-            // console.log(matrixSeats);
-        }
-    }, [coord, adjustedMatrix]);
 
     // Функция удаления всех сидушек при изменении зала
     const deleteSeats = (hall_id) => {
@@ -108,8 +89,6 @@ export default function Config() {
 
     // Функция создания матрицы сидушек и отправки ее в БД
     const postSeats = (matrixPayload) => {
-
-
         axiosClient
             .post("/seats", matrixPayload)
             .catch((err) => {
@@ -123,36 +102,12 @@ export default function Config() {
 
     // Отправка скорректированной по типу мест матрицы в БД
     const onClickSubmit = (event) => {
-
-        console.log('ТЫК');
         event.preventDefault();
 
-        // const payload = { ...updatedHall };
-
+        // Удаляем все места зала hall.id
         deleteSeats(hall.id);
+        // Заново грузим массив данных в БД с новыми сидушками
         postSeats(adjustedMatrix);
-
-        // axiosClient
-        //     .put(`/halls/${hall.id}`, payload)
-        //     .then((response) => {
-        //         // Получаем из ответа ID измененного зала
-        //         halls_id = response.data.data.id;
-        //         // Удавляем все сидушки с ID залом $halls_id
-        //         deleteSeats(halls_id);
-        //         // Генерим новую матрицу сидушек и отправляем в БД
-        //         postSeats(Number(updatedHall.rows), Number(updatedHall.seats), types_id, halls_id);
-        //         // Закрываем slider-popup
-        //         setChange(false);
-        //         // Заново перезагружаем из БД все залы
-        //         getHalls();
-        //     })
-        //     .catch((err) => {
-        //         if (err && err.response) {
-        //             // Записываем error в состояние
-        //             setError(err.response.data.message);
-        //         }
-        //         console.log(err, err.response);
-        //     });
     };
 
     return (
@@ -219,7 +174,6 @@ export default function Config() {
                                                         rows={hall.rows}
                                                         seats={hall.seats}
                                                         types={types}
-                                                        selectedCoords={selectedCoords}
                                                         sendAdjustedMatrix={sendAdjustedMatrix}
                                                     />
                                                 </div>
@@ -234,7 +188,7 @@ export default function Config() {
                                                 <CloudArrowUpIcon className="h-6 w-6 mr-2" />
                                                 Сохранить
                                             </EButton>
-                                            <EButton color="gray" onClick="#">
+                                            <EButton color="gray" onClick="">
                                                 <XCircleIcon className="h-6 w-6 mr-2" />
                                                 Отменить
                                             </EButton>

@@ -70,7 +70,7 @@ export default function SidebarComponent() {
             to: "/admin/sessions",
         },
         {
-            name: "Пользователи",
+            name: "Администраторы",
             icon: <UsersIcon className="block w-6 h-7" />,
             to: "/admin/users",
         },

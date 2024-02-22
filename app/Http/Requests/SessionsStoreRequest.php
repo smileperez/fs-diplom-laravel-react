@@ -24,7 +24,9 @@ class SessionsStoreRequest extends FormRequest
         return [
             'movies_id' => 'exists:movies,id',
             'halls_id' => 'exists:halls,id',
-            'sessionStart' => 'date_format:H:i'
+            'sessionStart' => 'date_format:H:i',
+            'duration' => 'numeric',
+            'sessionEnd' => 'date_format:H:i'
         ];
     }
 }

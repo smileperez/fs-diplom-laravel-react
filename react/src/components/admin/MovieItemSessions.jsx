@@ -26,25 +26,48 @@ export default function MovieItemSession({ movie, hall, getSessions }) {
         const payload = {
             movies_id: `${movie.id}`,
             halls_id: `${hall.id}`,
-            sessionStart: `${session.sessionStart}`
+            sessionStart: `${session.sessionStart}`,
+            duration: movie.duration,
+            sessionEnd: `${getSessionInText(session.sessionStart, movie.duration)}`
         }
 
-        console.log(payload);
-
         axiosClient
-        .post("/sessions", payload)
-        .then((response) => {
-            // Закрываем slider-popup
-            setAdd(false);
-            // Заново перезагружаем всю информацию о всех сессиях
-            getSessions();
-        })
-        .catch((error) => {
-            if (error && error.response) {
-                setError(error.response.data.message);
-            }
-            console.error(error, error.response);
-        });
+            .post("/sessions", payload)
+            .then((response) => {
+                // Закрываем slider-popup
+                setAdd(false);
+                // Заново перезагружаем всю информацию о всех сессиях
+                getSessions();
+            })
+            .catch((error) => {
+                if (error && error.response) {
+                    setError(error.response.data.message);
+                }
+                console.error(error, error.response);
+            });
+    };
+
+    // Вспомогательная функция для получения правильно формата времени окончания фильма
+    const getSessionInText = (sessionStart, duration) => {
+        const hours = Number(sessionStart.substr(0, sessionStart.indexOf(':')));
+        const minutes = Number(sessionStart.slice(-2));
+
+        const sessionEndinMin = hours*60 + minutes + duration;
+
+        let textHours = parseInt(sessionEndinMin/60);
+        let textMinutes = (sessionEndinMin%60);
+
+        if (textHours > 23) {
+            textHours = `0${(textHours - 24).toString()}`;
+        } else if (textHours < 10) {
+            textHours = `0${textHours.toString()}`;
+        }
+
+        if (textMinutes < 10) {
+            textMinutes = `0${textMinutes.toString()}`;
+        }
+
+        return `${textHours}:${textMinutes}`;
     };
 
     return (

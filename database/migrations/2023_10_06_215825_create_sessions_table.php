@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Movies::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Halls::class)->constrained()->onDelete('cascade');
-            $table->time('sessionStart', $precision = 0)->nullable();
+            $table->time('sessionStart');
+            $table->time('sessionEnd');
+            $table->smallInteger('duration');
             $table->timestamps();
         });
     }

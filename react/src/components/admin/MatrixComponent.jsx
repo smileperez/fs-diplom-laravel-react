@@ -6,7 +6,6 @@ export default function MatrixComponent({
     rows,
     seats,
     types,
-    selectedCoords,
     sendAdjustedMatrix
 }) {
 
@@ -29,9 +28,8 @@ export default function MatrixComponent({
 
     // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>, как только setCoords обновит состояние coords
     useEffect(() => {
-        selectedCoords(coords);
         sendAdjustedMatrix(matrix);
-    }, [coords, matrix]);
+    }, [matrix]);
 
     // Обновляем рендеринг матрицы, если matrixSeats из родителя <Config> поменялся
     useEffect(() => {
@@ -42,7 +40,7 @@ export default function MatrixComponent({
         <div className="flex flex-col flex-nowrap space-y-2">
             {matrix.sort((a, b) => a.row - b.row).map((row, i) => (
                 <div key={i} className="flex flex-nowrap space-x-2">
-                    {row.map((item, j) => (
+                    {row.map((item) => (
                         <div key={item.row.toString() + item.seat.toString()}
                             style={{ backgroundColor: `#${types.find(type => type.id === item.types_id).color}` }}
                             className="text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"

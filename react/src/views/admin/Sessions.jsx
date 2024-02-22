@@ -64,10 +64,10 @@ export default function Sessions() {
     }
 
     // TODO:
-    const sessionsByTime = sessions?.forEach(element => {
-        // element.map(session => console.log(session))
-        console.log(Object.entries(element))
-    });
+    // const sessionsByTime = sessions?.forEach(element => {
+    //     // element.map(session => console.log(session))
+    //     console.log(Object.entries(element))
+    // });
 
     // const sessionsByTime = sessions?.sort((a, b) => Number(a.sessionStart.replace(":", ''))-Number(b.sessionStart.replace(":", '')))
 
@@ -75,6 +75,16 @@ export default function Sessions() {
     //     sessions?.forEach(element => {element.sessionStart = element.sessionStart.slice(0, -3).replace(":", '')})
 
     // }
+
+    // Вспомогательная функция, переводящая тектовый формат времени в минуты
+    const getSessionInMinutes = (session) => {
+        console.log(`${session}`);
+        const hours = Number(session.substr(0, session.indexOf(':')));
+        const minutes = Number(session.slice(3).substr(0, session.indexOf(':')));
+        console.log(`${hours} x 60 + ${minutes}`);
+        // console.log(hours * 60 + minutes);
+        return hours * 60 + minutes;
+    }
 
     return (
         <PageComponent title="Управление сеансами">
@@ -109,19 +119,191 @@ export default function Sessions() {
                                         <span> :</span>
                                     </div>
 
-                                    <div className="flex border-2 border-[#63536C] rounded p-3">
-                                        {sessions?.map((session) => (
-                                            <SessionItem
-                                                session={session}
-                                                movies={movies}
-                                                getSessions={getSessions}
-                                                key={session.id}
-                                            />
-                                        ))}
+                                    <div className="flex flex-col relative h-[100px] border-2 border-[#63536C] rounded p-3">
+                                        <div className="flex relative">
+                                            {sessions?.map((session) => (
+                                                <SessionItem
+                                                    session={session}
+                                                    movies={movies}
+                                                    getSessions={getSessions}
+                                                    key={session.id}
+                                                    pixelStart={getSessionInMinutes(session.sessionStart)}
+                                                />
+                                            ))}
 
-                                        {
-                                            console.log(sessionsByTime)
-                                        }
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${60 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[8px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${120 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${180 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${240 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${300 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${360 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${420 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: `60px`,
+                                                left: `${480 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${540 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${600 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${660 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${720 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${780 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${840 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${900 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${960 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1020 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1080 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1140 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1200 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1260 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1320 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1380 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+                                            {/* Правый элемент - линия конец дня */}
+                                            <span style={{
+                                                top: -5,
+                                                left: `${1440 * 100 / 1620}%`
+                                            }}
+                                                className="absolute h-[80px] w-[1px] border border-gray-500 rounded">
+                                            </span>
+
+
+                                        </div>
+                                        {/* Нижний элемент - временная линия */}
+                                        <span className="relative block w-full h-[1px] border border-gray-500 rounded -bottom-[66px]"></span>
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap">
