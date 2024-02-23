@@ -1,11 +1,11 @@
-import { useStateContext } from "../../context/ContextProvider";
-import MovieListItemUser from "../../components/guest/MovieListItemUser";
-import NavItem from "../../components/guest/NavItem";
+import { useStateContext } from "../../context/ContextProvider.jsx";
+import MovieListItemUser from "../../components/guest/MovieListItemUser.jsx";
+import NavItem from "../../components/guest/NavItem.jsx";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios.js";
-import PaginationComponent from "../../components/admin/PaginationComponent";
+import PaginationComponent from "../../components/admin/PaginationComponent.jsx";
 
-export default function Tickets() {
+export default function Index() {
     const [weekend, setWeekend] = useState();
     const { calendar } = useStateContext();
 

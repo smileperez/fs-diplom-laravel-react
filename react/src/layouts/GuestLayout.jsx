@@ -4,7 +4,7 @@ import LogoComponent from "../components/guest/LogoComponent";
 export default function GuestLayout() {
     return (
         <div className="h-screen bg-guest bg-cover">
-            <div className="mx-auto w-[900px]">
+            <div className="mx-auto w-[990px]">
                 <header className="p-4 flex items-center justify-between">
                     <LogoComponent />
                     <Link

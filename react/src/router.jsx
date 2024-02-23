@@ -13,7 +13,7 @@ import Prices from "./views/admin/Prices";
 import Sessions from "./views/admin/Sessions";
 import Users from "./views/admin/Users";
 // Guests
-import Tickets from "./views/guest/Tickets";
+import Index from "./views/guest/Index";
 // Auth
 import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Tickets />,
+                element: <Index />,
             },
         ],
     },
