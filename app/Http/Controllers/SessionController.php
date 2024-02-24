@@ -40,6 +40,15 @@ class SessionController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function showGuest($movie_id)
+    {
+        $data = Sessions::where('movies_id', $movie_id)->get()->toArray();
+        return $data;
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)

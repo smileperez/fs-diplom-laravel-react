@@ -7,7 +7,6 @@ import PaginationComponent from "../../components/admin/PaginationComponent.jsx"
 
 export default function Index() {
     const [weekend, setWeekend] = useState();
-    const { calendar } = useStateContext();
 
     // Состояние для загрузки из БД общего списка фильмов
     const [movies, setMovies] = useState([]);
@@ -20,6 +19,39 @@ export default function Index() {
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
+
+    const calendar = [
+        {
+            name_of_day: "Пн",
+            day: "02",
+            weekend: "false",
+        },
+        {
+            name_of_day: "Вт",
+            day: "03",
+            weekend: "false",
+        },
+        {
+            name_of_day: "Ср",
+            day: "04",
+            weekend: "false",
+        },
+        {
+            name_of_day: "Чт",
+            day: "05",
+            weekend: "false",
+        },
+        {
+            name_of_day: "Пт",
+            day: "06",
+            weekend: "false",
+        },
+        {
+            name_of_day: "Сб",
+            day: "07",
+            weekend: "true",
+        }
+    ];
 
     // Функция получения фильмов и meta данных для пагинации (meta данные пагинации для компонента PaginationComponent)
     const getMovies = () => {

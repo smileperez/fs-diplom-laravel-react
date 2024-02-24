@@ -10,9 +10,9 @@
 </p>
 
 ## Ключевые версии ПО
-├── PHP Version - 8.2.4</br>
+├── PHP Version - 8.2.12</br>
 ├── Laravel Framework Version - 10.23.1</br>
-├── Node.js Version - 20.8.0</br>
+├── Node.js Version - 20.5.1</br>
 ├── NPM Version - 10.1.0</br>
 
 ## Используемые NPM пакеты

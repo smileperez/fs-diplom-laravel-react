@@ -7,8 +7,6 @@ import { ContextProvider } from './context/ContextProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <ContextProvider>
-            <RouterProvider router={router} />
-        </ContextProvider>
+        <RouterProvider router={router} />
     </React.StrictMode>,
 )

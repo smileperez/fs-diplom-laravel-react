@@ -23,6 +23,16 @@ class MoviesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function indexGuest()
+    {
+        return MoviesResource::collection(
+            Movies::orderBy('id', 'desc')->paginate(3)
+        );
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(MoviesStoreRequest $request)

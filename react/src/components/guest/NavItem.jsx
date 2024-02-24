@@ -7,7 +7,7 @@ export default function NavItem({ day }) {
     }
 
     return (
-        <Link className={`${day.weekend ? 'text-red-500' : 'text-black'} block bg-white/95 py-2.5 px-5 ml-px rounded text-xs cursor-pointer`}>
+        <Link className={`${day.weekend ? 'text-red-500' : 'text-black'} block bg-white/95 py-2.5 px-5 ml-px rounded text-xs cursor-pointer`} onClick={() => (console.log('ТЫК'))}>
             {day.name_of_day}, {day.day}
         </Link>
     )

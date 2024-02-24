@@ -44,5 +44,6 @@ API для гостевого доступа
 */
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/signin', [AuthController::class, 'signin']);
-Route::get('/getmovies', [MoviesController::class, 'index']);
-Route::get('/sessions', [MoviesController::class, 'index']);
+Route::get('/getmovies', [MoviesController::class, 'indexGuest']);
+Route::get('/getsessions/{movie_id}', [SessionController::class, 'showGuest']);
+Route::get('/gethalls', [HallsController::class, 'index']);

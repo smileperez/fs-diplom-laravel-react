@@ -10,4 +10,6 @@ class Halls extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'rows', 'seats'];
+
+    protected $visible = ['name', 'rows', 'seats'];
 }
