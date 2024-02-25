@@ -11,6 +11,7 @@ export default function AdminLayout() {
         return <Navigate to="/auth/signin" />;
     }
 
+    // При обновлении страницы делаем запрос в БД за информацией администратора.
     useEffect(() => {
         axiosClient.get('/current').then(({data}) => {
             setCurrentUser(data)

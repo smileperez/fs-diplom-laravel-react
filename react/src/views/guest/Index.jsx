@@ -1,4 +1,3 @@
-import { useStateContext } from "../../context/ContextProvider.jsx";
 import MovieListItemUser from "../../components/guest/MovieListItemUser.jsx";
 import NavItem from "../../components/guest/NavItem.jsx";
 import { useEffect, useState } from "react";

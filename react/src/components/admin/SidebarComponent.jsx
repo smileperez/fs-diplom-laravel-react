@@ -21,7 +21,7 @@ export default function SidebarComponent() {
     const { currentUser, userToken, setCurrentUser, setUserToken } =
         useStateContext();
 
-    // Request в сторону контрлллера Laravel
+    // Запрос в сторону контролллера Laravel для выхода пользвоателя. Также затираем все State по пользователю.
     const logout = (event) => {
         event.preventDefault();
 
