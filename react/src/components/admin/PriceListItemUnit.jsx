@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function PriceListItemUnit({ type, price, types }) {
+export default function PriceListItemUnit({ type, price, color, types }) {
 
     const [updatedPrice, setUpdatedPrice] = useState({
         price: price
@@ -16,7 +16,7 @@ export default function PriceListItemUnit({ type, price, types }) {
                         >
                             Место
                         </label>
-                        <div className={`bg-[#${types[type].color}] w-[100px] text-center inline-block text-white  px-2 py-1 rounded text-s border border-gray-500 font-medium`}>{types[type].type}</div>
+                        <div className={`bg-[#${types.find((item) => (item.id === type)).color}] w-[100px] text-center inline-block text-white  px-2 py-1 rounded text-s border border-gray-500 font-medium`}>{types.find((item) => (item.id === type)).type}</div>
                     </div>
 
                     <span className="mx-5">=</span>

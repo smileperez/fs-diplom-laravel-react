@@ -110,11 +110,11 @@ export default function PriceListItem({ hall, types, getHalls }) {
                             <div className="ml-6">
                                 <h2 className="flex text-sm font-light">
                                     <div>Стоимость обычных мест:</div>
-                                    <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{prices[1]?.price} ₽</div>
+                                    <div className={`bg-[#63536C] w-auto px-2 ml-2 text-center inline-block text-white rounded text-s border border-gray-500 font-medium`}>{prices[0]?.price} ₽</div>
                                 </h2>
                                 <h2 className="flex text-sm font-light mt-1">
                                     <div>Стоимость VIP мест:</div>
-                                    <div className={`bg-[#FFD700] w-auto px-2 ml-2 text-center inline-block text-black rounded text-s border border-gray-500 font-medium`}>{prices[0]?.price} ₽</div>
+                                    <div className={`bg-[#FFD700] w-auto px-2 ml-2 text-center inline-block text-black rounded text-s border border-gray-500 font-medium`}>{prices[1]?.price} ₽</div>
                                 </h2>
                             </div>
                         </div>
@@ -148,10 +148,11 @@ export default function PriceListItem({ hall, types, getHalls }) {
                 <>
                     <form onSubmit={onSubmit} action="#" method="POST">
                         {/* Количество рядов X Количество мест в ряду */}
-                        {!loading && prices?.slice(0).reverse().map((item, idx) => (
+                        {!loading && prices?.map((item, idx) => (
                             <PriceListItemUnit
                                 type={item.types_id}
                                 price={item.price}
+                                color={types[item.types_id].color}
                                 types={types}
                                 key={idx}
                             />

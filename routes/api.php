@@ -54,4 +54,4 @@ Route::get('/getmovie/{movie_id}', [MoviesController::class, 'show']);
 Route::get('/getseats/{hall_id}', [SeatsController::class, 'show']);
 Route::get('/gethall/{hall_id}', [HallsController::class, 'show']);
 Route::get('/gettypes', [TypesController::class, 'index']);
-Route::get('/getprices/{hall_id}', [PricesController::class, 'index']); //TODO:
+Route::get('/getprices/{hall_id}', [PricesController::class, 'show']);

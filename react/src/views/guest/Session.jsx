@@ -10,25 +10,22 @@ export default function Hall() {
     const { id } = useParams();
 
     // Состояние для загрузки из БД сессии
-    const [session, setSession] = useState();
+    const [session, setSession] = useState([]);
 
     // Состояние для загрузки из БД фильма
-    const [movie, setMovie] = useState();
+    const [movie, setMovie] = useState([]);
 
     // Состояние для загрузки из БД зала
-    const [hall, setHall] = useState();
+    const [hall, setHall] = useState([]);
 
     // Состояние для загрузки из БД матрицы сидушек
-    const [matrix, setMatrix] = useState();
-
-    // Состояние для хранения обновленной матрицы
-    const [adjustedMatrix, setAdjustedMatrix] = useState();
+    const [matrix, setMatrix] = useState([]);
 
     // Состояние для загрузки из БД всех типов мест
     const [types, setTypes] = useState();
 
     // Состояние для загрузки из БД цен сидушек для конкретного зала
-    const [prices, setPrices] = useState();
+    const [prices, setPrices] = useState([]);
 
     // Функция получения конкретной сессии
     const getSession = () => {
@@ -40,6 +37,7 @@ export default function Hall() {
                 getHall(data[0].halls_id);
                 getMatrix(data[0].halls_id);
                 getTypes();
+                getPrice(data[0].halls_id);
             });
     };
 
@@ -80,11 +78,12 @@ export default function Hall() {
     };
 
     // Функция получения цен сидушек по конкретному залу
-    const getPrice = () => {
+    const getPrice = (hall_id) => {
         axiosClient
-            .get(`/getprices${hall_id}`)
+            .get(`/getprices/${hall_id}`)
             .then(({ data }) => {
-                setMovie(data);
+                setPrices(data);
+                console.log(data);
             });
     };
 
@@ -100,7 +99,7 @@ export default function Hall() {
 
     return (
         <section className="bg-[#F1EBE6] rounded">
-            <div>
+            <div className="p-4">
                 <h2 className="text-lg font-medium">
                     {movie?.title}
                 </h2>
@@ -111,33 +110,47 @@ export default function Hall() {
                 <p>
                     Начало сеанса: {session?.sessionStart}
                 </p>
-                <p>
-                    Зал - №{session?.halls_id} {hall?.name}
+                <p className="font-medium">
+                    Зал№{session?.halls_id} - {hall?.name}
                 </p>
             </div>
 
             <div className="bg-[#171D24] text-white">
 
-                <div className="flex flex-col justify-center items-center">
-                    <span className="tracking-[1.25em] mt-10">
+                <div className="flex flex-col justify-center items-center px-8 pt-8">
+                    <span className="tracking-[1.25em] text-xs">
                         ЭКРАН
                     </span>
-                    <div className="mb-10">
+                    <div className="">
                         <MatrixComponentGuest
                             matrixSeats={matrix}
                             rows={hall?.rows}
                             seats={hall?.seats}
                             types={types}
-                        // sendAdjustedMatrix={sendAdjustedMatrix}
                         />
                     </div>
+                    <div className="grid grid-rows-2 grid-flow-col gap-x-20 gap-y-3 my-8">
+                        <div className="flex">
+                            <div className="w-[24px] h-[24px] bg-[#63536C] border border-gray-400 rounded-md"></div>
+                            <span className="ml-2">Свободно ({prices[0]?.price} ₽)</span>
+                        </div>
+                        <div className="flex">
+                            <div className="w-[24px] h-[24px] bg-[#FFD700] border border-gray-400 rounded-md"></div>
+                            <span className="ml-2">Свободно VIP ({prices[1]?.price} ₽)</span>
+                        </div>
+                        <div className="flex">
+                            <div className="w-[24px] h-[24px] bg-[#] border border-gray-400 rounded-md"></div>
+                            <span className="ml-2">Занято</span>
+                        </div>
+                        <div className="flex">
+                            <div className="w-[24px] h-[24px] bg-[#25C4CE] border border-gray-400 rounded-md"></div>
+                            <span className="ml-2">Выбрано</span>
+                        </div>
+                    </div>
                 </div>
-
-
-
             </div>
 
-            <div className="flex items-center justify-center my-10">
+            <div className="flex items-center justify-center p-8">
                 <EButton
                     onClick={onClickReserve}>
                     ЗАБРОНИРОВАТЬ

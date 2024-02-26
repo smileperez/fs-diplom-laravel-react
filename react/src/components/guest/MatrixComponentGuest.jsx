@@ -22,8 +22,8 @@ export default function MatrixComponentGuest({
 
     return (
         <div className="flex flex-col flex-nowrap space-y-2">
-            {matrix?.map((row, i) => (
-                <div key={i} className="flex flex-nowrap space-x-2">
+            {matrix?.map((row, idx) => (
+                <div key={idx} className="flex flex-nowrap space-x-2">
                     {row.map((item, idx) => (
                         <>
                             <Seat
