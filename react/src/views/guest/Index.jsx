@@ -64,7 +64,7 @@ export default function Index() {
             });
     };
 
-    // // При каждом обновлении страницы обновляем список фильмов
+    // При каждом обновлении страницы обновляем список фильмов
     useEffect(() => {
         getMovies();
     }, []);
@@ -92,7 +92,10 @@ export default function Index() {
                 {!loading && (
                     <div>
                         {movies.map((movie) => (
-                            <MovieListItemUser movie={movie} key={movie.id} />
+                            <MovieListItemUser
+                                movie={movie}
+                                key={movie.id}
+                            />
                         ))}
 
                         <PaginationComponent

@@ -14,6 +14,9 @@ import Sessions from "./views/admin/Sessions";
 import Users from "./views/admin/Users";
 // Guests
 import Index from "./views/guest/Index";
+import Session from "./views/guest/Session";
+import Payment from "./views/guest/Payment";
+import Ticket from "./views/guest/Ticket";
 // Auth
 import Signin from "./views/auth/Signin";
 import Signup from "./views/auth/Signup";
@@ -66,6 +69,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Index />,
+            },
+            {
+                path: "/session/:id",
+                element: <Session />,
             },
         ],
     },

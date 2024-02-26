@@ -31,7 +31,7 @@ class SessionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Показать все сессии относящиеся к конкретному halls_id
      */
     public function show($hall_id)
     {
@@ -40,11 +40,21 @@ class SessionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Показать все сессии относящиеся к конкретному movies_id
      */
-    public function showGuest($movie_id)
+    public function showSessionsByMovie($movie_id)
     {
         $data = Sessions::where('movies_id', $movie_id)->get()->toArray();
+        return $data;
+    }
+
+
+    /**
+     * Показать конкретную сессию
+     */
+    public function showSession($id)
+    {
+        $data = Sessions::where('id', $id)->get()->toArray();
         return $data;
     }
 

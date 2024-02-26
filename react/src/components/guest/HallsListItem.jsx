@@ -1,21 +1,20 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import axiosClient from "../../axios.js";
+import SessionListItem from './SessionListItem';
 
-export default function HallsListItem({ hall, sessions, movie }) {
+export default function HallsListItem({ hall, sessions }) {
 
-    // Состояние для загрузки из БД общего списка фильмов
+    // Состояние для хранения массива сессий по конкретному залу
     const [sessionByHall, setSessionByHall] = useState();
 
-    // Функция получения массива сессий по залу
+    // Функция получения массива сессий по конкретному залу
     const getSessionsByHall = () => {
         if (sessions) {
             setSessionByHall(sessions?.filter((item) => item.halls_id === hall.id));
-
         }
     };
 
-    // При каждом обновлении страницы обновляем список фильмов
+    // При каждом обновлении страницы обновляем массив сессий по конкретному залу
     useEffect(() => {
         if (hall && sessions) {
             getSessionsByHall();
@@ -30,12 +29,11 @@ export default function HallsListItem({ hall, sessions, movie }) {
                     <span>Зал - {hall.name}</span>
                 </div>
                 <div className='flex'>
-                    {sessionByHall?.map((item) => (
-                        <>
-                            <div className='mr-2 bg-white p-2 rounded cursor-pointer shadow-md' onClick={() => (console.log('ТЫК'))}>
-                                {item.sessionStart}
-                            </div>
-                        </>
+                    {sessionByHall?.map((item, idx) => (
+                        <SessionListItem
+                            session={item}
+                            key={idx}
+                        />
                     ))}
                 </div>
             </div>

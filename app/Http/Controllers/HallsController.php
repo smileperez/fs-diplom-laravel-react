@@ -34,9 +34,10 @@ class HallsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Halls $hall)
+    public function show($hall_id)
     {
-        return new HallsResource($hall);
+        $data = Halls::where('id', $hall_id)->get()->toArray();
+        return $data;
     }
 
     /**

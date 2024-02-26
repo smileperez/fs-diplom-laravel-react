@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import reshapeMatrix from "../core/ReshapeMatrix.jsx";
 
-export default function MatrixComponent({
+export default function MatrixComponentAdmin({
     matrixSeats,
     rows,
     seats,
@@ -26,7 +26,7 @@ export default function MatrixComponent({
         }
     }
 
-    // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>, как только setCoords обновит состояние coords
+    // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>
     useEffect(() => {
         sendAdjustedMatrix(matrix);
     }, [matrix]);
@@ -43,7 +43,7 @@ export default function MatrixComponent({
                     {row.map((item) => (
                         <div key={item.row.toString() + item.seat.toString()}
                             style={{ backgroundColor: `#${types.find(type => type.id === item.types_id).color}` }}
-                            className="text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
+                            className="cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
                             onClick={(event) => (
                                 onMouseEnter(item.row, item.seat, item.types_id)
                             )}

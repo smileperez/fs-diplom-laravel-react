@@ -55,9 +55,10 @@ class MoviesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movies $movie)
+    public function show($movie_id)
     {
-        return new MoviesResource($movie);
+        $data = Movies::where('id', $movie_id)->get()->toArray();
+        return $data;
     }
 
     /**

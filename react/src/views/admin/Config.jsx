@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PageComponent from "../../components/admin/PageComponent";
 import axiosClient from "../../axios";
-import MatrixComponent from "../../components/admin/MatrixComponent";
+import MatrixComponentAdmin from "../../components/admin/MatrixComponentAdmin";
 import SelectMenusComponent from "../../components/core/SelectMenusComponent";
 import EButton from "../../components/core/EButton";
 import { CloudArrowUpIcon, XCircleIcon } from "@heroicons/react/24/outline";
@@ -169,7 +169,7 @@ export default function Config() {
                                                     ЭКРАН
                                                 </span>
                                                 <div className="mt-2">
-                                                    <MatrixComponent
+                                                    <MatrixComponentAdmin
                                                         matrixSeats={matrixSeats}
                                                         rows={hall.rows}
                                                         seats={hall.seats}

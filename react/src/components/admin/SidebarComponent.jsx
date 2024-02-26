@@ -25,10 +25,12 @@ export default function SidebarComponent() {
     const logout = (event) => {
         event.preventDefault();
 
-        axiosClient.post("/signout").then((res) => {
-            setCurrentUser({});
-            setUserToken(null);
-        });
+        axiosClient
+            .post("/signout")
+            .then((res) => {
+                setCurrentUser({});
+                setUserToken(null);
+            });
     };
 
     // Навигация
