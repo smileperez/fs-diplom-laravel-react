@@ -5,12 +5,14 @@ import MatrixComponentGuest from "../../components/guest/MatrixComponentGuest.js
 import axiosClient from "../../axios.js";
 
 export default function Hall() {
+
+    // Берем id сессии из под URL страницы (из роутера)
     const { id } = useParams();
 
     // Состояние для загрузки из БД сессии
     const [session, setSession] = useState();
 
-    // Состояние для загрузки из БД сессии
+    // Состояние для загрузки из БД фильма
     const [movie, setMovie] = useState();
 
     // Состояние для загрузки из БД зала
@@ -25,7 +27,7 @@ export default function Hall() {
     // Состояние для загрузки из БД всех типов мест
     const [types, setTypes] = useState();
 
-    // Состояние для загрузки из БД цен на места
+    // Состояние для загрузки из БД цен сидушек для конкретного зала
     const [prices, setPrices] = useState();
 
     // Функция получения конкретной сессии
@@ -91,12 +93,10 @@ export default function Hall() {
         getSession();
     }, []);
 
-    // callback функция, для получения измененной матрицы по типу мест из компонента <MatrixComponent>
-    const sendAdjustedMatrix = (adjustedMatrix) => {
-        setAdjustedMatrix(adjustedMatrix);
-    };
-
-
+    // Функция бронирования выбранных мест
+    const onClickReserve = () => {
+        console.log('ТЫК');
+    }
 
     return (
         <section className="bg-[#F1EBE6] rounded">
@@ -104,6 +104,10 @@ export default function Hall() {
                 <h2 className="text-lg font-medium">
                     {movie?.title}
                 </h2>
+                <p>
+                    {/* TODO: */}
+                    Дата: {session?.sessionStart}
+                </p>
                 <p>
                     Начало сеанса: {session?.sessionStart}
                 </p>
@@ -124,7 +128,7 @@ export default function Hall() {
                             rows={hall?.rows}
                             seats={hall?.seats}
                             types={types}
-                            sendAdjustedMatrix={sendAdjustedMatrix}
+                        // sendAdjustedMatrix={sendAdjustedMatrix}
                         />
                     </div>
                 </div>
@@ -134,7 +138,8 @@ export default function Hall() {
             </div>
 
             <div className="flex items-center justify-center my-10">
-                <EButton>
+                <EButton
+                    onClick={onClickReserve}>
                     ЗАБРОНИРОВАТЬ
                 </EButton>
             </div>

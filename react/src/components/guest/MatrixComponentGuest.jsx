@@ -7,7 +7,6 @@ export default function MatrixComponentGuest({
     rows,
     seats,
     types,
-    sendAdjustedMatrix
 }) {
 
     // Создание матрицы на основе данных из родителя <Config>
@@ -16,35 +15,6 @@ export default function MatrixComponentGuest({
     // Состояние для хранения координаты
     const [coords, setCoords] = useState();
 
-    // const [guestTypes, setGuestTypes] = useState(types?.push({ id: 4, type: 'Выбранное', color: '25C4CE' })
-    // );
-
-    const guestTypes = types?.push({ id: 4, type: 'Выбранное', color: '25C4CE' })
-
-    const [toggle, setToggle] = useState(false);
-
-    // Функция корректировки матрицы от изменения типов мест при клике
-    function onMouseEnter(row, seat, types_id) {
-        // setCoords({ row, seat });
-        console.log('ТЫК');
-        setToggle(!toggle);
-        // console.log(toggle);
-        // console.log(guestTypes);
-
-        // Изменяем значение конкретного места в матрице на нужный тип места по кругу
-        // matrix[row - 1][seat - 1].types_id = types_id + 1;
-
-        // if (matrix[row - 1][seat - 1].types_id === 4) {
-        //     matrix[row - 1][seat - 1].types_id = 1;
-        // }
-        // console.log(matrix[row - 1][seat - 1].types_id);
-    }
-
-    // Отправка координат в родитель <MatrixComponent> -> в родитель <Config>
-    useEffect(() => {
-        sendAdjustedMatrix(matrix);
-    }, [matrix]);
-
     // Обновляем рендеринг матрицы, если matrixSeats из родителя <Config> поменялся
     useEffect(() => {
         setMatrix(reshapeMatrix(matrixSeats, rows, seats));
@@ -52,7 +22,7 @@ export default function MatrixComponentGuest({
 
     return (
         <div className="flex flex-col flex-nowrap space-y-2">
-            {matrix.map((row, i) => (
+            {matrix?.map((row, i) => (
                 <div key={i} className="flex flex-nowrap space-x-2">
                     {row.map((item, idx) => (
                         <>
