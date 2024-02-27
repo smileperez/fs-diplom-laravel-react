@@ -98,7 +98,31 @@ export default function Hall() {
     const onClickReserve = () => {
         console.log('ТЫК');
 
-        axiosClient.post()
+        // axiosClient
+        //     .post("/tikets", payload)
+        //     .then((response) => {
+        //         console.log(response);
+        //         // Закрываем slider-popup
+        //         setOpen(false);
+        //         // Перезагружаем страницу
+        //         getMovies();
+        //         // Стираем предыдущее добавление нового фильма
+        //         setMovie({
+        //             title: "",
+        //             img: null,
+        //             img_url: null,
+        //             description: "",
+        //             duration: 0,
+        //             origin: "",
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         if (err && err.response) {
+        //             // Записываем error в состояние
+        //             setError(err.response.data.message);
+        //         }
+        //         console.log(err, err.response);
+        //     });
     }
 
     // Call-back функция для получения координат сидушек и состояния toggle
