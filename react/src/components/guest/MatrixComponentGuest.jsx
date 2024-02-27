@@ -7,6 +7,7 @@ export default function MatrixComponentGuest({
     rows,
     seats,
     types,
+    sendCoord
 }) {
 
     // Создание матрицы на основе данных из родителя <Config>
@@ -23,13 +24,14 @@ export default function MatrixComponentGuest({
     return (
         <div className="flex flex-col flex-nowrap space-y-2">
             {matrix?.map((row, idx) => (
-                <div key={idx} className="flex flex-nowrap space-x-2">
-                    {row.map((item, idx) => (
+                <div key={row[idx].row + row[idx].seat} className="flex flex-nowrap space-x-2">
+                    {row.map((item, jdx) => (
                         <>
                             <Seat
                                 item={item}
                                 types={types}
-                                key={idx}
+                                key={item.seat}
+                                sendCoord={sendCoord}
                             >
                             </Seat>
                         </>
@@ -39,13 +41,3 @@ export default function MatrixComponentGuest({
         </div>
     );
 }
-
-// { backgroundColor: `#${types?.find(type => type.id === item.types_id).color}` }
-
-{/* <div key={item.row.toString() + item.seat.toString()}
-    style={toggle ? { backgroundColor: "#25C4CE" } : { backgroundColor: `#${types?.find(type => type.id === item.types_id).color}` }}
-    className="text-xs text-white inline-block cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
-    onClick={(event) => (
-        onMouseEnter(item.row, item.seat, item.types_id)
-    )}
-></div> */}

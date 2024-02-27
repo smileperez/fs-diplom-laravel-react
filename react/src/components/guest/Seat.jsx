@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function HallsListItem({ item, types }) {
+export default function HallsListItem({ item, types, sendCoord }) {
 
     // Состояние для переключения выбранного места
     const [toggle, setToggle] = useState(false);
@@ -15,11 +15,10 @@ export default function HallsListItem({ item, types }) {
     const [coords, setCoords] = useState();
 
     // Функция детектирования выбора места при клике
-    function onMouseEnter(row, seat) {
-        console.log('ТЫК');
-        setCoords({ row, seat });
+    function onMouseEnter(id, row, seat) {
+        setCoords({ id, row, seat });
         setToggle(!toggle);
-        console.log(coords);
+        sendCoord({ id, row, seat }, !toggle)
     }
 
     return (
@@ -27,7 +26,7 @@ export default function HallsListItem({ item, types }) {
             <div style={seatStyle}
                 className="cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
                 onClick={(event) => (
-                    onMouseEnter(item.row, item.seat)
+                    onMouseEnter(item.id, item.row, item.seat)
                 )}
             ></div>
         </>

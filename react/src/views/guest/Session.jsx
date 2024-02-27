@@ -27,6 +27,9 @@ export default function Hall() {
     // Состояние для загрузки из БД цен сидушек для конкретного зала
     const [prices, setPrices] = useState([]);
 
+
+    const [tikets, setTikets] = useState([]);
+
     // Функция получения конкретной сессии
     const getSession = () => {
         axiosClient
@@ -83,7 +86,6 @@ export default function Hall() {
             .get(`/getprices/${hall_id}`)
             .then(({ data }) => {
                 setPrices(data);
-                console.log(data);
             });
     };
 
@@ -92,9 +94,21 @@ export default function Hall() {
         getSession();
     }, []);
 
-    // Функция бронирования выбранных мест
+    // Функция бронирования выбранных мест tikets
     const onClickReserve = () => {
         console.log('ТЫК');
+
+        axiosClient.post()
+    }
+
+    // Call-back функция для получения координат сидушек и состояния toggle
+    const sendCoord = (coord, toggle) => {
+        // Если toggle, то записываем в состояние сидушку
+        if (toggle === true) {
+            setTikets(item => [...item, coord])
+        } else {
+            setTikets(tikets.filter(item => item.id !== coord.id))
+        }
     }
 
     return (
@@ -127,6 +141,7 @@ export default function Hall() {
                             rows={hall?.rows}
                             seats={hall?.seats}
                             types={types}
+                            sendCoord={sendCoord}
                         />
                     </div>
                     <div className="grid grid-rows-2 grid-flow-col gap-x-20 gap-y-3 my-8">
