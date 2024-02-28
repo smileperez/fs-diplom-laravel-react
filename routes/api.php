@@ -8,6 +8,7 @@ use App\Http\Controllers\TypesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PricesController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TicketsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -55,3 +56,5 @@ Route::get('/getseats/{hall_id}', [SeatsController::class, 'show']);
 Route::get('/gethall/{hall_id}', [HallsController::class, 'show']);
 Route::get('/gettypes', [TypesController::class, 'index']);
 Route::get('/getprices/{hall_id}', [PricesController::class, 'show']);
+Route::post('/tickets', [TicketsController::class, 'store']);
+Route::get('/tickets/{session_id}/{date}', [TicketsController::class, 'showSeatsBySession']);

@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export default function HallsListItem({ item, types, sendCoord }) {
+export default function HallsListItem({ item, types, sendCoord, reservedSeats }) {
 
     // Состояние для переключения выбранного места
     const [toggle, setToggle] = useState(false);
 
     // Диначически заданный стиль сидушек
-    const seatStyle = {
+    const seatTouchStyle = {
         visibility: item?.types_id === 3 ? "hidden" : "",
         backgroundColor: toggle ? `#25C4CE` : `#${types?.find(type => type.id === item.types_id).color}`
     }
@@ -23,12 +23,20 @@ export default function HallsListItem({ item, types, sendCoord }) {
 
     return (
         <>
-            <div style={seatStyle}
-                className="cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
-                onClick={(event) => (
-                    onMouseEnter(item.id, item.row, item.seat)
+            {/* Проверка на бронированные места в эту дату */}
+            {reservedSeats?.find(element => element.seats_id === item.id)
+                ? (
+                    <div
+                        className="w-[24px] h-[24px] border border-gray-400 rounded-md"
+                    ></div>
+                ) : (
+                    <div style={seatTouchStyle}
+                        className="cursor-pointer w-[24px] h-[24px] border border-gray-400 rounded-md"
+                        onClick={(event) => (
+                            onMouseEnter(item.id, item.row, item.seat)
+                        )}
+                    ></div>
                 )}
-            ></div>
         </>
     )
 }

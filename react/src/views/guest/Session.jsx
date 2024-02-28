@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import EButton from "../../components/core/EButton";
 import MatrixComponentGuest from "../../components/guest/MatrixComponentGuest.jsx";
+import { v4 as uuidv4 } from 'uuid';
 import axiosClient from "../../axios.js";
 
 export default function Hall() {
@@ -27,8 +28,14 @@ export default function Hall() {
     // Состояние для загрузки из БД цен сидушек для конкретного зала
     const [prices, setPrices] = useState([]);
 
+    // Состояние для хранения выбранных пользователем мест
+    const [tickets, setTickets] = useState([]);
 
-    const [tikets, setTikets] = useState([]);
+    // Состояние для хранения выбранных пользователем мест
+    const [reservedSeats, setReservedSeats] = useState([]);
+
+    // Состояние для хранения ошибки
+    const [error, setError] = useState("");
 
     // Функция получения конкретной сессии
     const getSession = () => {
@@ -41,6 +48,7 @@ export default function Hall() {
                 getMatrix(data[0].halls_id);
                 getTypes();
                 getPrice(data[0].halls_id);
+                getReservedSeats(data[0].id, "2024-02-28");
             });
     };
 
@@ -89,6 +97,15 @@ export default function Hall() {
             });
     };
 
+    // Функция получения цен сидушек по конкретному залу
+    const getReservedSeats = (session_id, date) => {
+        axiosClient
+            .get(`/tickets/${session_id}/${date}`)
+            .then(({ data }) => {
+                setReservedSeats(data);
+            });
+    };
+
     // При каждом обновлении страницы обновляем данные
     useEffect(() => {
         getSession();
@@ -96,42 +113,43 @@ export default function Hall() {
 
     // Функция бронирования выбранных мест tikets
     const onClickReserve = () => {
-        console.log('ТЫК');
+        // console.log(tickets);
 
-        // axiosClient
-        //     .post("/tikets", payload)
-        //     .then((response) => {
-        //         console.log(response);
-        //         // Закрываем slider-popup
-        //         setOpen(false);
-        //         // Перезагружаем страницу
-        //         getMovies();
-        //         // Стираем предыдущее добавление нового фильма
-        //         setMovie({
-        //             title: "",
-        //             img: null,
-        //             img_url: null,
-        //             description: "",
-        //             duration: 0,
-        //             origin: "",
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         if (err && err.response) {
-        //             // Записываем error в состояние
-        //             setError(err.response.data.message);
-        //         }
-        //         console.log(err, err.response);
-        //     });
+        // Уникальный идентифкатор билета
+        const uuid = uuidv4();
+
+        const payload = [];
+        for (let i = 0; i < tickets.length; i++) {
+            payload.push({
+                uuid: uuid,
+                date: "2024-02-28",
+                sessions_id: session.id,
+                seats_id: tickets[i].id
+            })
+        }
+
+        payload.map(item => {
+            console.log(item);
+            axiosClient
+                .post("/tickets", item)
+                .catch((err) => {
+                    if (err && err.response) {
+                        // Записываем error в состояние
+                        setError(err.response.data.message);
+                    }
+                    console.log(err, err.response);
+                });
+        })
+
     }
 
     // Call-back функция для получения координат сидушек и состояния toggle
     const sendCoord = (coord, toggle) => {
         // Если toggle, то записываем в состояние сидушку
         if (toggle === true) {
-            setTikets(item => [...item, coord])
+            setTickets(item => [...item, coord])
         } else {
-            setTikets(tikets.filter(item => item.id !== coord.id))
+            setTickets(tickets.filter(item => item.id !== coord.id))
         }
     }
 
@@ -143,7 +161,7 @@ export default function Hall() {
                 </h2>
                 <p>
                     {/* TODO: */}
-                    Дата: {session?.sessionStart}
+                    Дата сеанса: {session?.sessionStart}
                 </p>
                 <p>
                     Начало сеанса: {session?.sessionStart}
@@ -166,6 +184,7 @@ export default function Hall() {
                             seats={hall?.seats}
                             types={types}
                             sendCoord={sendCoord}
+                            reservedSeats={reservedSeats}
                         />
                     </div>
                     <div className="grid grid-rows-2 grid-flow-col gap-x-20 gap-y-3 my-8">

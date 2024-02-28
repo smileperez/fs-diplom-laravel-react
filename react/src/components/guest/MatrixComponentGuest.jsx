@@ -7,7 +7,8 @@ export default function MatrixComponentGuest({
     rows,
     seats,
     types,
-    sendCoord
+    sendCoord,
+    reservedSeats
 }) {
 
     // Создание матрицы на основе данных из родителя <Config>
@@ -32,6 +33,7 @@ export default function MatrixComponentGuest({
                                 types={types}
                                 key={item.seat}
                                 sendCoord={sendCoord}
+                                reservedSeats={reservedSeats}
                             >
                             </Seat>
                         </>

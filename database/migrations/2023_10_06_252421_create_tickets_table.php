@@ -14,6 +14,8 @@ return new class extends Migration {
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
+            $table->date('date');
             $table->foreignIdFor(Sessions::class)->constrained();
             $table->foreignIdFor(Seats::class)->constrained();
             $table->timestamps();
