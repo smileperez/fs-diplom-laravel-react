@@ -32,13 +32,6 @@ export default function Halls() {
         seats: "",
     });
 
-    const [vipSeats, setVipSeats] = useState();
-    const [defaultSeats, setDefaultSeats] = useState();
-
-    // Состояние мест зала, для отпарвки в таблицу БД "Seats"
-    // FIXME: Используется переменная вместо состояния useState
-    let halls_id = 0;
-
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
     const [types_id, setTypes_id] = useState(1);
 
@@ -74,18 +67,15 @@ export default function Halls() {
             .post("/halls", hall)
             .then((response) => {
                 // Получаем ID нового зала.
-                // FIXME: Используется переменная let для синхронности получения данных.
-                // FIXME: При использоваии useState, состояние не успевает отработать и передать в следующую функцию актуальные данные.
-                halls_id = response.data.data.id;
                 // Генерируем матрицу сидушек и отправляем в таблицу Seats
                 postSeats(
                     Number(hall.rows),
                     Number(hall.seats),
                     types_id,
-                    halls_id
+                    response.data.data.id
                 );
                 // Отправляем нулевые цены за сидушки в таблицу Prices
-                postPrices(halls_id);
+                postPrices(response.data.data.id);
                 // Закрываем slider-popup
                 setOpen(false);
                 // Перезагружаем страницу

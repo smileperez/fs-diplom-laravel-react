@@ -21,9 +21,6 @@ export default function Config() {
     // Соятоние загрузки данных
     const [loading, setLoading] = useState(false);
 
-    //
-    const [coord, setCoord] = useState({ row: -1, seat: -1 });
-
     // Полученный из БД массив сидушек для конкретного зала.
     const [matrixSeats, setMatrixSeats] = useState();
 
