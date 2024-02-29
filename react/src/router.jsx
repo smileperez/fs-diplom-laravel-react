@@ -74,6 +74,10 @@ const router = createBrowserRouter([
                 path: "/session/:id",
                 element: <Session />,
             },
+            {
+                path: "/payment/:uuid",
+                element: <Payment />,
+            },
         ],
     },
 

@@ -24,19 +24,24 @@ export default function HallsListItem({ hall, sessions }) {
 
     return (
         <>
-            <div className='mb-2'>
-                <div className='font-medium text-lg'>
-                    <span>Зал - {hall.name}</span>
+            {sessions.find(item => item.halls_id === hall.id)
+                ?
+                <div className='mb-2'>
+                    <div className='font-medium text-lg'>
+                        <span>Зал - {hall.name}</span>
+                    </div>
+                    <div className='flex'>
+                        {sessionByHall?.map((item, idx) => (
+                            <SessionListItem
+                                session={item}
+                                key={idx}
+                            />
+                        ))}
+                    </div>
                 </div>
-                <div className='flex'>
-                    {sessionByHall?.map((item, idx) => (
-                        <SessionListItem
-                            session={item}
-                            key={idx}
-                        />
-                    ))}
-                </div>
-            </div>
+                :
+                <></>
+            }
         </>
     )
 }

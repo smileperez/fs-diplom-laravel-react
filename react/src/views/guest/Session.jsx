@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EButton from "../../components/core/EButton";
 import MatrixComponentGuest from "../../components/guest/MatrixComponentGuest.jsx";
 import { v4 as uuidv4 } from 'uuid';
@@ -33,6 +34,8 @@ export default function Hall() {
 
     // Состояние для хранения выбранных пользователем мест
     const [reservedSeats, setReservedSeats] = useState([]);
+
+    const navigate = useNavigate();
 
     // Состояние для хранения ошибки
     const [error, setError] = useState("");
@@ -113,8 +116,6 @@ export default function Hall() {
 
     // Функция бронирования выбранных мест tikets
     const onClickReserve = () => {
-        // console.log(tickets);
-
         // Уникальный идентифкатор билета
         const uuid = uuidv4();
 
@@ -141,6 +142,7 @@ export default function Hall() {
                 });
         })
 
+        navigate(`/payment/${uuid}`)
     }
 
     // Call-back функция для получения координат сидушек и состояния toggle
@@ -154,8 +156,8 @@ export default function Hall() {
     }
 
     return (
-        <section className="bg-[#F1EBE6] rounded">
-            <div className="p-4">
+        <section className="rounded ">
+            <div className="p-4 bg-[#F1EBE6] opacity-95">
                 <h2 className="text-lg font-medium">
                     {movie?.title}
                 </h2>
@@ -208,10 +210,11 @@ export default function Hall() {
                 </div>
             </div>
 
-            <div className="flex items-center justify-center p-8">
-                <EButton
-                    onClick={onClickReserve}>
-                    ЗАБРОНИРОВАТЬ
+            <div className="flex items-center justify-center p-8 bg-[#F1EBE6] opacity-95">
+                <EButton onClick={onClickReserve}>
+                    <span className="uppercase text-base px-8">
+                        Забронировать
+                    </span>
                 </EButton>
             </div>
 

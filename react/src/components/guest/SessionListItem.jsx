@@ -5,8 +5,8 @@ export default function SessionListItem({ session }) {
 
     return (
         <>
-            <div className='mr-2 bg-white p-2 rounded cursor-pointer shadow-md' onClick={() => (navigate(`/session/${session.id}`))}>
-                {session.sessionStart}
+            <div className='mr-3 bg-white py-1 px-6 rounded cursor-pointer shadow-md text-base font-medium' onClick={() => (navigate(`/session/${session.id}`))}>
+                {session.sessionStart.slice(0, 5)}
             </div>
         </>
     )
