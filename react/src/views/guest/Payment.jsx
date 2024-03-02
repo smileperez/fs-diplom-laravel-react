@@ -10,13 +10,16 @@ export default function Hall() {
     const { uuid } = useParams();
 
     // Состояние для загрузки из БД информации по билету
-    const [tickets, setTickets] = useState([]);
+    const [ticket, setTicket] = useState();
 
     // Состояние для загрузки из БД сессии
-    const [session, setSession] = useState([]);
+    const [session, setSession] = useState();
+
+    // Состояние для загрузки из БД
+    const [seats, setSeats] = useState([]);
 
     // Состояние для загрузки из БД фильма
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState();
 
     // Состояние для загрузки из БД цен сидушек для конкретного зала
     const [prices, setPrices] = useState([]);
@@ -26,68 +29,72 @@ export default function Hall() {
 
     // Функция получения билета
     const getTicket = () => {
-        // axiosClient
-        //     .get(`/getsession/${id}`)
-        //     .then(({ data }) => {
-        //         setSession(data[0]);
-        //         getMovie(data[0].movies_id);
-        //         getHall(data[0].halls_id);
-        //         getMatrix(data[0].halls_id);
-        //         getTypes();
-        //         getPrice(data[0].halls_id);
-        //         getReservedSeats(data[0].id, "2024-02-28");
-        //     });
+        axiosClient
+            .get(`/getticket/${uuid}`)
+            .then(({ data }) => {
+                setTicket(data);
+                getSession(data[0].sessions_id);
+                data.forEach(element => {
+                    getSeat(element.seats_id)
+                });
+            });
+    };
+
+    // Функция получения конкретного зала
+    const getSession = (session_id) => {
+        axiosClient
+            .get(`/getsession/${session_id}`)
+            .then(({ data }) => {
+                setSession(data[0]);
+                getPrice(data[0].halls_id);
+                getMovie(data[0].movies_id)
+            });
+    };
+
+    //
+    const getSeat = (seat_id) => {
+        axiosClient
+            .get(`/getseat/${seat_id}`)
+            .then(({ data }) => {
+
+                // Проверка, если сидушки уже записана, то не добавляем
+                if (seats.length < ticket.length) {
+                    setSeats(item => [...item, data[0]])
+                }
+            });
+    }
+
+    // Функция получения цен сидушек по конкретному залу
+    const getPrice = (hall_id) => {
+        axiosClient
+            .get(`/getprices/${hall_id}`)
+            .then(({ data }) => {
+                setPrices(data);
+            });
     };
 
     // Функция получения всех сессий по конкретному залу
     const getMovie = (movie_id) => {
-        // axiosClient
-        //     .get(`/getmovie/${movie_id}`)
-        //     .then(({ data }) => {
-        //         setMovie(data[0]);
-        //     });
+        axiosClient
+            .get(`/getmovie/${movie_id}`)
+            .then(({ data }) => {
+                setMovie(data[0]);
+            });
     };
 
-    // Функция получения конкретного зала
-    const getHall = (hall_id) => {
-        // axiosClient
-        //     .get(`/gethall/${hall_id}`)
-        //     .then(({ data }) => {
-        //         setHall(data[0]);
-        //     });
-    };
+    const total = () => {
+        let result = 0;
+        seats.forEach(item => {
+            result += prices.find(element => element.types_id == item.types_id).price;
+        })
+        return result;
+    }
 
-    // Функция получения матрицы сидушек конкретного зала
-    const getMatrix = (hall_id) => {
-        // axiosClient
-        //     .get(`/getseats/${hall_id}`)
-        //     .then(({ data }) => {
-        //         setMatrix(data);
-        //     });
-    };
-
-    // Функция получения цен сидушек по конкретному залу
-    const getTypes = () => {
-        // axiosClient
-        //     .get(`/gettypes`)
-        //     .then(({ data }) => {
-        //         setTypes(data.data);
-        //     });
-    };
-
-    // Функция получения цен сидушек по конкретному залу
-    const getPrice = (hall_id) => {
-        // axiosClient
-        //     .get(`/getprices/${hall_id}`)
-        //     .then(({ data }) => {
-        //         setPrices(data);
-        //     });
-    };
 
     // При каждом обновлении страницы обновляем данные
-    // useEffect(() => {
-    //     getSession();
-    // }, []);
+    useEffect(() => {
+        getTicket();
+    }, []);
 
     // Функция бронирования выбранных мест tikets
     const onClick = () => {
@@ -127,11 +134,39 @@ export default function Hall() {
             </header>
 
             <div className="py-2 text-base">
-                <span className="block text-base">На фильм: Звёздные войны XXIII: Атака клонированных клонов</span>
-                <span className="block mt-1">Места: 6, 7</span>
-                <span className="block mt-1">В зале: 1</span>
-                <span className="block mt-1">Начало сеанса: 18:30</span>
-                <span className="block mt-1">Стоимость: 600 рублей</span>
+                <div className="flex mt-1">
+                    <span className="block text-base">На фильм:</span>
+                    <span className="font-medium ml-1"></span>
+                    {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+
+                </div>
+
+                <div className="flex mt-1">
+                    <span className="block mr-1">Дата:</span>
+                    {ticket ? <span className="font-medium">{ticket[0].date}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                </div>
+
+                <div className="flex mt-1">
+                    <span className="block mr-1">Начало сеанса:</span>
+                    {session ? <span className="font-medium">{session.sessionStart.slice(0, -3)}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                </div>
+
+                <div className="flex mt-1">
+                    <span className="block mr-1">В зале:</span>
+                    {session ? <span className="font-medium">№{session.halls_id}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                </div>
+
+                <div className="flex mt-1">
+                    <span className="block mr-1">Места:</span>
+                    {ticket ? ticket.map(item => (<span key={item.seats_id} className="font-medium">{item.seats_id}, </span>)) : <span className="font-medium ml-1">Загрузка...</span>}
+                </div>
+
+
+                <div className="flex mt-1">
+                    <span className="block mr-1">Стоимость:</span>
+                    {seats && prices ? <span className="font-medium">{total()} ₽</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                </div>
+
             </div>
 
             <div className="py-2 flex flex-col items-center justify-center">

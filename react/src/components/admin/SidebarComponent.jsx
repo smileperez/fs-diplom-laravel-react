@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
     UserIcon,
     ChevronLeftIcon,
@@ -31,7 +31,11 @@ export default function SidebarComponent() {
                 setCurrentUser({});
                 setUserToken(null);
             });
+
+        navigate(`/`)
     };
+
+    const navigate = useNavigate();
 
     // Навигация
     const navigation = [

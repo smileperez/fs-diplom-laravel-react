@@ -52,9 +52,9 @@ class SessionController extends Controller
     /**
      * Показать конкретную сессию
      */
-    public function showSession($id)
+    public function showSession($session_id)
     {
-        $data = Sessions::where('id', $id)->get()->toArray();
+        $data = Sessions::where('id', $session_id)->get()->toArray();
         return $data;
     }
 

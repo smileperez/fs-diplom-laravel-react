@@ -49,12 +49,14 @@ Route::post('/signin', [AuthController::class, 'signin']);
 Route::get('/getmovies', [MoviesController::class, 'indexGuest']);
 Route::get('/getsessions/{movie_id}', [SessionController::class, 'showSessionsByMovie']);
 Route::get('/gethalls', [HallsController::class, 'index']);
-    // Для страницы Session
+    // Для страниц Session/Payment
 Route::get('/getsession/{id}', [SessionController::class, 'showSession']);
 Route::get('/getmovie/{movie_id}', [MoviesController::class, 'show']);
 Route::get('/getseats/{hall_id}', [SeatsController::class, 'show']);
+Route::get('/getseat/{seat_id}', [SeatsController::class, 'showByID']);
 Route::get('/gethall/{hall_id}', [HallsController::class, 'show']);
 Route::get('/gettypes', [TypesController::class, 'index']);
 Route::get('/getprices/{hall_id}', [PricesController::class, 'show']);
 Route::post('/tickets', [TicketsController::class, 'store']);
-Route::get('/tickets/{session_id}/{date}', [TicketsController::class, 'showSeatsBySession']);
+Route::get('/getticket/{session_id}/{date}', [TicketsController::class, 'showSeatsBySession']);
+Route::get('/getticket/{uuid}', [TicketsController::class, 'showTicketsBySession']);

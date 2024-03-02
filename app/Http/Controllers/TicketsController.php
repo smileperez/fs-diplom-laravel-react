@@ -17,6 +17,18 @@ class TicketsController extends Controller
         return new TicketsResource($tickets);
     }
 
+    /**
+     * Показать все сессии относящиеся к конкретному UUID
+     */
+    public function showTicketsBySession($uuid)
+    {
+        $data = Tickets::where('uuid', $uuid)->get()->toArray();
+        return $data;
+    }
+
+    /**
+     * Показать все билеты относящиеся к конкретному session_id
+     */
     public function showSeatsBySession($session_id, $date)
     {
         $data = Tickets::where('date', $date)->where('sessions_id', $session_id)->get()->toArray();

@@ -103,7 +103,7 @@ export default function Hall() {
     // Функция получения цен сидушек по конкретному залу
     const getReservedSeats = (session_id, date) => {
         axiosClient
-            .get(`/tickets/${session_id}/${date}`)
+            .get(`/getticket/${session_id}/${date}`)
             .then(({ data }) => {
                 setReservedSeats(data);
             });
