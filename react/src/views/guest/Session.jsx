@@ -12,10 +12,10 @@ export default function Hall() {
     const { id } = useParams();
 
     // Состояние для загрузки из БД сессии
-    const [session, setSession] = useState([]);
+    const [session, setSession] = useState();
 
     // Состояние для загрузки из БД фильма
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState();
 
     // Состояние для загрузки из БД зала
     const [hall, setHall] = useState([]);
@@ -130,7 +130,6 @@ export default function Hall() {
         }
 
         payload.map(item => {
-            console.log(item);
             axiosClient
                 .post("/tickets", item)
                 .catch((err) => {
@@ -159,17 +158,19 @@ export default function Hall() {
         <section className="rounded ">
             <div className="p-4 bg-[#F1EBE6] opacity-95">
                 <h2 className="text-lg font-medium">
-                    {movie?.title}
+                    {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
                 </h2>
-                <p>
+                <p className="flex mt-1">
                     {/* TODO: */}
-                    Дата сеанса: {session?.sessionStart}
+                    <span className="block mr-1">Дата сеанса:</span>
+                    {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
                 </p>
-                <p>
-                    Начало сеанса: {session?.sessionStart}
+                <p className="flex mt-1">
+                    <span className="block mr-1">Начало сеанса:</span>
+                    {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
                 </p>
-                <p className="font-medium">
-                    Зал№{session?.halls_id} - {hall?.name}
+                <p className="flex mt-1 font-medium">
+                    {session ? <span className="font-medium">Зал№{session?.halls_id} - {hall?.name}</span> : <span className="font-medium ml-1">Загрузка...</span>}
                 </p>
             </div>
 

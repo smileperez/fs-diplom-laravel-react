@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import EButton from "../../components/core/EButton";
-import MatrixComponentGuest from "../../components/guest/MatrixComponentGuest.jsx";
 import axiosClient from "../../axios.js";
 
 export default function Hall() {
@@ -128,59 +127,63 @@ export default function Hall() {
     }
 
     return (
-        <section className="bg-[#F1EBE6] rounded px-4 opacity-95">
-            <header className="py-6 uppercase text-2xl text-[#C76F00] font-bold">
-                Вы выбрали билеты:
+        <section className="bg-[#F1EBE6] rounded px-4 opacity-95 relative">
+            <span className="block absolute top-0 left-0 w-100% bg-[url('/img/border-top.png')">1</span>
+            <header className="py-6">
+
+                <span className="block uppercase text-2xl text-[#C76F00] font-bold flex flex-col">Вы выбрали билеты:</span>
+                <span className="block ]">1</span>
             </header>
 
             <div className="py-2 text-base">
-                <div className="flex mt-1">
-                    <span className="block text-base">На фильм:</span>
-                    <span className="font-medium ml-1"></span>
+                <h2 className="flex mt-1">
+                    <span className="block mr-1 text-base">На фильм:</span>
                     {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                </h2>
 
-                </div>
-
-                <div className="flex mt-1">
+                <p className="flex mt-1">
                     <span className="block mr-1">Дата:</span>
                     {ticket ? <span className="font-medium">{ticket[0].date}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                </div>
+                </p>
 
-                <div className="flex mt-1">
+                <p className="flex mt-1">
                     <span className="block mr-1">Начало сеанса:</span>
                     {session ? <span className="font-medium">{session.sessionStart.slice(0, -3)}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                </div>
+                </p>
 
-                <div className="flex mt-1">
+                <p className="flex mt-1">
                     <span className="block mr-1">В зале:</span>
                     {session ? <span className="font-medium">№{session.halls_id}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                </div>
+                </p>
 
-                <div className="flex mt-1">
+                <p className="flex mt-1">
                     <span className="block mr-1">Места:</span>
                     {ticket ? ticket.map(item => (<span key={item.seats_id} className="font-medium">{item.seats_id}, </span>)) : <span className="font-medium ml-1">Загрузка...</span>}
-                </div>
+                </p>
 
 
-                <div className="flex mt-1">
+                <p className="flex mt-1">
                     <span className="block mr-1">Стоимость:</span>
                     {seats && prices ? <span className="font-medium">{total()} ₽</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                </div>
+                </p>
 
             </div>
 
-            <div className="py-2 flex flex-col items-center justify-center">
+            <div className="py-2 flex flex-col justify-center items-center">
                 <EButton onClick={onClick}>
                     <span className="uppercase text-base px-8">
                         Получить код бронирования
                     </span>
                 </EButton>
-                <p className="mt-6">
-                    После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.
-                </p>
-                <p>
-                    Приятного просмотра!
-                </p>
+                <div className="flex flex-col">
+                    <p className="mt-6">
+                        После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.
+                    </p>
+                    <p>
+                        Приятного просмотра!
+                    </p>
+                </div>
+
             </div>
 
         </section>
