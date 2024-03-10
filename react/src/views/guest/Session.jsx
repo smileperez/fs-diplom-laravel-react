@@ -5,6 +5,7 @@ import EButton from "../../components/core/EButton";
 import MatrixComponentGuest from "../../components/guest/MatrixComponentGuest.jsx";
 import { v4 as uuidv4 } from 'uuid';
 import axiosClient from "../../axios.js";
+import load from '../../img/loading.gif';
 
 export default function Hall() {
 
@@ -47,11 +48,12 @@ export default function Hall() {
     // Состояние для хранения общей стоимости билета
     const [totalPrices, setTotalPrices] = useState();
 
-    // Состояние для хранения ошибки
-    const [error, setError] = useState("");
+    // Соятоние загрузки данных
+    const [loading, setLoading] = useState(false);
 
     // Функция получения конкретной сессии
     const getSession = () => {
+        setLoading(true);
         axiosClient
             .get(`/getsession/${id}`)
             .then(({ data }) => {
@@ -129,6 +131,7 @@ export default function Hall() {
             .get(`/getticket/${session_id}/${date}`)
             .then(({ data }) => {
                 setReservedSeats(data);
+                setLoading(false);
             });
     };
 
@@ -192,7 +195,6 @@ export default function Hall() {
     // Функция расчета стоимости билета
     const getTotalPrice = (seats, prices) => {
         let result = 0;
-        console.log(seats);
         seats.forEach(item => {
             result += prices.find(element => element.types_id == item.types_id).price;
         })
@@ -206,134 +208,149 @@ export default function Hall() {
     }, [seats]);
 
     return (
-        <section>
 
-            {toggleComponent ?
+
+        <>
+            {loading && (
                 <>
-                    <header className="py-6 px-4 bg-[#F1EBE6] opacity-95 rounded">
-                        <span className="block uppercase text-2xl text-[#C76F00] font-bold">Вы выбрали билеты:</span>
-                    </header>
-
-                    <div className="p-4 mt-4 bg-[#F1EBE6] opacity-95 rounded-t">
-                        <h2 className="flex mt-1">
-                            <span className="block mr-1 text-base">На фильм:</span>
-                            {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </h2>
-
-                        <p className="flex mt-1">
-                            <span className="block mr-1">Дата:</span>
-                            {session ? <span className="font-medium">{session.date}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-
-                        <p className="flex mt-1">
-                            <span className="block mr-1">Начало сеанса:</span>
-                            {session ? <span className="font-medium">{session.sessionStart.slice(0, -3)}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-
-                        <p className="flex mt-1">
-                            <span className="block mr-1">В зале:</span>
-                            {session ? <span className="font-medium">№{session.halls_id}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-
-                        <p className="flex mt-1">
-                            <span className="block mr-1">Места [ряд-место]:</span>
-                            {tickets.length !== 0
-                                ?
-                                <span className="font-medium">{`${tickets.map(item => (` ${item.row}-${item.seat}`))}`}</span>
-                                :
-                                <span className="font-medium ml-1">Загрузка...</span>
-                            }
-                        </p>
-
-                        <p className="flex mt-1">
-                            <span className="block mr-1">Стоимость:</span>
-                            {totalPrices ? <span className="font-medium">{totalPrices} ₽</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-                    </div>
-
-                    <div className="py-2 flex flex-col justify-center items-center bg-[#F1EBE6] rounded-b px-4 opacity-95 relative">
-                        <EButton onClick={onClickReserve}>
-                            <span className="uppercase text-base px-8">
-                                Оплатить и получить код бронирования
-                            </span>
-                        </EButton>
-                        <div className="flex flex-col">
-                            <p className="mt-6">
-                                После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.
-                            </p>
-                            <p>
-                                Приятного просмотра!
-                            </p>
-                        </div>
+                    <div className="p-4 bg-[#F1EBE6] opacity-95 rounded">
+                        <img src={load} alt="Загрузка данных" className="w-20 h-20 my-24 mx-auto" />
                     </div>
                 </>
+            )}
 
-                :
-
+            {!loading && (
                 <>
-                    <div className="p-4 bg-[#F1EBE6] opacity-95 rounded-t">
-                        <h2 className="text-lg font-medium">
-                            {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </h2>
-                        <p className="flex mt-1">
-                            {/* TODO: */}
-                            <span className="block mr-1">Дата сеанса:</span>
-                            {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-                        <p className="flex mt-1">
-                            <span className="block mr-1">Начало сеанса:</span>
-                            {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-                        <p className="flex mt-1 font-medium">
-                            {session ? <span className="font-medium">Зал№{session?.halls_id} - {hall?.name}</span> : <span className="font-medium ml-1">Загрузка...</span>}
-                        </p>
-                    </div>
+                    <section>
+                        {toggleComponent ?
+                            <>
+                                <header className="py-6 px-4 bg-[#F1EBE6] opacity-95 rounded">
+                                    <span className="block uppercase text-2xl text-[#C76F00] font-bold">Вы выбрали билеты:</span>
+                                </header>
 
-                    <div className="bg-[#171D24] text-white">
+                                <div className="p-4 mt-4 bg-[#F1EBE6] opacity-95 rounded-t">
+                                    <h2 className="flex mt-1">
+                                        <span className="block mr-1 text-base">На фильм:</span>
+                                        <span className="font-medium">{movie.title}</span>
+                                    </h2>
 
-                        <div className="flex flex-col justify-center items-center px-8 pt-8">
-                            <span className="tracking-[1.25em] text-xs">
-                                ЭКРАН
-                            </span>
-                            <div className="">
-                                <MatrixComponentGuest
-                                    matrixSeats={matrix}
-                                    rows={hall?.rows}
-                                    seats={hall?.seats}
-                                    types={types}
-                                    sendCoord={sendCoord}
-                                    reservedSeats={reservedSeats}
-                                />
-                            </div>
-                            <div className="grid grid-rows-2 grid-flow-col gap-x-20 gap-y-3 my-8">
-                                <div className="flex">
-                                    <div className="w-[24px] h-[24px] bg-[#63536C] border border-gray-400 rounded-md"></div>
-                                    <span className="ml-2">Свободно ({prices[0]?.price} ₽)</span>
-                                </div>
-                                <div className="flex">
-                                    <div className="w-[24px] h-[24px] bg-[#FFD700] border border-gray-400 rounded-md"></div>
-                                    <span className="ml-2">Свободно VIP ({prices[1]?.price} ₽)</span>
-                                </div>
-                                <div className="flex">
-                                    <div className="w-[24px] h-[24px] bg-[#] border border-gray-400 rounded-md"></div>
-                                    <span className="ml-2">Занято</span>
-                                </div>
-                                <div className="flex">
-                                    <div className="w-[24px] h-[24px] bg-[#25C4CE] border border-gray-400 rounded-md"></div>
-                                    <span className="ml-2">Выбрано</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">Дата:</span>
+                                        <span className="font-medium">{session.date}</span>
+                                    </p>
 
-                    <div className="flex items-center justify-center p-8 bg-[#F1EBE6] opacity-95 rounded-b">
-                        <EButton onClick={onClickToggle}>
-                            <span className="uppercase text-base px-8">
-                                Забронировать
-                            </span>
-                        </EButton>
-                    </div>
-                </>}
-        </section>
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">Начало сеанса:</span>
+                                        <span className="font-medium">{session.sessionStart.slice(0, -3)}</span>
+                                    </p>
+
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">В зале:</span>
+                                        <span className="font-medium">№{session.halls_id}</span>
+                                    </p>
+
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">Места [ряд-место]:</span>
+                                        {tickets.length !== 0
+                                            ?
+                                            <span className="font-medium">{`${tickets.map(item => (` ${item.row}-${item.seat}`))}`}</span>
+                                            :
+                                            <span className="font-medium ml-1">Загрузка...</span>
+                                        }
+                                    </p>
+
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">Стоимость:</span>
+                                        <span className="font-medium">{totalPrices} ₽</span>
+                                    </p>
+                                </div>
+
+                                <div className="py-2 flex flex-col justify-center items-center bg-[#F1EBE6] rounded-b px-4 opacity-95 relative">
+                                    <EButton onClick={onClickReserve}>
+                                        <span className="uppercase text-base px-8">
+                                            Оплатить и получить код бронирования
+                                        </span>
+                                    </EButton>
+                                    <div className="flex flex-col">
+                                        <p className="mt-6">
+                                            После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.
+                                        </p>
+                                        <p>
+                                            Приятного просмотра!
+                                        </p>
+                                    </div>
+                                </div>
+                            </>
+
+                            :
+
+                            <>
+                                <div className="p-4 bg-[#F1EBE6] opacity-95 rounded-t">
+                                    <h2 className="text-lg font-medium">
+                                        {movie ? <span className="font-medium">{movie.title}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                                    </h2>
+                                    <p className="flex mt-1">
+                                        {/* TODO: */}
+                                        <span className="block mr-1">Дата сеанса:</span>
+                                        {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                                    </p>
+                                    <p className="flex mt-1">
+                                        <span className="block mr-1">Начало сеанса:</span>
+                                        {session ? <span className="font-medium">{session.sessionStart}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                                    </p>
+                                    <p className="flex mt-1 font-medium">
+                                        {session ? <span className="font-medium">Зал№{session?.halls_id} - {hall?.name}</span> : <span className="font-medium ml-1">Загрузка...</span>}
+                                    </p>
+                                </div>
+
+                                <div className="bg-[#171D24] text-white">
+
+                                    <div className="flex flex-col justify-center items-center px-8 pt-8">
+                                        <MatrixComponentGuest
+                                            matrixSeats={matrix}
+                                            rows={hall?.rows}
+                                            seats={hall?.seats}
+                                            types={types}
+                                            sendCoord={sendCoord}
+                                            reservedSeats={reservedSeats}
+                                        />
+
+                                        <div className="grid grid-rows-2 grid-flow-col gap-x-20 gap-y-3 my-8">
+                                            <div className="flex">
+                                                <div className="w-[24px] h-[24px] bg-[#63536C] border border-gray-400 rounded-md"></div>
+                                                <span className="ml-2">Свободно ({prices[0]?.price} ₽)</span>
+                                            </div>
+                                            <div className="flex">
+                                                <div className="w-[24px] h-[24px] bg-[#FFD700] border border-gray-400 rounded-md"></div>
+                                                <span className="ml-2">Свободно VIP ({prices[1]?.price} ₽)</span>
+                                            </div>
+                                            <div className="flex">
+                                                <div className="w-[24px] h-[24px] bg-[#] border border-gray-400 rounded-md"></div>
+                                                <span className="ml-2">Занято</span>
+                                            </div>
+                                            <div className="flex">
+                                                <div className="w-[24px] h-[24px] bg-[#25C4CE] border border-gray-400 rounded-md"></div>
+                                                <span className="ml-2">Выбрано</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-center p-8 bg-[#F1EBE6] opacity-95 rounded-b">
+                                    <EButton onClick={onClickToggle}>
+                                        <span className="uppercase text-base px-8">
+                                            Забронировать
+                                        </span>
+                                    </EButton>
+                                </div>
+                            </>}
+                    </section>
+                </>
+            )}
+
+
+        </>
+
+
     )
 }

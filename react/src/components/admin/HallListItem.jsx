@@ -26,7 +26,7 @@ export default function HallListItem({ hall, getHalls }) {
 
     // Состояние мест зала, для отпарвки в таблицу БД "Seats"
     // FIXME: Используется переменная вместо состояния useState
-    let halls_id = 0;
+    // let halls_id = 0;
 
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
     const [types_id, setTypes_id] = useState(1);
@@ -46,15 +46,15 @@ export default function HallListItem({ hall, getHalls }) {
             .put(`/halls/${hall.id}`, updatedHall)
             .then((response) => {
                 // Получаем из ответа ID измененного зала (так как состояние не успевает отрабатывать)
-                halls_id = response.data.data.id;
+                // halls_id = response.data.data.id;
                 // Удавляем все сидушки с ID залом $halls_id
-                deleteSeats(halls_id);
+                deleteSeats(response.data.data.id);
                 // Генерим новую матрицу сидушек и отправляем в БД
                 postSeats(
                     Number(updatedHall.rows),
                     Number(updatedHall.seats),
                     types_id,
-                    halls_id
+                    response.data.data.id
                 );
                 // Закрываем slider-popup
                 setChange(false);

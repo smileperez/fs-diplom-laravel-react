@@ -1,6 +1,7 @@
 import HallsListItem from "../../components/guest/HallsListItem.jsx";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios.js";
+import load from '../../img/loading.gif';
 
 export default function MovieListItemUser({ movie }) {
 
@@ -64,9 +65,7 @@ export default function MovieListItemUser({ movie }) {
 
             {loading && (
                 <div className='mb-2'>
-                    <div className='font-normal text-lg'>
-                        <span>Загрузка данных...</span>
-                    </div>
+                    <img src={load} alt="Загрузка данных" className="w-20 h-20 my-24 mx-auto" />
                 </div>
             )}
 

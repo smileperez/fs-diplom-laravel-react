@@ -3,6 +3,7 @@ import NavItem from "../../components/guest/NavItem.jsx";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios.js";
 import PaginationComponent from "../../components/admin/PaginationComponent.jsx";
+import load from '../../img/loading.gif';
 
 export default function Index() {
     const [weekend, setWeekend] = useState();
@@ -10,14 +11,11 @@ export default function Index() {
     // Состояние для загрузки из БД общего списка фильмов
     const [movies, setMovies] = useState([]);
 
-    // Состояние загрузки данных из БД
-    const [loading, setLoading] = useState(false);
-
     // Состояние для meta, полученной с ответом на запрос данных из БД (для pagination)
     const [meta, setMeta] = useState({});
 
-    // Состояние для хранения ошибки
-    const [error, setError] = useState("");
+    // Соятоние загрузки данных
+    const [loading, setLoading] = useState(false);
 
     const calendar = [
         {
@@ -86,7 +84,9 @@ export default function Index() {
 
             <main>
                 {loading && (
-                    <div className="text-center text-lg text-white">Загрузка данных...</div>
+                    <div className="p-4 mt-8 bg-[#F1EBE6] opacity-95 rounded">
+                        <img src={load} alt="Загрузка данных" className="w-20 h-20 my-24 mx-auto" />
+                    </div>
                 )}
 
                 {!loading && (

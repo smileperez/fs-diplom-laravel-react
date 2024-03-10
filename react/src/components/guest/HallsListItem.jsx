@@ -24,8 +24,10 @@ export default function HallsListItem({ hall, sessions }) {
 
     return (
         <>
-            {sessions.find(item => item.halls_id === hall.id)
+            {sessions?.find(item => item.halls_id === hall.id)
+
                 ?
+
                 <div className='mb-2'>
                     <div className='font-medium text-lg'>
                         <span>Зал - {hall.name}</span>
@@ -39,7 +41,9 @@ export default function HallsListItem({ hall, sessions }) {
                         ))}
                     </div>
                 </div>
+
                 :
+
                 <></>
             }
         </>
