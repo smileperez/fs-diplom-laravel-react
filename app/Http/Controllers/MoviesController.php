@@ -18,7 +18,7 @@ class MoviesController extends Controller
     public function index()
     {
         return MoviesResource::collection(
-            Movies::orderBy('id', 'desc')->paginate(5)
+            Movies::orderBy('id', 'desc')->paginate(3)
         );
     }
 
@@ -27,8 +27,9 @@ class MoviesController extends Controller
      */
     public function indexGuest()
     {
+
         return MoviesResource::collection(
-            Movies::orderBy('id', 'desc')->paginate(3)
+            Movies::orderBy('id')->get()
         );
     }
 

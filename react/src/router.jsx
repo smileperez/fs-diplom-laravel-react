@@ -70,7 +70,7 @@ const router = createBrowserRouter([
                 element: <Index />,
             },
             {
-                path: "/session/:id",
+                path: "/session/:id/:selectedDate",
                 element: <Session />,
             },
             {

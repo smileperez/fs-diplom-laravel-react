@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import SessionListItem from './SessionListItem';
 
-export default function HallsListItem({ hall, sessions }) {
+export default function HallsListItem({ hall, sessions, selectedDate }) {
 
     // Состояние для хранения массива сессий по конкретному залу
     const [sessionByHall, setSessionByHall] = useState();
@@ -29,13 +29,14 @@ export default function HallsListItem({ hall, sessions }) {
                 ?
 
                 <div className='mb-2'>
-                    <div className='font-medium text-lg'>
-                        <span>Зал - {hall.name}</span>
+                    <div className='font-medium text-md'>
+                        <span>Зал №{hall.id} - {hall.name}</span>
                     </div>
                     <div className='flex'>
                         {sessionByHall?.map((item, idx) => (
                             <SessionListItem
                                 session={item}
+                                selectedDate={selectedDate}
                                 key={idx}
                             />
                         ))}
