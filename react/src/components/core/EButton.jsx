@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function EButton({
     color = "regular",
     circle = false,
-    onClick = () => {},
+    onClick = () => { },
     submit = false,
     children,
 }) {
@@ -82,6 +82,17 @@ export default function EButton({
                     "hover:bg-gray-700",
                     "hover:text-white",
                     "active:bg-[#89639e]",
+                    "active:duration-0",
+                ];
+                break;
+            case "green":
+                classes = [
+                    ...classes,
+                    "bg-green-500",
+                    "text-black",
+                    "hover:bg-green-700",
+                    "hover:text-white",
+                    "active:bg-[#195C19]",
                     "active:duration-0",
                 ];
                 break;

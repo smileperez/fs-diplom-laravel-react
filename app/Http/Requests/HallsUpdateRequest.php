@@ -22,9 +22,10 @@ class HallsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
-            'rows' => 'nullable|numeric',
-            'seats' => 'nullable|numeric'
+            'name' => 'string|max:100',
+            'rows' => 'nullable|numeric|max:25',
+            'seats' => 'nullable|numeric|max:25',
+            'isActive' => 'boolean'
         ];
     }
 }

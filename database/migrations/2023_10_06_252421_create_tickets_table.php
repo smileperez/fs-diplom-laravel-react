@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->id();
             $table->string('uuid');
             $table->date('date');
-            $table->foreignIdFor(Sessions::class)->constrained();
-            $table->foreignIdFor(Seats::class)->constrained();
+            $table->foreignIdFor(Sessions::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Seats::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

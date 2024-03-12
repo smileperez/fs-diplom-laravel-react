@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->tinyText('name');
             $table->unsignedTinyInteger('rows')->nullable();
             $table->unsignedTinyInteger('seats')->nullable();
+            $table->boolean('isActive')->default(0);
             $table->timestamps();
         });
     }

@@ -43,11 +43,6 @@ export default function Index() {
         getMovies();
     }, []);
 
-    // Callback для пагинации (компонент PaginationComponent)
-    const onPageClick = (link) => {
-        getMovies(link.url);
-    };
-
     // Callback для выделения выбранной даты
     const selectDate = (date) => {
         setSelectedDate(formatDate(new Date(date)));
@@ -55,7 +50,6 @@ export default function Index() {
 
     return (
         <>
-
             <NavBarComponent
                 selectDate={selectDate}
             />

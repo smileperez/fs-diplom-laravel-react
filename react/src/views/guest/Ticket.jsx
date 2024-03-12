@@ -20,6 +20,9 @@ export default function Ticket() {
     // Состояние для загрузки из БД сидушек
     const [seats, setSeats] = useState([]);
 
+    // Состояние
+    const [payload, setPayload] = useState();
+
     // Соятоние загрузки данных
     const [loading, setLoading] = useState(false);
 
@@ -31,6 +34,10 @@ export default function Ticket() {
             .then(({ data }) => {
                 setTicket(data);
                 getSession(data[0].sessions_id);
+
+                for (let i = 0; i < data.length; i++) {
+                    getSeat(data[i].seats_id);
+                }
             });
     };
 
@@ -54,15 +61,12 @@ export default function Ticket() {
             });
     };
 
-    //
+    // Функция получения данных о купленных сидушках
     const getSeat = (seat_id) => {
         axiosClient
             .get(`/getseat/${seat_id}`)
             .then(({ data }) => {
-
-                // TODO: ДОДЕЛАТЬ
-                setSeats(item => [...item, data[0]])
-
+                setSeats(item => [...item, data[0]]);
             });
     }
 
@@ -71,16 +75,9 @@ export default function Ticket() {
         getTicket();
     }, []);
 
-    // При каждом обновлении страницы обновляем данные
-    useEffect(() => {
-        ticket.forEach(element => {
-            getSeat(element.seats_id);
-        });
-    }, [ticket]);
 
     return (
         <>
-
             {loading && (
                 <>
                     <header className="py-6 px-4 bg-[#F1EBE6] opacity-95 rounded">
@@ -125,19 +122,14 @@ export default function Ticket() {
 
                         <p className="flex mt-1">
                             <span className="block mr-1">Места:</span>
-                            {seats.length !== 0
-                                ?
-                                <span className="font-medium">{`${seats?.map(item => (` ${item.row}-${item.seat}`))}`}</span>
-                                :
-                                <span className="font-medium ml-1">Загрузка...</span>
-                            }
+                            <span className="font-medium">{`${seats?.map(item => (` ${item.row}-${item.seat}`))}`}</span>
                         </p>
                     </div>
 
                     <div className="py-2 flex flex-col bg-[#F1EBE6] rounded-b px-4 opacity-95">
                         <div style={{ height: "auto", margin: "0 auto", maxWidth: 256, width: "100%" }}>
                             <QRCode
-                                size={1024}
+                                size={2048}
                                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                                 value={uuid}
                                 viewBox={`0 0 512 512`}

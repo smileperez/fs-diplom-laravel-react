@@ -73,13 +73,17 @@ export default function MovieListItemUser({ movie, selectedDate }) {
 
             {!loading && (
                 halls?.map((item) => (
-                    <HallsListItem
-                        hall={item}
-                        sessions={sessions}
-                        movie={movie}
-                        selectedDate={selectedDate}
-                        key={item.id}
-                    />
+                    item.isActive === 1
+                        ?
+                        <HallsListItem
+                            hall={item}
+                            sessions={sessions}
+                            movie={movie}
+                            selectedDate={selectedDate}
+                            key={item.id}
+                        />
+                        :
+                        <></>
                 ))
             )}
 

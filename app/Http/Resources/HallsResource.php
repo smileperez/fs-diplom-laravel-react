@@ -18,6 +18,7 @@ class HallsResource extends JsonResource
             'name' => $this->name,
             'rows' => $this->rows,
             'seats' => $this->seats,
+            'isActive' => $this->isActive,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
         ];
