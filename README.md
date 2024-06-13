@@ -3,17 +3,12 @@
 <p align="center"><img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/logo.png" width="100%" alt="Laravel Logo"></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://badgen.net/badge/PHP/8.2.12?color=purple" alt="PHP Version">
+<img src="https://badgen.net/badge/Laravel/10.23.1?color=red" alt="Laravel Version">
+<img src="https://badgen.net/badge/Node.js/8.2.12?color=green" alt="NODE Version">
+<img src="https://badgen.net/badge/NPM/10.1.0?color=orange" alt="NPM Version">
+<img src="https://badgen.net/badge/App%20Version/1.0?color=grey" alt="App Version">
 </p>
-
-## Ключевые версии ПО
-├── PHP Version - 8.2.12</br>
-├── Laravel Framework Version - 10.23.1</br>
-├── Node.js Version - 20.5.1</br>
-├── NPM Version - 10.1.0</br>
 
 ## Используемые NPM пакеты
 
