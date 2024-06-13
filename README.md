@@ -7,6 +7,7 @@
 <img src="https://badgen.net/badge/Laravel/10.23.1?color=red" alt="Laravel Version">
 <img src="https://badgen.net/badge/Node.js/8.2.12?color=green" alt="NODE Version">
 <img src="https://badgen.net/badge/NPM/10.1.0?color=orange" alt="NPM Version">
+<img src="https://badgen.net/badge/React/18.2?color=cyan" alt="React Version">
 <img src="https://badgen.net/badge/App%20Version/1.0?color=grey" alt="App Version">
 </p>
 
@@ -15,17 +16,21 @@
 
 ## Превью проекта
 
+*Клиентская часть*
+
+*Административная часть*
+
 ## Ключевые заметки по работе приложения
 
-1. Использование **Laravel Framework**
-2. Использование **Vite** с уклоном в **React**
-3. Стандартный порт **Vite** был изменен на **`:3000`**
-4. Использование пакета стилей **`Tailwind.css`**
-5. Использование плагина **`@tailwindcss/forms`**
-6. Использование пакет иконок **`Heroicons`**
-7. Использование пакета стилей **`Headless UI`**
-8. Использование пакета **`react-router-dom`** в качестве основного роутера приложения
-9. Использование пакета **`axios`** для создания и обработки запросов в сторону API Laravel
+- Использование **Laravel Framework**
+- Использование **Vite** с уклоном в **React**
+- Стандартный порт **Vite** был изменен на **`:3000`**
+- Использование пакета стилей **`Tailwind.css`**
+- Использование плагина **`@tailwindcss/forms`**
+- Использование пакет иконок **`Heroicons`**
+- Использование пакета стилей **`Headless UI`**
+- Использование пакета **`react-router-dom`** в качестве основного роутера приложения
+- Использование пакета **`axios`** для создания и обработки запросов в сторону API Laravel
 
 ## Документация
 
@@ -52,24 +57,24 @@
 
 ## Используемые NPM пакеты
 
-├── @headlessui/react@1.7.17</br>
-├── @heroicons/react@2.0.18</br>
-├── @tailwindcss/forms@0.5.6</br>
-├── @types/react-dom@18.2.7</br>
-├── @types/react@18.2.21</br>
-├── @vitejs/plugin-react@4.0.4</br>
-├── autoprefixer@10.4.15</br>
-├── axios@1.5.0</br>
-├── eslint-plugin-react-hooks@4.6.0</br>
-├── eslint-plugin-react-refresh@0.4.3</br>
-├── eslint-plugin-react@7.33.2</br>
-├── eslint@8.49.0</br>
-├── postcss@8.4.29</br>
-├── react-dom@18.2.0</br>
-├── react-router-dom@6.16.0</br>
-├── react@18.2.0</br>
-├── tailwindcss@3.3.3</br>
-└── vite@4.4.9</br>
+-  @headlessui/react@1.7.17</br>
+-  @heroicons/react@2.0.18</br>
+-  @tailwindcss/forms@0.5.6</br>
+-  @types/react-dom@18.2.7</br>
+-  @types/react@18.2.21</br>
+-  @vitejs/plugin-react@4.0.4</br>
+-  autoprefixer@10.4.15</br>
+-  axios@1.5.0</br>
+-  eslint-plugin-react-hooks@4.6.0</br>
+-  eslint-plugin-react-refresh@0.4.3</br>
+-  eslint-plugin-react@7.33.2</br>
+-  eslint@8.49.0</br>
+-  postcss@8.4.29</br>
+-  react-dom@18.2.0</br>
+-  react-router-dom@6.16.0</br>
+-  react@18.2.0</br>
+-  tailwindcss@3.3.3</br>
+-  vite@4.4.9</br>
 
 
 
