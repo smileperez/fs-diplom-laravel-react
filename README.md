@@ -1,4 +1,4 @@
-# Веб-приложение управления кинотеатром и бронирования сеансов
+# Веб-приложение управления кинотеатром
 
 <p align="center"><img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/logo.png" width="100%" alt="Laravel Logo"></p>
 
