@@ -111,24 +111,6 @@ export default function HallListItem({ hall, getHalls }) {
         });
     };
 
-    const toggleActive = () => {
-        if (hall.isActive === 0) {
-            axiosClient
-                .put(`/halls/${hall.id}`, {isActive: 1})
-                .then((response) => {
-                    // Заново перезагружаем из БД
-                    getHalls();
-                })
-        } else {
-            axiosClient
-                .put(`/halls/${hall.id}`, {isActive: 0})
-                .then((response) => {
-                    // Заново перезагружаем из БД
-                    getHalls();
-                })
-        }
-    }
-
     return (
         <>
             <section className="mb-4 flex h-auto">
@@ -173,18 +155,6 @@ export default function HallListItem({ hall, getHalls }) {
                                 </div>
                             </h2>
                         </div>
-                    </div>
-                    <div className="flex items-center justify-center">
-                        {hall.isActive
-                            ?
-                            <EButton color="danger" onClick={toggleActive}>
-                                Закрыть продажи
-                            </EButton>
-                            :
-                            <EButton color="green" onClick={toggleActive}>
-                                Открыть продажи
-                            </EButton>
-                        }
                     </div>
                     <div className="flex items-center">
                         <EButton circle onClick={() => setChange(true)}>

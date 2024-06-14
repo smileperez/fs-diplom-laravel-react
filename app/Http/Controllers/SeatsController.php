@@ -19,6 +19,18 @@ class SeatsController extends Controller
         );
     }
 
+    public function indexDefault()
+    {
+        $data = Seats::where('types_id', 1)->get()->toArray();
+        return $data;
+    }
+
+    public function indexVIP()
+    {
+        $data = Seats::where('types_id', 2)->get()->toArray();
+        return $data;
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -64,7 +76,7 @@ class SeatsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
         //
     }

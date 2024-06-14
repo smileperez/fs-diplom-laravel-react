@@ -29,8 +29,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/signout', [AuthController::class, 'signout']);
     Route::get('/current', [AuthController::class, 'current']);
+    Route::get('/seats/default', [SeatsController::class, 'indexDefault']);
+    Route::get('/seats/vip', [SeatsController::class, 'indexVIP']);
     Route::get('/seats/vip/{hall_id}', [SeatsController::class, 'vip']);
     Route::get('/seats/default/{hall_id_id}', [SeatsController::class, 'default']);
+    Route::get('/tickets/default', [TicketsController::class, 'indexDefaultSeats']);
+    Route::get('/tickets/vip', [TicketsController::class, 'indexVIPtSeats']);
     Route::apiResource('movies', MoviesController::class);
     Route::apiResource('halls', HallsController::class);
     Route::apiResource('types', TypesController::class);
@@ -45,11 +49,11 @@ API для гостевого доступа
 */
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/signin', [AuthController::class, 'signin']);
-    // Для страницы Index
+// Для страницы Index
 Route::get('/getmovies', [MoviesController::class, 'indexGuest']);
 Route::get('/getsessions/{movie_id}', [SessionController::class, 'showSessionsByMovie']);
 Route::get('/gethalls', [HallsController::class, 'index']);
-    // Для страниц Session/Payment
+// Для страниц Session/Payment
 Route::get('/getsession/{id}', [SessionController::class, 'showSession']);
 Route::get('/getmovie/{movie_id}', [MoviesController::class, 'show']);
 Route::get('/getseats/{hall_id}', [SeatsController::class, 'show']);
