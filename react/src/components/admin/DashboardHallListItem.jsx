@@ -22,17 +22,17 @@ export default function DashboardHallListItem({ hall, getHalls }) {
     }
 
     return (
-        <div className="flex items-center justify-center">
+        <>
             {hall.isActive
                 ?
                 <EButton color="danger" onClick={toggleActive}>
-                    Закрыть зал {hall.id}
+                    Закрыть продажи
                 </EButton>
                 :
                 <EButton color="green" onClick={toggleActive}>
-                    Открыть зал {hall.id}
+                    Открыть продажи
                 </EButton>
             }
-        </div>
+        </>
     );
 }

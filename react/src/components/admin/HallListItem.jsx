@@ -24,10 +24,6 @@ export default function HallListItem({ hall, getHalls }) {
         seats: hall.seats,
     });
 
-    // Состояние мест зала, для отпарвки в таблицу БД "Seats"
-    // FIXME: Используется переменная вместо состояния useState
-    // let halls_id = 0;
-
     // Состояние типа сидушки, по дефолту 1 = "Обычное"
     const [types_id, setTypes_id] = useState(1);
 

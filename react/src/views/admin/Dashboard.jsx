@@ -4,6 +4,8 @@ import {
     FilmIcon,
     SquaresPlusIcon,
     RectangleGroupIcon,
+    CurrencyDollarIcon,
+    ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 import axiosClient from "../../axios.js";
 import EButton from "../../components/core/EButton.jsx";
@@ -17,7 +19,6 @@ export default function Dashboard() {
     const [reservedVipSeats, setReservedVipSeats] = useState();
     const [reservedDefaultSeats, setReservedDefaultSeats] = useState();
     const [movies, setMovies] = useState([]);
-    const [tickets, setTickets] = useState([]);
     const [profit, setProfit] = useState();
     const [loading, setLoading] = useState(false);
 
@@ -38,6 +39,7 @@ export default function Dashboard() {
                 setHalls(data.data);
                 getCountSeats();
                 getCountReservedSeats();
+                gerProfit();
             });
     };
 
@@ -68,6 +70,14 @@ export default function Dashboard() {
         setLoading(false);
     };
 
+    const gerProfit = () => {
+        axiosClient
+            .get('/tickets/profit')
+            .then(({ data }) => {
+                setProfit(data);
+            });
+    }
+
     useEffect(() => {
         getData();
     }, []);
@@ -89,13 +99,13 @@ export default function Dashboard() {
 
                 <div className="flex justify-between p-2 bg-[#FFD700] text-black rounded row-span-2">
                     <div className="flex flex-col justify-center">
-                        <h1 className="text-5xl">
-                            {11} ₽
+                        <h1 className="text-4xl">
+                            {profit} ₽
                         </h1>
                         <span className="text-sm text-gray-700">Доход</span>
                     </div>
                     <div className="ml-8">
-                        <SquaresPlusIcon className="block w-6 h-7" />
+                        <ArrowTrendingUpIcon className="block w-6 h-7" />
                     </div>
                 </div>
 
@@ -160,20 +170,32 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div className="mt-8">
+            <div className="grid grid-cols-2 gap-8 mt-8">
                 <div className="flex p-2 bg-white border-gray-400 border-2 rounded">
-                    <div>
-                        <span className="text-sm text-gray-700">Управление продажами</span>
-                        <div className="flex flex-col gap-2">
-                            {halls
-                                .slice(0)
-                                .reverse()
-                                .map((hall) => (
-                                    <DashboardHallListItem hall={hall} getHalls={getHalls} />
-                                ))
-                            }
-                        </div>
-                    </div>
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+                            <tr className="text-nowrap text-center">
+                                <th className="px-3 py-2">ID</th>
+                                <th className="px-3 py-2">Зал</th>
+                                <th className="px-3 py-2">Действие</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {halls.slice(0).reverse().map((hall) => (
+                                <tr className="bg-white dark:bg-gray-800 dark:border-gray-700 text-nowrap text-center">
+                                    <td className="px-3 py-3">{hall.id}</td>
+                                    <td className="px-3 py-3">{hall.name}</td>
+                                    <td className="px-3 py-3 flex justify-center">
+                                        <DashboardHallListItem hall={hall} getHalls={getHalls} />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+
                 </div>
             </div>
         </PageComponent >

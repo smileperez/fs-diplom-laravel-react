@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prices;
 use App\Models\Seats;
 use App\Models\Tickets;
 use App\Http\Resources\TicketsResource;
@@ -60,5 +61,21 @@ class TicketsController extends Controller
             }
         }
         return $VIPSeats;
+    }
+
+    public function showProfit()
+    {
+        $data = Tickets::pluck('seats_id');
+        $profit = [];
+
+        foreach ($data as $seat) {
+            $types_id = Seats::where('id', $seat)->value('types_id');
+            $halls_id = Seats::where('id', $seat)->value('halls_id');
+
+            $prices = Prices::where('halls_id', $halls_id)->where('types_id', $types_id)->value('price');
+
+            array_push($profit, $prices);
+        }
+        return array_sum($profit);
     }
 }

@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/seats/default/{hall_id_id}', [SeatsController::class, 'default']);
     Route::get('/tickets/default', [TicketsController::class, 'indexDefaultSeats']);
     Route::get('/tickets/vip', [TicketsController::class, 'indexVIPtSeats']);
+    Route::get('/tickets/profit', [TicketsController::class, 'showProfit']);
     Route::apiResource('movies', MoviesController::class);
     Route::apiResource('halls', HallsController::class);
     Route::apiResource('types', TypesController::class);
