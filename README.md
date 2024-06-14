@@ -25,8 +25,8 @@
 
 *Административная часть*
 
-<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_2.png" alt="Dashboard page">
-<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_1.png" alt="Dashboard page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_2.png" alt="Dashboard page 2">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_1.png" alt="Dashboard page 1">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_1.png" alt="Halls page 1">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_2.png" alt="Halls page 2">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/config_page.png" alt="Config page">
@@ -69,6 +69,7 @@
 | 2.1 | Проходим в папку `/react` и запускаем команду  | `npm install` |
 | 2.2 | В корне папки `/react` создаём новый файл конфиг с именем `.env` и записываем туда константу | `VITE_API_BASE_URL=http://localhost:8000` |
 | 2.3 | Проверяем, что Vite запустился корректно | `npm run dev` |
+| 2.4 | Стандартный логин и пароль | `test@test.com` `P@ssw0rd` |
 
 *3. Схема базы данных:*
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/schema-fs-app.png" width="100%" alt="DB Schema">
