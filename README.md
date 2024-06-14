@@ -18,7 +18,24 @@
 
 *Клиентская часть*
 
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/main_page.png" alt="Main page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/select_seats_page.png" alt="Select seats page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/reserve_page.png" alt="Reserve page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/ticket_page.png" alt="Ticket page">
+
 *Административная часть*
+
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page.png" alt="Dashboard page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_1.png" alt="Halls page 1">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_2.png" alt="Halls page 2">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/config_page.png" alt="Config page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/prices_page_1.png" alt="Prices page 1">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/prices_page_2.png" alt="Prices page 2">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/movies_page_1.png" alt="Ticket page 1">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/movies_page_2.png" alt="Ticket page 2">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/sessions_page_1.png" alt="Ticket page 1">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/sessions_page_2.png" alt="Ticket page 2">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/users_page.png" alt="Users page">
 
 ## Ключевые заметки по работе приложения
 
@@ -52,8 +69,8 @@
 | 2.2 | В корне папки `/react` создаём новый файл конфиг с именем `.env` и записываем туда константу | `VITE_API_BASE_URL=http://localhost:8000` |
 | 2.3 | Проверяем, что Vite запустился корректно | `npm run dev` |
 
-3. Схема базы данных
-<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/logo.png" width="100%" alt="DB Schema">
+*3. Схема базы данных:*
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/schema-fs-app.png" width="100%" alt="DB Schema">
 
 ## Используемые NPM пакеты
 
