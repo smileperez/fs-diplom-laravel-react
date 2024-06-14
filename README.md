@@ -25,7 +25,8 @@
 
 *Административная часть*
 
-<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page.png" alt="Dashboard page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_2.png" alt="Dashboard page">
+<img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/dashboard_page_1.png" alt="Dashboard page">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_1.png" alt="Halls page 1">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/halls_page_2.png" alt="Halls page 2">
 <img src="https://raw.githubusercontent.com/smileperez/fs-diplom-laravel-react/main/public/images/config_page.png" alt="Config page">
